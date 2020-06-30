@@ -1,8 +1,33 @@
 .Login {
     text-align: center;
-    background-color: rgb(8, 68, 107);
+    background-color: rgb(34, 139, 201);
+    height: auto;
     height: calc(100vh);
-    color: white;
-    font-size: calc(20vh);
   }
-  
+
+  .login-form {
+    padding-top: calc(15vh);
+    width: calc(100%);
+    display: flex;
+    justify-content: center;
+  }
+
+  .login-form .container {
+    width: 50%;
+    border: calc(2px) solid rgb(255, 255, 255);
+    background-color: white;
+    border-radius: calc(2rem);
+    padding: calc(3vw);
+    box-shadow: calc(4px) calc(4px) calc(10px);
+  }
+
+  .form-group div {
+    width: 100%;
+    text-align: left;
+  }
+
+  .forgot-password {
+    margin-top: calc(0.7vh);
+    font-size: calc(0.75vw);
+    padding-bottom: calc(2rem);
+  }
