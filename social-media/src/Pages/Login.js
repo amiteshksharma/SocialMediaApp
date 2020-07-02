@@ -1,6 +1,7 @@
 import React from 'react';
 import '../Css/Login.css';
 import Form from 'react-bootstrap/Form';
+import { withRouter } from 'react-router-dom';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap'; 
 
 class Login extends React.Component {
@@ -40,11 +41,11 @@ class Login extends React.Component {
       headers: {
         'Content-type': 'application/json'
       }
-    }).then(res => {
-      res.text();
-    }).then(res => {
-      console.log(res);    
-      this.setState({value: res});
+    }).then(response => response.text()).then(data => {
+      console.log(data);    
+      this.setState({value: data});
+      let path = `/home`;
+      this.props.history.push(path);
       });
   }
 

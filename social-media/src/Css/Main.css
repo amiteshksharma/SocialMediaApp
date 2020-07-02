@@ -1,0 +1,20 @@
+.homepage {
+    width: 100%;
+    height: auto;
+}
+
+.sidebar {
+    background-color: rgb(20, 138, 218);
+    width: calc(13vw);
+    height: calc(100vh);
+}
+
+button {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.right {
+    width: calc(15vw);
+}

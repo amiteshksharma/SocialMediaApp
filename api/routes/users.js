@@ -4,6 +4,7 @@ const admin = require('firebase-admin');
 const firebase = require('firebase');
 require('firebase/auth')
 
+//Environmental variables inside the bashsouce.ps1 file
 firebase.initializeApp({
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -18,23 +19,14 @@ firebase.initializeApp({
 const db = admin.firestore();
 const router = express.Router();
 router.post('/login', function(req, res, next) {
-    console.log(req.body);
-    console.log(req.body.email);
-    console.log(req.body.password);
-
     const email = req.body.email;
     const password = req.body.password;
-    let isSuccess = true;
-
-    console.log(email);
-    console.log(password);
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-      res.status(200).send("Success!");
+      //Login was sucessful, send a 200 response
+      return res.status(200).send("Success!");
     }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      res.status(404).send("error!");
+      // Return an error comment and 404 error, indicating account is not found
+      return res.status(404).send("Error!");
     });
 });
 
