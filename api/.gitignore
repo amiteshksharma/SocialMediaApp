@@ -1,2 +1,7 @@
 # Ignore the node_modules package inside api/ directory
 /node_modules
+
+# Bash source file for Firebase
+bashsource.ps1
+
+firebaseSocialMediaKey.json

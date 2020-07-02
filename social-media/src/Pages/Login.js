@@ -1,23 +1,77 @@
 import React from 'react';
 import '../Css/Login.css';
 import Form from 'react-bootstrap/Form';
-import { Container, Row, Col, Button } from 'react-bootstrap'; 
+import { Container, Row, Col, Button, Modal } from 'react-bootstrap'; 
 
 class Login extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      ModalShow: false,
+      Email: '',
+      Password: ''
     }
 
     this.callAPI = this.callAPI.bind(this);
+    this.displayModal = this.displayModal.bind(this);
+    this.loginRequest = this.loginRequest.bind(this);
   }
   callAPI = () => {
-    fetch("http://localhost:5000/backend")
-        .then(res => res.text())
-        .then(res => this.setState({ value: res }));
+    fetch("http://localhost:5000/users")
+        .then(res => res.json())
+        .then(res => {
+          this.setState({value: res.test});
+          console.log(res);
+      });
   
+  }
+
+  loginRequest() {
+    console.log(this.state.Email);
+    console.log(this.state.Password);
+    fetch("http://localhost:5000/users/login", {
+      method: 'POST',
+      body: JSON.stringify({
+        email: this.state.Email,
+        password: this.state.Password
+      }),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then(res => {
+      res.text();
+    }).then(res => {
+      console.log(res);    
+      this.setState({value: res});
+      });
+  }
+
+  displayModal() {
+    return (
+      <Modal
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={this.state.ModalShow}
+      onHide={() => this.setState({ ModalShow: false})}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Enter email to send password reset
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Centered Modal</h4>
+          <p>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+            consectetur ac, vestibulum at eros.
+          </p>
+        </Modal.Body>
+      </Modal>
+    )
   }
 
   componentDidMount() {
@@ -41,11 +95,14 @@ class Login extends React.Component {
                   <Form>
                     <Form.Group controlId="formGroupEmail">
                       <div><Form.Label>Email address</Form.Label></div>
-                      <Form.Control type="email" placeholder="Enter email" />
+                      <Form.Control type="email" placeholder="Enter email" 
+                      onChange={(e) => this.setState({ Email: e.target.value})}/>
                     </Form.Group>
                     <Form.Group controlId="formGroupPassword">
                       <div><Form.Label>Password</Form.Label></div>
-                      <Form.Control type="password" placeholder="Password" />
+                      <Form.Control type="password" placeholder="Password" 
+                        onChange={(e) => this.setState({ Password: e.target.value })}
+                      />
                     </Form.Group>
                   </Form>
                 </Col>
@@ -53,17 +110,21 @@ class Login extends React.Component {
 
               <Row>
                 <Col md={{ span: 6, offset: 3}}>
-                  <Button as="input" type="button" value="Login" className="w-100 mt-3"/>{' '}
+                  <Button variant="primary" className="mt-2" size="lg" block
+                  onClick={() => this.loginRequest()}>Login</Button>
+                  {' '}
                 </Col>
               </Row>
 
               <Row>
                 <Col md={{ span: 6, offset: 5}}>
-                  <footer className="forgot-password">Forgot Password?</footer>
+                  <footer className="forgot-password"><button className="forgot-password-btn" onClick={() => this.setState({ ModalShow: true})}>Forgot Password?</button></footer>
                 </Col>
               </Row>
             </Container>
           </div>
+
+          {this.state.ModalShow ? this.displayModal() : null}
         </div>
       );
   }

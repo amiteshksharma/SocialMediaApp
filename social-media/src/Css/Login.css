@@ -28,6 +28,18 @@
 
   .forgot-password {
     margin-top: calc(0.7vh);
-    font-size: calc(0.75vw);
+    font-size: calc(.75vw);
     padding-bottom: calc(2rem);
+  }
+
+  .forgot-password-btn {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;  
   }
