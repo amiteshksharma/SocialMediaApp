@@ -1,7 +1,50 @@
+/*
+    STYLING FOR MAIN.JS
+ */
+
 .homepage {
     width: 100%;
     height: calc(100vh);
     background-color: rgb(245, 245, 245);
+}
+
+.container-main {
+    display: flex;
+    flex-direction: row;
+}
+
+.create-section {
+    position: absolute;
+    left: calc(15vw);
+    top: calc(9vh);
+    padding: calc(0.2vw);
+    border-radius: calc(0.7vw);
+}
+
+.create-section:hover {
+    background-color: rgba(41, 128, 209, 0.384);
+    color: black;
+}
+
+.create-section h1 {
+    font-size: calc(1.3vw);
+}
+
+.content-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-div {
+    width: 47%;
+    border: 1px solid rgb(119, 118, 118);
+    border-top: none;
+    border-bottom: none;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 /*
