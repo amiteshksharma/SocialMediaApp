@@ -2,6 +2,7 @@ import React from 'react'
 import '../Css/Main.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
+import { withHistory } from 'react-router-dom';
 
 class Main extends React.Component {
     constructor(props) {
@@ -9,6 +10,12 @@ class Main extends React.Component {
         this.state = {
             Right: false
         }
+
+        this.createPost = this.createPost.bind(this);
+    }
+
+    createPost() {
+        this.props.history.push(`/create`);
     }
 
     render() {
@@ -16,7 +23,7 @@ class Main extends React.Component {
             <div className="homepage">
                 <Navigation />
                 <div className="container-main">
-                    <section className="create-section">
+                    <section className="create-section" onClick={() => this.createPost()}>
                         <h1>Create Post</h1>
                     </section>
                     

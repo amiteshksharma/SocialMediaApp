@@ -13,7 +13,7 @@ admin.initializeApp({
 });
 
 const usersRouter = require('./routes/users');
-const backendRouter = require("./routes/backend");
+const backendRouter = require('./routes/backend');
 
 const app = express();
 
@@ -34,6 +34,7 @@ app.use("/users/login", usersRouter);
 
 // Routes to be determined later
 app.use("/backend", backendRouter);
+app.use("/backend/create", backendRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
