@@ -1,0 +1,121 @@
+.profile {
+    background-color: aliceblue;
+    min-height: calc(100vh);
+    height: auto;
+}
+
+.profile-layout {
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh);
+    display: flex;
+    justify-content: center;
+
+}
+
+.border-line {
+    width: 60%;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styling for the header background */
+
+.image-background{
+    width: calc(100%);
+    display: flex;
+    background-color: aliceblue;
+    position: relative;
+}
+
+.image-background img {
+    width: calc(100%);
+    height: calc(30vh);
+    position: relative;
+}
+
+/* Styling of the icon */
+
+.profile-icon {
+    position: absolute;
+    left: calc(0.95vw);
+    bottom: calc(2.1vh);
+    background-color: black;
+    transform: scale(2);
+    border-radius: calc(0.5rem);
+}
+
+/* Biography section of the profile page */
+
+.biography {
+    background-color: rgb(202, 227, 248);
+    height: auto;
+    border-bottom: 1px solid black;
+}
+
+.name {
+    display: flex;
+    flex-direction: row;
+    margin-left: calc(0.5vw);
+}
+
+.follow-button {
+    border: 2px solid rgb(0, 123, 255);
+    border-radius: calc(6px);
+    background: white;
+    margin-left: calc(1vw);
+    height: calc(4vh);
+    width: calc(6vw);
+    margin-top: calc(0.5vh);
+    font-size: calc(1.1rem);
+    transition: 0.2s;
+}
+
+.plus-icon {
+    transition: 0.2s;
+}
+
+.follow-button:hover {
+    background: rgb(0, 123, 255);
+    color: white;
+    transition: 0.2s;
+}
+
+.follow-button:hover > .plus-icon {
+    color: white;
+    transition: 0.2s;
+}
+
+.description {
+    width: calc(25vw);
+    margin-left: calc(0.5vw);
+    display: flex;
+    flex-direction: row;
+}
+
+.description p {
+    font-size: calc(1.2vw);
+}
+
+/* Styling of the description box */
+
+.followers {
+    display: flex;
+    flex-direction: row;
+    margin-left: calc(0.5vw);
+}
+
+.followers h2 {
+    font-size: calc(1vw);
+}
+
+.followers h2:hover {
+    text-decoration: underline;
+    color: rgb(54, 126, 221);
+}
+
+.followers span {
+    width: calc(1.2vw);
+}

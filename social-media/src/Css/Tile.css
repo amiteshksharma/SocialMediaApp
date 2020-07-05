@@ -49,4 +49,8 @@
 
 .summary h3{
     font-size: calc(1vw);
+    text-overflow: ellipsis; /* will make [...] at the end */
+    width: calc(55vw); /* change to your preferences */
+    white-space: nowrap; /* paragraph to one line */
+    overflow:hidden; /* older browsers */
 }

@@ -33,10 +33,10 @@ router.post('/login', function(req, res, next) {
 router.get('/', function(req, res, next) {
     (async () => {
         try {
-          const value = await db.collection('user').doc('amitesh').get();
-          console.log(value);
-          console.log(value.data().test);
-          return res.send(value.data());
+          const value = await db.collection('user').doc('amitesh').collection('posts').get();
+          const array = value.docs.map(doc => doc.data());
+          console.log(array);
+          return res.send(array);
         } catch (error) {
           console.log(error);
           return res.status(500).send(error);

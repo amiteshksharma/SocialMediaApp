@@ -23,7 +23,7 @@ class Login extends React.Component {
     fetch("http://localhost:5000/users")
         .then(res => res.json())
         .then(res => {
-          this.setState({value: res.test});
+          this.setState({value: res[1].Body});
           console.log(res);
       });
   

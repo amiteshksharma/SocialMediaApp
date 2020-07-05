@@ -29,20 +29,6 @@ class Create extends React.Component {
             this.setState({value: data});
             });
     }
-
-    callAPI = () => {
-        fetch("http://localhost:5000/backend")
-            .then(res => res.text())
-            .then(res => {
-              this.setState({value: res});
-              console.log(res);
-          });
-      
-      }
-
-    componentWillMount() {
-        this.callAPI();
-    }
     render() {
         return (
             <section className="post">
@@ -63,7 +49,7 @@ class Create extends React.Component {
                     </div>
 
                     <div className="create-button">
-                        <Button as="input" type="button" value="Input" onClick={() => this.submitPost()}/>{' '}
+                        <Button as="input" type="button" value="Create" onClick={() => this.submitPost()}/>{' '}
                     </div>
                 </div>
             </section>
