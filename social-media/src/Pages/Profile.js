@@ -1,14 +1,47 @@
 import React from 'react';
 import '../Css/Profile.css';
-import Image from '../Images/Background.jpg';
+import Background from '../Images/Background.jpg';
 import Navigation from '../Components/Navigation';
+import ProfileIcon from '../Images/download.png';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CreateIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
 import Tile from '../Components/Tile';
-import { Button } from 'react-bootstrap';
+import { Image, Row, Container, Col } from 'react-bootstrap';
 
 class Profile extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            Posts: []
+        }
+
+        this.loadTiles = this.loadTiles.bind(this);
+    }
+
+    loadTiles() {
+        this.state.Posts.map(post => {
+            return (
+                <li>
+                    <Tile />
+                </li>
+            )
+        })
+    }
+
+    componentDidMount() {
+        fetch("http://localhost:5000/users", {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }).then(response => response.json()).then(data => {
+            console.log(data);
+            console.log(typeof data);
+            this.setState({ Posts: data });    
+        });
+    }
     render() {
         return (
             <div className="profile">
@@ -16,9 +49,9 @@ class Profile extends React.Component {
                 <div className="profile-layout">
                     <div className="border-line">
                         <section className="image-background">
-                            <img src={Image} alt="Background" />
-                            <div className="icon-div">
-                                <AccountCircleIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="profile-icon"/> 
+                            <img src={Background} alt="Background" />
+                            <div className="profile-icon">
+                                <img src={ProfileIcon} width="160vw" height="150vh" alt="Profile icon" />
                             </div>
                         </section>
 
@@ -36,7 +69,7 @@ class Profile extends React.Component {
                                 To share my stories with the world here.    
                                 </p>
 
-                                <CreateIcon style={{marginLeft: 'calc(1vw)', cursor: 'pointer'}} onClick={() => console.log("Clicked")}/>
+                                <CreateIcon style={{marginLeft: 'calc(1vw)', cursor: 'pointer'}} className="edit-profile" onClick={() => console.log("Clicked")}/>
                             </div>
 
                             <div className="followers">
@@ -48,7 +81,11 @@ class Profile extends React.Component {
 
                         <section className="post-div">
                             <div className="post-display">
-                                <Tile />
+                                {this.state.Posts.map(post => {
+                                    return (
+                                        <Tile />
+                                    )
+                                })}  
                             </div>
                         </section>
                     </div>
