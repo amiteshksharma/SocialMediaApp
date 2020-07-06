@@ -5,6 +5,7 @@ import Login from './Pages/Login';
 import Main from './Pages/Main';
 import Create from './Pages/Create';
 import Profile from './Pages/Profile';
+import Signup from './Pages/Signup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/home" component={Main} />
           <Route path="/create" component={Create} />
           <Route path="/profile" component={Profile} />
+          <Route path="/signup" component={Signup} />
         </Switch>  
       </div>
     </Router>

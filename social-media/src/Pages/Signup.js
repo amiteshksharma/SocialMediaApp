@@ -1,40 +1,29 @@
 import React from 'react';
 import '../Css/Login.css';
 import Form from 'react-bootstrap/Form';
-import { withRouter } from 'react-router-dom';
-import { Container, Row, Col, Button, Modal } from 'react-bootstrap'; 
+import { Container, Row, Col, Button } from 'react-bootstrap'; 
 
 class Login extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      ModalShow: false,
+      Name: '',
       Email: '',
       Password: ''
     }
 
-    this.callAPI = this.callAPI.bind(this);
-    this.displayModal = this.displayModal.bind(this);
-    this.loginRequest = this.loginRequest.bind(this);
-  }
-  callAPI = () => {
-    fetch("http://localhost:5000/")
-        .then(res => res.json())
-        .then(res => {
-          this.setState({value: res[1].Body});
-          console.log(res);
-      });
-  
+    this.signUpRequest = this.signUpRequest.bind(this);
   }
 
-  loginRequest() {
+  signUpRequest() {
     console.log(this.state.Email);
     console.log(this.state.Password);
-    fetch("http://localhost:5000/users/login", {
+    console.log(this.state.Name);
+    fetch("http://localhost:5000/users/register", {
       method: 'POST',
       body: JSON.stringify({
+        name: this.state.Name,
         email: this.state.Email,
         password: this.state.Password
       }),
@@ -43,57 +32,29 @@ class Login extends React.Component {
       }
     }).then(response => response.text()).then(data => {
       console.log(data);    
-      this.setState({value: data});
-      let path = `/home`;
-      this.props.history.push(path);
       });
   }
 
-  displayModal() {
-    return (
-      <Modal
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      show={this.state.ModalShow}
-      onHide={() => this.setState({ ModalShow: false})}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Enter email to send password reset
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </p>
-        </Modal.Body>
-      </Modal>
-    )
-  }
-
-  componentDidMount() {
-    this.callAPI(); 
-  }
 
   render() {
     return (
         <div className="Login">
-        {this.state.value}
           <div className="login-form">
             <Container>
               <Row>
                 <Col md={{ span: 6, offset: 3}}>
-                  <h2>LOGIN</h2>
+                  <h2>SIGN UP</h2>
                 </Col>
               </Row>
 
               <Row>
                 <Col md={{ span: 6, offset: 3 }}>
                   <Form>
+                    <Form.Group controlId="formGroupEmail">
+                      <div><Form.Label>Name</Form.Label></div>
+                      <Form.Control type="text" placeholder="Enter name" 
+                      onChange={(e) => this.setState({ Name: e.target.value})}/>
+                    </Form.Group>
                     <Form.Group controlId="formGroupEmail">
                       <div><Form.Label>Email address</Form.Label></div>
                       <Form.Control type="email" placeholder="Enter email" 
@@ -112,20 +73,13 @@ class Login extends React.Component {
               <Row>
                 <Col md={{ span: 6, offset: 3}}>
                   <Button variant="primary" className="mt-2" size="lg" block
-                  onClick={() => this.loginRequest()}>Login</Button>
+                  onClick={() => this.signUpRequest()}>Sign Up</Button>
                   {' '}
                 </Col>
               </Row>
 
-              <Row>
-                <Col md={{ span: 6, offset: 5}}>
-                  <footer className="forgot-password"><button className="forgot-password-btn" onClick={() => this.setState({ ModalShow: true})}>Forgot Password?</button></footer>
-                </Col>
-              </Row>
             </Container>
           </div>
-
-          {this.state.ModalShow ? this.displayModal() : null}
         </div>
       );
   }

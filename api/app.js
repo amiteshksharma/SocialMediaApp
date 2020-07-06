@@ -29,8 +29,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes for user data
-app.use('/users', usersRouter);
-app.use("/users/login", usersRouter);
+app.use("/", usersRouter);
+app.use("/users", usersRouter);
 
 // Routes to be determined later
 app.use("/backend", backendRouter);

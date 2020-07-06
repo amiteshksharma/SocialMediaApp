@@ -18,6 +18,33 @@ firebase.initializeApp({
 
 const db = admin.firestore();
 const router = express.Router();
+
+router.post('/register', function(req, res, next) {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+  
+  admin.auth().createUser({
+    email: email,
+    password: password,
+    displayName: name
+  }).then(() => {
+    //Get new user's details and add to db
+    admin.auth().getUserByEmail(email).then((userRecord) => {
+      const user = userRecord.toJSON();
+      db.collection('user').doc(user.uid).set({
+        Email: user.email,
+        Name: user.displayName
+      })
+    })
+    //successful creation and added to database
+    return res.send("Success!");
+  }).catch((error) => {
+    console.log(error);
+    res.status(404).send("Error");
+  })
+});
+
 router.post('/login', function(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
