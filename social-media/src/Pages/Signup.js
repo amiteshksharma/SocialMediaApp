@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Css/Login.css';
 import Form from 'react-bootstrap/Form';
-import { Container, Row, Col, Button } from 'react-bootstrap'; 
+import { Container, Row, Col, Button, Spinner } from 'react-bootstrap'; 
 
 class Login extends React.Component {
 
@@ -10,7 +10,8 @@ class Login extends React.Component {
     this.state = {
       Name: '',
       Email: '',
-      Password: ''
+      Password: '',
+      Loading: false
     }
 
     this.signUpRequest = this.signUpRequest.bind(this);
@@ -20,6 +21,7 @@ class Login extends React.Component {
     console.log(this.state.Email);
     console.log(this.state.Password);
     console.log(this.state.Name);
+    this.setState({ Loading: true});
     fetch("http://localhost:5000/users/register", {
       method: 'POST',
       body: JSON.stringify({
@@ -31,7 +33,13 @@ class Login extends React.Component {
         'Content-type': 'application/json'
       }
     }).then(response => response.text()).then(data => {
-      console.log(data);    
+        if(data === "Success!") {
+          this.setState({Loading: false})
+          this.props.history.push('/home');
+        } else {
+          console.log(data);
+          console.log("Error");
+        }    
       });
   }
 
@@ -43,7 +51,7 @@ class Login extends React.Component {
             <Container>
               <Row>
                 <Col md={{ span: 6, offset: 3}}>
-                  <h2>SIGN UP</h2>
+                   <h2>SIGN UP</h2>
                 </Col>
               </Row>
 
@@ -73,8 +81,15 @@ class Login extends React.Component {
               <Row>
                 <Col md={{ span: 6, offset: 3}}>
                   <Button variant="primary" className="mt-2" size="lg" block
-                  onClick={() => this.signUpRequest()}>Sign Up</Button>
+                  onClick={() => this.signUpRequest()}>{this.state.Loading ? <Spinner animation="border" role="status"/> : "Sign up" }</Button>
                   {' '}
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={{ span: 3, offset: 6}}>
+                  <footer className="user-login"><button className="user-login-btn"
+                  onClick={() => this.props.history.push('/')}>Already a user? Login</button></footer>
                 </Col>
               </Row>
 

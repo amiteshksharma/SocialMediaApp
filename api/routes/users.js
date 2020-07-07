@@ -32,6 +32,7 @@ router.post('/register', function(req, res, next) {
     //Get new user's details and add to db
     admin.auth().getUserByEmail(email).then((userRecord) => {
       const user = userRecord.toJSON();
+      console.log(user);
       db.collection('user').doc(user.uid).set({
         Email: user.email,
         Name: user.displayName
