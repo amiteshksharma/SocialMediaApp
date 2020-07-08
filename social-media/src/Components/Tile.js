@@ -6,11 +6,13 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useHistory } from 'react-router-dom';
 
 export default function Tile(props) {
+    const email = sessionStorage.getItem('Email');
     const [favorite, setFavorite] = useState({Favorite: true});
     const history = useHistory();
+    console.log();
 
     const routeChange = () =>{ 
-        let path = `/profile`; 
+        let path = `/profile/${email}`; 
         history.push(path);
     }
     
@@ -18,7 +20,7 @@ export default function Tile(props) {
         <div className="tile-container">
             <section className="tile-author">
                 <AccountCircleIcon color="primary" style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
-                <h6 className="profile-link"><a href="/profile">Amitesh Sharma</a></h6>
+                <h6 className="profile-link"><a href={`/profile/${email}`}>Amitesh Sharma</a></h6>
                 <div className="favorite-icon" onClick={() => setFavorite({Favorite: !favorite.Favorite})}>
                     {favorite.Favorite ? <FavoriteBorderIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorite"/> 
                     : <FavoriteIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorited" /> }
@@ -27,14 +29,13 @@ export default function Tile(props) {
 
             <section className="title-section">
                 <div className="title">
-                    <h3>Why America is not the best country</h3>
+                    <h3>{props.Title}</h3>
                 </div>
             </section>
 
             <section className="summary-section">
                 <div className="summary">
-                    <h3>The reason this country is not good is for a number of reasons... and in this
-                    blog I will explain to you why this is, and it is because</h3>
+                    <h3>{props.Body}</h3>
                 </div>
             </section>
         </div>

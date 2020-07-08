@@ -3,7 +3,6 @@ import '../Css/Login.css';
 import Form from 'react-bootstrap/Form';
 import { withRouter } from 'react-router-dom';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap'; 
-import { auth } from '../firebase';
 
 class Login extends React.Component {
 
@@ -22,10 +21,10 @@ class Login extends React.Component {
   }
   
   callAPI = () => {
-    fetch("http://localhost:5000/")
-        .then(res => res.json())
+    fetch("http://localhost:5000/backend")
+        .then(res => res.text())
         .then(res => {
-          this.setState({value: res[1].Body});
+          this.setState({value: res});
           console.log(res);
       });
   
@@ -43,17 +42,15 @@ class Login extends React.Component {
       headers: {
         'Content-type': 'application/json'
       }
-    }).then(response => response.text()).then(data => {
+    }).then(response => response.json()).then(data => {
       console.log(data);    
-      this.setState({value: data});
-      if(data === 'true') {
-        let path = `/home`;
-        this.props.history.push(path);
-        console.log("here");
-      } else {
-        // let path = `/home`;
-        // this.props.history.push(path);
-      }
+      sessionStorage.setItem('Email', data.Email);
+      sessionStorage.setItem('Uid', data.Uid);
+      sessionStorage.setItem('Name', data.Name);
+      this.props.history.push('/home');
+      console.log("here");
+      }).catch(error => {
+        console.log("Error");
       });
   }
 

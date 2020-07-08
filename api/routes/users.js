@@ -3,7 +3,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const firebase = require('firebase');
 require('firebase/auth')
-require('dotenv').config()
+require('dotenv').config();
 
 //Environmental variables inside the bashsouce.ps1 file
 firebase.initializeApp({
@@ -39,8 +39,16 @@ router.post('/register', function(req, res, next) {
         Name: user.displayName
       })
     })
-    //successful creation and added to database
-    return res.send("Success!");
+    
+    //Send the details to the frontend to user for data retrieval
+    const user = firebase.auth().currentUser;
+    const obj = {
+      Email: email,
+      Uid: user.uid,
+      Name: user.displayName
+    };
+
+    return res.send(obj);
   }).catch((error) => {
     console.log(error);
     res.status(404).send("Error");
@@ -51,8 +59,15 @@ router.post('/login', function(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-      //Login was sucessful, send a 200 response
-      return res.status(200).send(true);
+      const user = firebase.auth().currentUser;
+      
+      const obj = {
+        Email: email,
+        Uid: user.uid,
+        Name: user.displayName
+      };
+
+      return res.status(200).send(obj);
     }).catch(function(error) {
       // Return an error comment and 404 error, indicating account is not found
       return res.status(404).send("Error!");
@@ -74,7 +89,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/logout', (req, res, next) => {
-  console.log(firebase.auth());
+  firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+    // Send token to your backend via HTTPS
+    console.log(idToken);
+    // ...
+  }).catch(function(error) {
+    // Handle error
+  });
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
     console.log("Logged out");

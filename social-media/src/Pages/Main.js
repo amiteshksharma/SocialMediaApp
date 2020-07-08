@@ -3,7 +3,6 @@ import '../Css/Main.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import { withHistory } from 'react-router-dom';
-import { auth } from '../firebase';
 
 class Main extends React.Component {
     constructor(props) {

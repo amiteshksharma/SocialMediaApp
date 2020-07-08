@@ -11,7 +11,7 @@ import '../Css/Main.css';
 import { useHistory } from 'react-router-dom';
 
 export default function DrawerItem(props) { 
-
+  const email = sessionStorage.getItem('Email');
   const history = useHistory();
   
   const logout = () => {
@@ -27,6 +27,10 @@ export default function DrawerItem(props) {
           
       });
   }
+
+  const profile = () => {
+    history.push(`/profile/${email}`);
+  }
   
   console.log(props.handler);
   return (
@@ -39,7 +43,7 @@ export default function DrawerItem(props) {
           </IconButton>
           <Divider />
           <List>
-              <ListItem button key={'Profile'} onClick={() => console.log("clicked")}>
+              <ListItem button key={'Profile'} onClick={profile}>
                 <ListItemIcon><InboxIcon /></ListItemIcon>
                 <ListItemText primary={'Profile'} />
               </ListItem>

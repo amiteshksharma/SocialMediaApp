@@ -8,7 +8,7 @@
 # Bashsource file
 /bashsource.ps1
 /.bashsource
-bashsource.env
+.env
 config.js
 
 # testing

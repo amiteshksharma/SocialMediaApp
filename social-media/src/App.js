@@ -17,7 +17,8 @@ function App() {
           <Route exact path="/" component={Login}></Route>
           <Route path="/home" component={Main} />
           <Route path="/create" component={Create} />
-          <Route path="/profile" component={Profile} />
+          <Route exact path="/profile" component={Profile} />
+          <Route path="/profile/:email" component={Profile} />
           <Route path="/signup" component={Signup} />
         </Switch>  
       </div>

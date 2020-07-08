@@ -20,16 +20,18 @@ class Profile extends React.Component {
 
     loadTiles() {
         this.state.Posts.map(post => {
+            console.log(post.Title);
             return (
                 <li>
-                    <Tile />
+                    <Tile Title={post.Title} Body={post.Body}/>
                 </li>
             )
         })
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/users", {
+        const email = this.props.match.params.email
+        fetch(`http://localhost:5000/backend/posts/${email}`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json'
@@ -81,7 +83,7 @@ class Profile extends React.Component {
                             <div className="post-display">
                                 {this.state.Posts.map(post => {
                                     return (
-                                        <Tile />
+                                        <Tile Title={post.Title} Body={post.Body}/>
                                     )
                                 })}  
                             </div>

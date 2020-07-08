@@ -32,14 +32,16 @@ class Login extends React.Component {
       headers: {
         'Content-type': 'application/json'
       }
-    }).then(response => response.text()).then(data => {
-        if(data === "Success!") {
-          this.setState({Loading: false})
-          this.props.history.push('/home');
-        } else {
-          console.log(data);
-          console.log("Error");
-        }    
+    }).then(response => response.json()).then(data => {
+        this.setState({Loading: false})
+        console.log(data);    
+        sessionStorage.setItem('Email', data.Email);
+        sessionStorage.setItem('Uid', data.Uid);
+        sessionStorage.setItem('Name', data.Name);
+        // this.props.history.push('/home');
+        console.log("here"); 
+      }).catch(error => {
+        console.log(error);
       });
   }
 
