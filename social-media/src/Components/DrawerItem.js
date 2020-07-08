@@ -10,6 +10,16 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import '../Css/Main.css';
 
 export default function DrawerItem(props) { 
+  
+  const logout = () => {
+    console.log("here");
+    fetch("http://localhost:5000/users/logout")
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
+      });
+  }
+  
   console.log(props.handler);
   return (
         <div
@@ -29,7 +39,7 @@ export default function DrawerItem(props) {
           <Divider />
           <List>
           <List>
-              <ListItem button key={'Logout'} onClick={() => console.log("clicked")}>
+              <ListItem button key={'Logout'} onClick={logout}>
                 <ListItemIcon><InboxIcon /></ListItemIcon>
                 <ListItemText primary={'Logout'} />
               </ListItem>

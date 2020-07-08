@@ -72,4 +72,15 @@ router.get('/', function(req, res, next) {
       })();
 });
 
+router.get('/logout', (req, res, next) => {
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+    console.log("Logged out");
+    return res.send("Logged out");
+  }).catch(function(error) {
+    // An error happened.
+    console.log("here");
+  });
+})
+
 module.exports = router;

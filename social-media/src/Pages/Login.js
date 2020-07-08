@@ -20,6 +20,7 @@ class Login extends React.Component {
     this.displayModal = this.displayModal.bind(this);
     this.loginRequest = this.loginRequest.bind(this);
   }
+  
   callAPI = () => {
     fetch("http://localhost:5000/")
         .then(res => res.json())
