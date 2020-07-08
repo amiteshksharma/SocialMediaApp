@@ -3,6 +3,7 @@ import '../Css/Login.css';
 import Form from 'react-bootstrap/Form';
 import { withRouter } from 'react-router-dom';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap'; 
+import { auth } from '../firebase';
 
 class Login extends React.Component {
 
@@ -44,8 +45,14 @@ class Login extends React.Component {
     }).then(response => response.text()).then(data => {
       console.log(data);    
       this.setState({value: data});
-      let path = `/home`;
-      this.props.history.push(path);
+      if(data === 'true') {
+        let path = `/home`;
+        this.props.history.push(path);
+        console.log("here");
+      } else {
+        // let path = `/home`;
+        // this.props.history.push(path);
+      }
       });
   }
 

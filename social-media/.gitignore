@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# Bashsource file
+/bashsource.ps1
+
 # testing
 /coverage
 

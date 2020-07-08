@@ -51,7 +51,7 @@ router.post('/login', function(req, res, next) {
     const password = req.body.password;
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
       //Login was sucessful, send a 200 response
-      return res.status(200).send("Success!");
+      return res.status(200).send(true);
     }).catch(function(error) {
       // Return an error comment and 404 error, indicating account is not found
       return res.status(404).send("Error!");

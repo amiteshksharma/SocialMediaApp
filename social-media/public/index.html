@@ -10,6 +10,7 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -47,15 +48,15 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
 
     <script>
-      var firebaseConfig = {
-        apiKey: "AIzaSyChkj4mVbFMqPLFdLmb7RrD9LO7TSsuYjQ",
-        authDomain: "socialmedia-c9bf6.firebaseapp.com",
-        databaseURL: "https://socialmedia-c9bf6.firebaseio.com",
-        projectId: "socialmedia-c9bf6",
-        storageBucket: "socialmedia-c9bf6.appspot.com",
-        messagingSenderId: "932727730082",
-        appId: "1:932727730082:web:3a97bc28e4b3edfa5d8cfb",
-        measurementId: "G-W6RGRHDQVZ"
+      const firebaseConfig = {
+        apiKey: process.env.API_KEY,
+        authDomain: process.env.AUTH_DOMAIN,
+        databaseURL: process.env.DATABASE_URL,
+        projectId: process.env.PROJECT_ID,
+        storageBucket: process.env.STORAGE_BUCKET,
+        messagingSenderId: process.env.MESSAGING_SENDER_ID,
+        appId: process.env.APP_ID,
+        measurementId: process.env.MEASUREMENT_ID
       };
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
