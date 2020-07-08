@@ -20,14 +20,6 @@ class Main extends React.Component {
     }
 
     render() {
-        // console.log(auth);
-        // console.log(auth.currentUser);
-        // auth.currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-        //     // Send token to your backend via HTTPS
-        //     // ...
-        //   }).catch(function(error) {
-        //     // Handle error
-        //   });
         return (
             <div className="homepage">
                 <Navigation />

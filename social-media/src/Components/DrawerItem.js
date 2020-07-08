@@ -8,8 +8,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import '../Css/Main.css';
+import { useHistory } from 'react-router-dom';
 
 export default function DrawerItem(props) { 
+
+  const history = useHistory();
   
   const logout = () => {
     console.log("here");
@@ -17,6 +20,11 @@ export default function DrawerItem(props) {
         .then(response => response.text())
         .then(data => {
           console.log(data);
+          if(data === 'True') {
+            let path = `/`; 
+            history.push(path);
+          }
+          
       });
   }
   

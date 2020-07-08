@@ -3,11 +3,9 @@ import '../Css/Profile.css';
 import Background from '../Images/Background.jpg';
 import Navigation from '../Components/Navigation';
 import ProfileIcon from '../Images/download.png';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CreateIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
 import Tile from '../Components/Tile';
-import { Image, Row, Container, Col } from 'react-bootstrap';
 
 class Profile extends React.Component {
 

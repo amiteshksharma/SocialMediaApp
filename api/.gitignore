@@ -4,5 +4,6 @@
 # Bash source file for Firebase
 bashsource.ps1
 .bashsource
+bashsource.env
 
 firebaseSocialMediaKey.json

@@ -8,6 +8,8 @@
 # Bashsource file
 /bashsource.ps1
 /.bashsource
+bashsource.env
+config.js
 
 # testing
 /coverage

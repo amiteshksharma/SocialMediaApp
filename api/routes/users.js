@@ -3,6 +3,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const firebase = require('firebase');
 require('firebase/auth')
+require('dotenv').config()
 
 //Environmental variables inside the bashsouce.ps1 file
 firebase.initializeApp({
@@ -73,13 +74,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/logout', (req, res, next) => {
+  console.log(firebase.auth());
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
     console.log("Logged out");
-    return res.send("Logged out");
+    return res.send("True");
   }).catch(function(error) {
     // An error happened.
-    console.log("here");
+    console.log(error);
   });
 })
 
