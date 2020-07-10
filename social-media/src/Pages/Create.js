@@ -24,7 +24,7 @@ class Create extends React.Component {
             headers: {
                 'Content-type': 'application/json'
             }
-            }).then(response => {response.text(); console.log(response)}).then(data => {
+            }).then(response => response.text()).then(data => {
             console.log(data);    
             this.setState({value: data});
             });

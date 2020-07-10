@@ -38,7 +38,7 @@ class Login extends React.Component {
         sessionStorage.setItem('Email', data.Email);
         sessionStorage.setItem('Uid', data.Uid);
         sessionStorage.setItem('Name', data.Name);
-        // this.props.history.push('/home');
+        this.props.history.push('/home');
         console.log("here"); 
       }).catch(error => {
         console.log(error);

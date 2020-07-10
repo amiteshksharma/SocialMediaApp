@@ -8,10 +8,21 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Right: false
+            Right: false,
+            Post: []
         }
 
         this.createPost = this.createPost.bind(this);
+    }
+
+    componentWillMount() {
+        fetch("http://localhost:5000/backend/loadposts")
+        .then(response => response.json()).then(data => {
+            console.log(data);    
+            this.setState({ Post: data });
+        }).catch(error => {
+            console.log("Error");
+        });    
     }
 
     createPost() {
@@ -29,8 +40,11 @@ class Main extends React.Component {
                     
                     <section className="content-section">
                         <div className="content-div">
-                            <Tile />
-                            <Tile />
+                            {this.state.Post.map(post => {
+                                return (
+                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} />
+                                )
+                            })}
                         </div>
                     </section>
                 </div>

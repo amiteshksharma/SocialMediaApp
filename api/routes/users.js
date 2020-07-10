@@ -33,22 +33,19 @@ router.post('/register', function(req, res, next) {
     //Get new user's details and add to db
     admin.auth().getUserByEmail(email).then((userRecord) => {
       const user = userRecord.toJSON();
-      console.log(user);
+      // console.log(user);
       db.collection('user').doc(user.uid).set({
         Email: user.email,
         Name: user.displayName
-      })
+      });
+      const obj = {
+        Email: email,
+        Uid: user.uid,
+        Name: user.displayName
+      };
+  
+      return res.send(obj);
     })
-    
-    //Send the details to the frontend to user for data retrieval
-    const user = firebase.auth().currentUser;
-    const obj = {
-      Email: email,
-      Uid: user.uid,
-      Name: user.displayName
-    };
-
-    return res.send(obj);
   }).catch((error) => {
     console.log(error);
     res.status(404).send("Error");
