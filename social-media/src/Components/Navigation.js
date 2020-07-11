@@ -17,7 +17,7 @@ export default function Navigation() {
         <Navbar bg="dark" variant="dark" className="w-100 pb-1 pt-1 justify-content-center">
             <div className="navigation-links">
                 <Nav className="mr-5">
-                    <Nav.Link href="#home">Home</Nav.Link>
+                    <Nav.Link href="/home">Home</Nav.Link>
                     <Nav.Link href="#features">Find Friends</Nav.Link>
                     <Nav.Link href="#pricing">Search</Nav.Link>
                     <Nav.Link href="#features">Notifications</Nav.Link>

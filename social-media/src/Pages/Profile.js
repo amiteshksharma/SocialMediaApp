@@ -12,7 +12,8 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Posts: []
+            Posts: [],
+            Email: this.props.match.params.email
         }
 
         this.loadTiles = this.loadTiles.bind(this);
@@ -43,6 +44,7 @@ class Profile extends React.Component {
         });
     }
     render() {
+        const getCurrentEmail = sessionStorage.getItem("Email");
         return (
             <div className="profile">
             <Navigation />
@@ -58,9 +60,9 @@ class Profile extends React.Component {
                         <section className="biography">
                             <div className="name">
                                 <h2>Amitesh Sharma</h2>
-                                <button className="follow-button">
+                                {this.state.Email === getCurrentEmail ? <button className="follow-button">
                                     Follow <AddIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="plus-icon" />
-                                </button>
+                                </button> : null}
                             </div>
                             
                             <div className="description">
@@ -83,7 +85,7 @@ class Profile extends React.Component {
                             <div className="post-display">
                                 {this.state.Posts.map(post => {
                                     return (
-                                        <Tile Title={post.Title} Body={post.Body}/>
+                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} />
                                     )
                                 })}  
                             </div>

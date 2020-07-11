@@ -6,13 +6,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useHistory } from 'react-router-dom';
 
 export default function Tile(props) {
-    const email = sessionStorage.getItem('Email');
     const [favorite, setFavorite] = useState({Favorite: true});
     const history = useHistory();
     console.log();
 
     const routeChange = () =>{ 
-        let path = `/profile/${email}`; 
+        let path = `/profile/${props.Name}`; 
         history.push(path);
     }
     
@@ -20,7 +19,7 @@ export default function Tile(props) {
         <div className="tile-container">
             <section className="tile-author">
                 <AccountCircleIcon color="primary" style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
-                <h6 className="profile-link"><a href={`/profile/${email}`}>{props.Name}</a></h6>
+                <h6 className="profile-link"><a href={`/profile/${props.Name}`}>{props.Name}</a></h6>
                 <div className="favorite-icon" onClick={() => setFavorite({Favorite: !favorite.Favorite})}>
                     {favorite.Favorite ? <FavoriteBorderIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorite"/> 
                     : <FavoriteIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorited" /> }
