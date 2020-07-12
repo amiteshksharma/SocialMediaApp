@@ -14,6 +14,30 @@ export default function Tile(props) {
         let path = `/profile/${props.Name}`; 
         history.push(path);
     }
+
+    const like = () => {
+        console.log("fav");
+        fetch("http://localhost:5000/backend/postlike", {
+        method: 'POST',
+        body: JSON.stringify({
+            currentEmail: sessionStorage.getItem('Email'),
+            email: props.Email,
+            title: props.Title
+        }),
+        headers: {
+            'Content-type': 'application/json'
+        }
+        }).then(response => response.text()).then(data => {
+            console.log(data);    
+            console.log("here");
+        }).catch(error => {
+            console.log("Error");
+        });
+    }
+
+    const unlike = () => {
+        console.log("unfav");
+    }
     
     return (
         <div className="tile-container">
@@ -21,8 +45,8 @@ export default function Tile(props) {
                 <AccountCircleIcon color="primary" style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
                 <h6 className="profile-link"><a href={`/profile/${props.Name}`}>{props.Name}</a></h6>
                 <div className="favorite-icon" onClick={() => setFavorite({Favorite: !favorite.Favorite})}>
-                    {favorite.Favorite ? <FavoriteBorderIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorite"/> 
-                    : <FavoriteIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorited" /> }
+                    {favorite.Favorite ? <FavoriteBorderIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorite" onClick={like}/> 
+                    : <FavoriteIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorited" onClick={unlike}/> }
                 </div>
             </section>
 

@@ -42,7 +42,7 @@ class Main extends React.Component {
                         <div className="content-div">
                             {this.state.Post.map(post => {
                                 return (
-                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} />
+                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} />
                                 )
                             })}
                         </div>

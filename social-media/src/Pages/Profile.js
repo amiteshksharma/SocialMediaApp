@@ -24,7 +24,7 @@ class Profile extends React.Component {
             console.log(post.Title);
             return (
                 <li>
-                    <Tile Title={post.Title} Body={post.Body}/>
+                    <Tile Title={post.Title} Body={post.Body} Email={post.Email} />
                 </li>
             )
         })
@@ -45,6 +45,8 @@ class Profile extends React.Component {
     }
     render() {
         const getCurrentEmail = sessionStorage.getItem("Email");
+        console.log(getCurrentEmail);
+        console.log(this.state.Email);
         return (
             <div className="profile">
             <Navigation />
@@ -60,7 +62,7 @@ class Profile extends React.Component {
                         <section className="biography">
                             <div className="name">
                                 <h2>Amitesh Sharma</h2>
-                                {this.state.Email === getCurrentEmail ? <button className="follow-button">
+                                {this.state.Email !== getCurrentEmail ? <button className="follow-button">
                                     Follow <AddIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="plus-icon" />
                                 </button> : null}
                             </div>
