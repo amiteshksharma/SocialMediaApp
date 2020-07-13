@@ -46,13 +46,11 @@ router.post('/create', function(req, res, next) {
 router.get('/posts/:email', function(req, res, next) {
   //Get the email from the url
   const name = req.params.email;
-  console.log(name);
   (async () => {
       try {
         //Get the user from the database by name
         admin.auth().getUserByEmail(name)
         .then(async function(userRecord) {
-          console.log('Successfully fetched user data:', userRecord.toJSON());
           //Convert record to JSON
           const user = userRecord.toJSON();
           //Get all posts for the user
@@ -88,7 +86,6 @@ router.get('/posts/:email', function(req, res, next) {
 
 router.get('/posts', function(req, res, next) {
   const name = req.params;
-  console.log(name);
   (async () => {
       try {
         const user = firebase.auth().currentUser;
@@ -110,9 +107,7 @@ async function getUid() {
   let userUid = [];
   
   const users = db.collection('user');
-  // console.log(users)
   const snapshot = await users.get();
-  // console.log(snapshot);
   snapshot.forEach(doc => {
     userUid.push(doc.id);
   });
@@ -130,17 +125,14 @@ async function getBlogPosts(uid) {
   const items = await db.collection('user').doc(uid).collection('posts').get();
   //Get all the names
   const name = await db.collection('user').doc(uid).get();
-  console.log(name.data().Name);
           
   items.forEach(title => {
     //Store the name in each obj being pushed into the array
     const obj = title.data();
     obj.Name = name.data().Name;
     obj.Email = name.data().Email;
-    console.log(title.data());
     getAllPosts.push(obj);
   })
-  // console.log(getAllPosts);
   return getAllPosts; 
 }
 
@@ -163,8 +155,7 @@ router.get('/loadposts', (req, res, next) => {
         getAllPosts.push(post);
       }
     }
-    
-    console.log(getAllPosts);
+  
     return res.status(200).send(getAllPosts);
   }
 
@@ -179,7 +170,7 @@ router.get('/loadposts', (req, res, next) => {
  * @param {String} currUserEmail current user's email
  * @param {String} getTitle Title of the post
  */
-async function addLikeToAccount(currUserEmail, getTitle) {
+async function addLikeToAccount(currUserEmail, getTitle, getEmail) {
   //Collect the user's uid
   admin.auth().getUserByEmail(currUserEmail).then(async (userRecord) => {
     const user = userRecord.toJSON();
@@ -200,6 +191,14 @@ async function addLikeToAccount(currUserEmail, getTitle) {
   })
 }
 
+async function getUidOfUser(email) {
+  return admin.auth().getUserByEmail(email).then(async (userRecord) => {
+    const user = userRecord.toJSON();
+    //Store the user's uid
+    return user;
+  })
+}
+
 /**
  * Adds a like to the post that was liked
  */
@@ -211,17 +210,18 @@ router.post('/postlike', function(req, res, next) {
   
   (async () => {
     //Add the like to the current user's account
-    const addLike = await addLikeToAccount(currUserEmail, getTitle);
+    const addLike = await addLikeToAccount(currUserEmail, getTitle, getEmail);
     //Add the like to the account of the post
     admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
       //Get his information
       const userInfo = userRecord.toJSON();
+      const currUserInfo = await getUidOfUser(currUserEmail);
       //Add the document to database
       const likePath = await db.collection('user').doc(userInfo.uid).collection('posts').doc(getTitle)
-        .collection('likes').doc(userInfo.uid).set({
-          Uid: userInfo.uid,
-          Name: userInfo.displayName,
-          Email: getEmail 
+        .collection('likes').doc(currUserInfo.uid).set({
+          Uid: currUserInfo.uid,
+          Name: currUserInfo.displayName,
+          Email: currUserInfo.email 
         }).then(() => {
           console.log("here");
           //Return the phrase "liked" if successful
@@ -237,12 +237,82 @@ router.post('/postlike', function(req, res, next) {
   })();  
 });
 
+router.post('/mylikes', (req, res, next) => {
+  //Get Email of user
+  const getEmail = req.body.email;
+  //Array of titles to send back to frontend
+  let getLikesTitle = [];
+  (async () => {
+    //Get the user's uid 
+    admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
+      //Convert data to JSON and get the Uid
+      const userInfo = userRecord.toJSON();
+      const getUid = userInfo.uid;
+
+      //Get the likes collection from the user
+      const getLikes = await db.collection('user').doc(getUid).collection('likes').get();
+      //Get all titles from the collection
+      getLikes.forEach(doc => {
+        getLikesTitle.push(doc.id);  
+      })
+
+      return res.send(getLikesTitle);
+    }).catch(error => {
+      //Catch any error that occurs
+      console.log(error);
+    })
+  })();
+})
+
+router.post('/unlike', (req, res, next) => {
+  const getCurrEmail = req.body.currEmail;
+  const getEmail = req.body.email;
+  const getTitle = req.body.title;
+
+  (async () => {
+    admin.auth().getUserByEmail(getCurrEmail).then(async (userRecord) => {
+      const userInfo = userRecord.toJSON();
+      const getUid = userInfo.uid;
+
+      const unLike = await db.collection('user').doc(getUid).collection('likes').doc(getTitle).delete().then(() => {
+        // return res.status(204).send("Unliked!");
+        console.log("unliked");
+      }).catch(error => {
+        console.log(error);
+      })
+
+      const postUid = await getUidOfUser(getEmail);
+      const unLikeFromPost = await db.collection('user').doc(postUid.uid).collection('posts').doc(getTitle).collection('likes').doc(getUid).delete().then(() => {
+        console.log("deleted from post");
+      }).catch(error => {
+        console.log(error);
+      });
+
+      return res.send("Unliked");
+    })
+  })();
+})
+
+router.post('/loadlikes', (req, res, next) => {
+  const getEmail = req.body.email;
+  const getTitle = req.body.title;
+  
+  (async () => {
+    admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
+      const userInfo = userRecord.toJSON();
+      const uid = userInfo.uid;
+
+      const likes = await db.collection('user').doc(uid).collection('posts')
+      .doc(getTitle).collection('likes').get();
+      return res.send({Likes: likes.size});
+    })
+  })();
+})
+
 router.get('/', function(req, res, next) {
     (async () => {
         try {
           const value = await db.collection('user').doc('amitesh').get();
-          console.log(value);
-          console.log(value.data().test);
           return res.send("Hello");
         } catch (error) {
           console.log(error);

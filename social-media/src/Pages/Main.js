@@ -9,20 +9,39 @@ class Main extends React.Component {
         super(props);
         this.state = {
             Right: false,
-            Post: []
+            Post: [],
+            MyLikes: []
         }
 
         this.createPost = this.createPost.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        Promise.all([
         fetch("http://localhost:5000/backend/loadposts")
         .then(response => response.json()).then(data => {
             console.log(data);    
             this.setState({ Post: data });
         }).catch(error => {
             console.log("Error");
-        });    
+        }),   
+        
+        fetch("http://localhost:5000/backend/mylikes", {
+            method: 'POST',
+            body: JSON.stringify({
+                email: sessionStorage.getItem('Email'),
+            }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+            }).then(response => response.text()).then(data => {
+                this.setState({ MyLikes: data}, () => {
+                    console.log(this.state.MyLikes);
+                });
+            }).catch(error => {
+                console.log("Error");
+            }) 
+        ]) .then(console.log("hello"));
     }
 
     createPost() {
@@ -42,7 +61,7 @@ class Main extends React.Component {
                         <div className="content-div">
                             {this.state.Post.map(post => {
                                 return (
-                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} />
+                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
                                 )
                             })}
                         </div>
