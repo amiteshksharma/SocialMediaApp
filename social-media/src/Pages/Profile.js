@@ -13,26 +13,15 @@ class Profile extends React.Component {
         super(props);
         this.state = {
             Posts: [],
-            Email: this.props.match.params.email
+            Email: this.props.match.params.email,
+            MyLikes: []
         }
-
-        this.loadTiles = this.loadTiles.bind(this);
-    }
-
-    loadTiles() {
-        this.state.Posts.map(post => {
-            console.log(post.Title);
-            return (
-                <li>
-                    <Tile Title={post.Title} Body={post.Body} Email={post.Email} />
-                </li>
-            )
-        })
     }
 
     componentDidMount() {
         const email = this.props.match.params.email
-        fetch(`http://localhost:5000/backend/posts/${email}`, {
+        Promise.all([
+            fetch(`http://localhost:5000/backend/posts/${email}`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json'
@@ -41,7 +30,23 @@ class Profile extends React.Component {
             console.log(data);
             console.log(typeof data);
             this.setState({ Posts: data });    
-        });
+        }),
+            fetch("http://localhost:5000/backend/mylikes", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: sessionStorage.getItem('Email'),
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+                }).then(response => response.text()).then(data => {
+                    this.setState({ MyLikes: data}, () => {
+                        console.log(this.state.MyLikes);
+                    });
+                }).catch(error => {
+                    console.log("Error");
+            }) 
+        ])
     }
     render() {
         const getCurrentEmail = sessionStorage.getItem("Email");
@@ -86,8 +91,9 @@ class Profile extends React.Component {
                         <section className="post-div">
                             <div className="post-display">
                                 {this.state.Posts.map(post => {
+                                    console.log(post);
                                     return (
-                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} />
+                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} isLiked={this.state.MyLikes} Email={post.Email}/>
                                     )
                                 })}  
                             </div>

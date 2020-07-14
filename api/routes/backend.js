@@ -296,6 +296,7 @@ router.post('/unlike', (req, res, next) => {
 router.post('/loadlikes', (req, res, next) => {
   const getEmail = req.body.email;
   const getTitle = req.body.title;
+  console.log(getEmail);
   
   (async () => {
     admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {

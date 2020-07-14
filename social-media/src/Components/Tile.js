@@ -11,6 +11,10 @@ export default function Tile(props) {
     const history = useHistory();
 
     const checkIsLiked = () => {
+        if(props.isLiked === undefined) {
+            return;
+        }
+        
         if(props.isLiked.includes(props.Title)) {
             setFavorite({ Favorite: false});
         }   
@@ -34,6 +38,7 @@ export default function Tile(props) {
         }
         }).then(response => response.text()).then(data => {
             console.log(data);    
+            loadTotalLikes();
             console.log("here");
         }).catch(error => {
             console.log("Error");
@@ -73,6 +78,7 @@ export default function Tile(props) {
         }
         }).then(response => response.text()).then(data => {
             console.log(data);    
+            loadTotalLikes();
             console.log("here");
         }).catch(error => {
             console.log("Error");
@@ -90,7 +96,7 @@ export default function Tile(props) {
                 <AccountCircleIcon color="primary" style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
                 <h6 className="profile-link"><a href={`/profile/${props.Name}`}>{props.Name}</a></h6>
                 <div className="display-likes">
-                    {likes.Likes <= 0 ? null : <p>{likes.Likes}</p>}
+                    {likes.Likes <= 0 ? <p>{props.Likes}</p> : <p>{likes.Likes}</p>}
                 </div>
                 <div className="favorite-icon" onClick={() => setFavorite({Favorite: !favorite.Favorite})}>
                     {favorite.Favorite ? <FavoriteBorderIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorite" onClick={like}/> 
