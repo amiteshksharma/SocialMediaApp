@@ -5,6 +5,7 @@ import Navigation from '../Components/Navigation';
 import ProfileIcon from '../Images/download.png';
 import CreateIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
+import CheckIcon from '@material-ui/icons/Check';
 import Tile from '../Components/Tile';
 
 class Profile extends React.Component {
@@ -14,8 +15,29 @@ class Profile extends React.Component {
         this.state = {
             Posts: [],
             Email: this.props.match.params.email,
-            MyLikes: []
+            MyLikes: [],
+            Follower: false,
+            Following: 0,
+            Followers: 0
         }
+
+        this.followClick = this.followClick.bind(this);
+    }
+
+    followClick() {
+        fetch(`http://localhost:5000/users/follow`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                userEmail: sessionStorage.getItem('Email'),
+                profileEmail: this.state.Email
+            })
+        }).then(response => response.text()).then(data => {
+                console.log(data);
+                this.setState({Follower: data})
+            })
     }
 
     componentDidMount() {
@@ -26,11 +48,12 @@ class Profile extends React.Component {
             headers: {
                 'Content-type': 'application/json'
             }
-        }).then(response => response.json()).then(data => {
+            }).then(response => response.json()).then(data => {
             console.log(data);
             console.log(typeof data);
             this.setState({ Posts: data });    
-        }),
+            }),
+
             fetch("http://localhost:5000/backend/mylikes", {
                 method: 'POST',
                 body: JSON.stringify({
@@ -39,19 +62,67 @@ class Profile extends React.Component {
                 headers: {
                     'Content-type': 'application/json'
                 }
-                }).then(response => response.text()).then(data => {
-                    this.setState({ MyLikes: data}, () => {
-                        console.log(this.state.MyLikes);
-                    });
-                }).catch(error => {
+            }).then(response => response.text()).then(data => {
+                this.setState({ MyLikes: data}, () => {
+                    console.log(this.state.MyLikes);
+                });
+            }).catch(error => {
                     console.log("Error");
-            }) 
+            }),
+
+            fetch("http://localhost:5000/backend/follow", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: sessionStorage.getItem('Email'),
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => {
+                if(data.includes(this.state.Email)) {
+                    console.log(data);
+                    this.setState({Follower: true});
+                }
+            }).catch(error => {
+                console.log("Error");
+            }),
+
+            fetch("http://localhost:5000/backend/loadprofile", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: this.state.Email,
+                    follow: 'following'
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                this.setState({Following: data.length});
+            }).catch(error => {
+                console.log("Error");
+            }),
+
+            fetch("http://localhost:5000/backend/loadprofile", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: this.state.Email,
+                    follow: 'followers'
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                this.setState({Followers: data.length});
+            }).catch(error => {
+                console.log("Error");
+            })
         ])
     }
+
     render() {
         const getCurrentEmail = sessionStorage.getItem("Email");
-        console.log(getCurrentEmail);
-        console.log(this.state.Email);
         return (
             <div className="profile">
             <Navigation />
@@ -67,9 +138,16 @@ class Profile extends React.Component {
                         <section className="biography">
                             <div className="name">
                                 <h2>Amitesh Sharma</h2>
-                                {this.state.Email !== getCurrentEmail ? <button className="follow-button">
-                                    Follow <AddIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="plus-icon" />
-                                </button> : null}
+                                {this.state.Email === getCurrentEmail ? null : (this.state.Follower ? 
+                                    <button className="followed-button" onClick={() => this.followClick()}>
+                                        Followed <CheckIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="checked-icon" />
+                                    </button> 
+                                    : 
+                                    <button className="follow-button" onClick={() => this.followClick()}>
+                                        Follow <AddIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="plus-icon" />
+                                    </button> 
+                                    )  
+                                }
                             </div>
                             
                             <div className="description">
@@ -82,9 +160,9 @@ class Profile extends React.Component {
                             </div>
 
                             <div className="followers">
-                                <h2>20 Followers</h2>
+                                <h2>{this.state.Followers} Followers</h2>
                                 <span></span>
-                                <h2>100 Following</h2>   
+                                <h2>{this.state.Following} Following</h2>   
                             </div>
                         </section>
 

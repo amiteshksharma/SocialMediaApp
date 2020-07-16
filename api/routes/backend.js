@@ -26,7 +26,6 @@ router.post('/create', function(req, res, next) {
         Body: body,
       }).then(function() {
         //Send success status if the post is added to database
-        console.log("Document successfully written!");
         return res.status(200).send("Success");
       }).catch(function(error) {
         console.error("Error writing document: ", error);
@@ -223,7 +222,6 @@ router.post('/postlike', function(req, res, next) {
           Name: currUserInfo.displayName,
           Email: currUserInfo.email 
         }).then(() => {
-          console.log("here");
           //Return the phrase "liked" if successful
           return res.send("liked");
         }).catch(error => {
@@ -296,7 +294,6 @@ router.post('/unlike', (req, res, next) => {
 router.post('/loadlikes', (req, res, next) => {
   const getEmail = req.body.email;
   const getTitle = req.body.title;
-  console.log(getEmail);
   
   (async () => {
     admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
@@ -321,5 +318,44 @@ router.get('/', function(req, res, next) {
         }
       })();
 });
+
+router.post('/follow', (req, res, next) => {
+  const email = req.body.email;
+  (async () => {
+    admin.auth().getUserByEmail(email).then(async (userRecord) => {
+      const user = userRecord.toJSON();
+
+      const value = await db.collection('user').doc(user.uid).collection('following').get();
+      let arr = [];
+      value.forEach(following => {
+        arr.push(following.data().Email);  
+      })
+
+      return res.send(arr);
+    }).catch(error => {
+      console.log(error);
+    })
+  })();
+})
+
+router.post('/loadprofile', (req, res, next) => {
+  const email = req.body.email;
+  const follow = req.body.follow;
+  (async () => {
+    admin.auth().getUserByEmail(email).then(async (userRecord) => {
+      const user = userRecord.toJSON();
+
+      const value = await db.collection('user').doc(user.uid).collection(follow).get();
+      let arr = [];
+      value.forEach(following => {
+        arr.push(following.data().Email);  
+      })
+
+      return res.send(arr);
+    }).catch(error => {
+      console.log(error);
+    })
+  })();
+})
 
 module.exports = router;
