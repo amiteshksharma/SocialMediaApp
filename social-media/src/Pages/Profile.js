@@ -22,6 +22,7 @@ class Profile extends React.Component {
         }
 
         this.followClick = this.followClick.bind(this);
+        this.redirectFollows = this.redirectFollows.bind(this);
     }
 
     followClick() {
@@ -121,6 +122,15 @@ class Profile extends React.Component {
         ])
     }
 
+    redirectFollows(tab) {
+        if(tab === 'followers') {
+            console.log("here");
+            this.props.history.push(`/profile/${this.state.Email}/followers`);
+        } else {
+            this.props.history.push(`/profile/${this.state.Email}/following`);    
+        }
+    }
+
     render() {
         const getCurrentEmail = sessionStorage.getItem("Email");
         return (
@@ -160,16 +170,15 @@ class Profile extends React.Component {
                             </div>
 
                             <div className="followers">
-                                <h2>{this.state.Followers} Followers</h2>
+                                <h2 onClick={() => this.redirectFollows("followers")}>{this.state.Followers} Followers</h2>
                                 <span></span>
-                                <h2>{this.state.Following} Following</h2>   
+                                <h2 onClick={() => this.redirectFollows("following")}>{this.state.Following} Following</h2>   
                             </div>
                         </section>
 
                         <section className="post-div">
                             <div className="post-display">
                                 {this.state.Posts.map(post => {
-                                    console.log(post);
                                     return (
                                         <Tile Title={post.Title} Body={post.Body} Name={post.Name} isLiked={this.state.MyLikes} Email={post.Email}/>
                                     )

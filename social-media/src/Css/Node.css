@@ -1,0 +1,47 @@
+.node-container {
+    width: 100%;
+    border: 1px solid red;
+    position: relative;
+}
+
+/* The profile icon and Name of the user */
+.information {
+    display: flex;
+    flex-direction: row;
+}
+
+.information h2 {
+    font-size: calc(1.2vw);
+    margin-top: calc(1vh);
+    margin-left: calc(0.3vw);
+}
+
+/* The display of the user's bio in the Node */
+.bio {
+    width: calc(70%);
+    margin-left: calc(2.8vw);
+}
+
+.bio h4 {
+    font-size: calc(0.9vw);
+}
+
+/* The 'followed' button */
+.followed-button-node {
+    position: relative;
+    text-align: center;
+}
+.followed-button-node {
+    color: white;
+    border-radius: calc(6px);
+    border: none;
+    background: rgb(0, 123, 255);
+    height: calc(4vh);
+    width: calc(6vw);
+    font-size: calc(1.1rem);
+    text-align: center;
+    transition: 0.2s;
+    position: absolute;
+    top: calc(2.5vh);
+    right: calc(1vw);
+}

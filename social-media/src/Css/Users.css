@@ -1,0 +1,24 @@
+/* General layout for the page */
+.users {
+    background-color: rgb(212, 230, 247);
+    min-height: calc(100vh);
+    height: auto;
+}
+
+/* The layout of the top layer for nodes */
+.users-layout {
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh);
+    display: flex;
+    justify-content: center;
+}
+
+/* The outer border line */
+.border-line {
+    width: 40%;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
