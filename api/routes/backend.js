@@ -83,21 +83,6 @@ router.get('/posts/:email', function(req, res, next) {
     })();
 });
 
-router.get('/posts', function(req, res, next) {
-  const name = req.params;
-  (async () => {
-      try {
-        const user = firebase.auth().currentUser;
-        const value = await db.collection('user').doc(user.uid).collection('posts').get();
-        const array = value.docs.map(doc => doc.data());
-        return res.send(array);
-      } catch (error) {
-        console.log(error);
-        return res.status(500).send(error);
-      }
-    })();
-});
-
 /**
  * Helper method for /loadposts
  * Returns all the uid in the database
@@ -235,6 +220,10 @@ router.post('/postlike', function(req, res, next) {
   })();  
 });
 
+/**
+ * Get all the likes of the current user. Return an array of the post 
+ * titles the user Has liked
+ */
 router.post('/mylikes', (req, res, next) => {
   //Get Email of user
   const getEmail = req.body.email;
@@ -262,16 +251,25 @@ router.post('/mylikes', (req, res, next) => {
   })();
 })
 
+/**
+ * Unlikes the post and removes from the database accordingly.
+ * Only affects the current User
+ */
 router.post('/unlike', (req, res, next) => {
+  //Get the user's email
   const getCurrEmail = req.body.currEmail;
+  //Email of the user who created the post
   const getEmail = req.body.email;
+  //Title of the post to unlike
   const getTitle = req.body.title;
 
   (async () => {
     admin.auth().getUserByEmail(getCurrEmail).then(async (userRecord) => {
+      //Get the current user's uid
       const userInfo = userRecord.toJSON();
       const getUid = userInfo.uid;
 
+      //Unlike from the current user's likes collection
       const unLike = await db.collection('user').doc(getUid).collection('likes').doc(getTitle).delete().then(() => {
         // return res.status(204).send("Unliked!");
         console.log("unliked");
@@ -279,7 +277,9 @@ router.post('/unlike', (req, res, next) => {
         console.log(error);
       })
 
+      //Get the uid of the author of post
       const postUid = await getUidOfUser(getEmail);
+      //Remove the like from his post in the posts collection
       const unLikeFromPost = await db.collection('user').doc(postUid.uid).collection('posts').doc(getTitle).collection('likes').doc(getUid).delete().then(() => {
         console.log("deleted from post");
       }).catch(error => {
@@ -291,40 +291,44 @@ router.post('/unlike', (req, res, next) => {
   })();
 })
 
+/**
+ * Returns the total number of likes on a post  
+ */
 router.post('/loadlikes', (req, res, next) => {
+  //Get the email of the user for the post
   const getEmail = req.body.email;
+  //Get the title of the post
   const getTitle = req.body.title;
   
   (async () => {
     admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
+      //Get the user's uid
       const userInfo = userRecord.toJSON();
       const uid = userInfo.uid;
 
+      //Get the total number of users under the 'likes' collection
       const likes = await db.collection('user').doc(uid).collection('posts')
       .doc(getTitle).collection('likes').get();
+      //Return the total number of likes
       return res.send({Likes: likes.size});
     })
   })();
 })
 
-router.get('/', function(req, res, next) {
-    (async () => {
-        try {
-          const value = await db.collection('user').doc('amitesh').get();
-          return res.send("Hello");
-        } catch (error) {
-          console.log(error);
-          return res.status(500).send(error);
-        }
-      })();
-});
-
-router.post('/follow', (req, res, next) => {
+/**
+ * Follows the user the current user clicks 'follow' on.
+ * Adds the follower to the current user's 'following' and
+ * to the profile user's 'follower' 
+ */
+router.post('/followlist', (req, res, next) => {
+  //Get the email of current user
   const email = req.body.email;
   (async () => {
     admin.auth().getUserByEmail(email).then(async (userRecord) => {
       const user = userRecord.toJSON();
-
+      
+      //Get all the profiles the current user is following
+      //Gets only the email of each user
       const value = await db.collection('user').doc(user.uid).collection('following').get();
       let arr = [];
       value.forEach(following => {
@@ -338,15 +342,23 @@ router.post('/follow', (req, res, next) => {
   })();
 })
 
+/**
+ * Method used for getting all the profile user's 
+ * followers and following
+ */
 router.post('/loadprofile', (req, res, next) => {
+  //Email of the profile user
   const email = req.body.email;
+  //A keyword that is either "followers" or "following"
   const follow = req.body.follow;
   (async () => {
     admin.auth().getUserByEmail(email).then(async (userRecord) => {
       const user = userRecord.toJSON();
 
+      //Load all the users in the collection specficied by the keyword
       const value = await db.collection('user').doc(user.uid).collection(follow).get();
       let arr = [];
+      //Push the emails into the array to return back to frontend
       value.forEach(following => {
         arr.push(following.data().Email);  
       })

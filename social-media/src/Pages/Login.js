@@ -9,25 +9,13 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
       ModalShow: false,
       Email: '',
       Password: ''
     }
 
-    this.callAPI = this.callAPI.bind(this);
     this.displayModal = this.displayModal.bind(this);
     this.loginRequest = this.loginRequest.bind(this);
-  }
-  
-  callAPI = () => {
-    fetch("http://localhost:5000/backend")
-        .then(res => res.text())
-        .then(res => {
-          this.setState({value: res});
-          console.log(res);
-      });
-  
   }
 
   loginRequest() {
@@ -80,14 +68,9 @@ class Login extends React.Component {
     )
   }
 
-  componentDidMount() {
-    this.callAPI(); 
-  }
-
   render() {
     return (
         <div className="Login">
-        {this.state.value}
           <div className="login-form">
             <Container>
               <Row>

@@ -20,11 +20,13 @@
     top: calc(9vh);
     padding: calc(0.2vw);
     border-radius: calc(0.7vw);
+    transition: 0.3s;
 }
 
 .create-section:hover {
     background-color: rgba(41, 128, 209, 0.384);
     color: black;
+    transition: 0.3s;
 }
 
 .create-section h1 {

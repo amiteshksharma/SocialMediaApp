@@ -88,7 +88,7 @@ class Profile extends React.Component {
                     console.log("Error");
             }),
 
-            fetch("http://localhost:5000/backend/follow", {
+            fetch("http://localhost:5000/backend/followlist", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: sessionStorage.getItem('Email'),

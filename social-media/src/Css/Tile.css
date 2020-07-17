@@ -4,7 +4,6 @@
     width: 100%;
     border-bottom: 1px solid rgb(78, 76, 76);
     position: relative;
-    cursor: pointer;
     padding-bottom: calc(1.5vh);
 }
 
