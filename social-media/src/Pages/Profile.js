@@ -22,6 +22,7 @@ class Profile extends React.Component {
         }
 
         this.followClick = this.followClick.bind(this);
+        this.unfollowClick = this.unfollowClick.bind(this);
         this.redirectFollows = this.redirectFollows.bind(this);
     }
 
@@ -38,6 +39,22 @@ class Profile extends React.Component {
         }).then(response => response.text()).then(data => {
                 console.log(data);
                 this.setState({Follower: data})
+            })
+    }
+
+    unfollowClick() {
+        fetch(`http://localhost:5000/users/unfollow`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                userEmail: sessionStorage.getItem('Email'),
+                profileEmail: this.state.Email
+            })
+        }).then(response => response.text()).then(data => {
+                console.log(data);
+                this.setState({Follower: false})
             })
     }
 
@@ -149,7 +166,7 @@ class Profile extends React.Component {
                             <div className="name">
                                 <h2>Amitesh Sharma</h2>
                                 {this.state.Email === getCurrentEmail ? null : (this.state.Follower ? 
-                                    <button className="followed-button" onClick={() => this.followClick()}>
+                                    <button className="followed-button" onClick={() => this.unfollowClick()}>
                                         Followed <CheckIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="checked-icon" />
                                     </button> 
                                     : 

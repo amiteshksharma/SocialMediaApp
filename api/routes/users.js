@@ -128,4 +128,29 @@ router.post('/follow', (req, res, next) => {
   })();
 })
 
+router.post('/unfollow', (req, res, next) => {
+  const userEmail = req.body.userEmail;
+  const profileEmail = req.body.profileEmail;
+  
+  (async () => {
+    admin.auth().getUserByEmail(userEmail).then(async (userRecord) => {
+      const user = userRecord.toJSON();
+
+      const followers = await db.collection('user').doc(user.uid).collection('following').doc(profileEmail).delete().then(() => {
+        console.log("Deleted profile Email");
+      })
+    }).catch(error => console.log(error))
+
+    admin.auth().getUserByEmail(profileEmail).then(async (userRecord) => {
+      const user = userRecord.toJSON();
+
+      const followers = await db.collection('user').doc(user.uid).collection('followers').doc(userEmail).delete().then(() => {
+        console.log("Deleted user Email")
+      })
+    }).catch(error => console.log(error))
+
+    return res.send(true);
+  })();  
+})
+
 module.exports = router;
