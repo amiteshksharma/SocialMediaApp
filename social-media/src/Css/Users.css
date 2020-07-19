@@ -22,3 +22,32 @@
     display: flex;
     flex-direction: column;
 }
+
+.user-section {
+    width: 100%;
+    height: calc(8vh);
+}
+
+.user-tab button {
+    background-color: rgba(41, 128, 209, 0.541);
+    width: calc(50%);
+    border: none;
+    height: calc(6vh);
+    border-bottom: 1px solid black;
+    font-size: calc(1.5vw);
+    color: black;
+}
+
+.user-tab button:focus {
+    outline: 0;
+    text-decoration: underline;
+    background-color: rgba(41, 128, 209, 0.801);
+}
+
+.user-tab button:first-child {
+    border-right: 1px solid black;
+}
+
+.user-tab button:hover {
+    text-decoration: underline;
+}

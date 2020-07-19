@@ -1,6 +1,6 @@
 .node-container {
     width: 100%;
-    border: 1px solid red;
+    border-bottom: 1px solid black;
     position: relative;
 }
 
@@ -27,10 +27,7 @@
 }
 
 /* The 'followed' button */
-.followed-button-node {
-    position: relative;
-    text-align: center;
-}
+
 .followed-button-node {
     color: white;
     border-radius: calc(6px);
@@ -45,3 +42,32 @@
     top: calc(2.5vh);
     right: calc(1vw);
 }
+
+/* The 'follow' button */
+.follow-button-node {
+    color: rgb(0, 123, 255);;
+    border-radius: calc(6px);
+    border: none;
+    background: white;
+    height: calc(4vh);
+    width: calc(6vw);
+    font-size: calc(1.1rem);
+    text-align: center;
+    transition: 0.2s;
+    position: absolute;
+    top: calc(2.5vh);
+    right: calc(1vw);
+    transition: 0.2s;   
+}
+
+.follow-button-node:hover {
+    background: rgb(0, 123, 255);
+    color: white;
+    transition: 0.2s;
+}
+
+.follow-button-node:hover > .plus-icon {
+    color: white;
+    transition: 0.2s;
+}
+

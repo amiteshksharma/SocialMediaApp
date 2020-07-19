@@ -170,4 +170,20 @@ router.post('/unfollow', (req, res, next) => {
   })();  
 })
 
+router.post('/username', (req, res, next) => {
+  const getEmail = req.body.email;
+
+  (async () => {
+    admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
+      const user = userRecord.toJSON();
+      const uid = user.uid;
+
+      const getName = await db.collection('user').doc(uid).get();
+      const setName = getName.data().Name;
+
+      return res.send({Name: setName});
+    })
+  })();
+})
+
 module.exports = router;
