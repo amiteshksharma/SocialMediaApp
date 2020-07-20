@@ -3,7 +3,7 @@ import { Nav, Navbar } from 'react-bootstrap';
 import PersonIcon from '@material-ui/icons/Person';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import DrawerItem from '../Components/DrawerItem';
-import '../Css/Main.css';
+import '../Css/Navigation.css';
 
 export default function Navigation() {
     const [right, setRight] = useState({Right: false});
@@ -19,7 +19,7 @@ export default function Navigation() {
                 <Nav className="mr-5">
                     <Nav.Link href="/home">Home</Nav.Link>
                     <Nav.Link href="#features">Find Friends</Nav.Link>
-                    <Nav.Link href="#pricing">Search</Nav.Link>
+                    <Nav.Link href="/explore">Explore</Nav.Link>
                     <Nav.Link href="#features">Notifications</Nav.Link>
                     <Nav.Link href="#pricing">Contact</Nav.Link>
                 </Nav>

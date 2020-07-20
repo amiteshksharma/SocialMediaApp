@@ -311,6 +311,8 @@ router.post('/loadlikes', (req, res, next) => {
       .doc(getTitle).collection('likes').get();
       //Return the total number of likes
       return res.send({Likes: likes.size});
+    }).catch(error => {
+      console.log(error)
     })
   })();
 })

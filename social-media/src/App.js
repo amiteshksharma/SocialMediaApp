@@ -7,6 +7,7 @@ import Create from './Pages/Create';
 import Profile from './Pages/Profile';
 import Signup from './Pages/Signup';
 import Users from './Pages/Users';
+import Explore from './Pages/Explore';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/profile/:email" component={Profile} />
           <Route exact path="/profile/:email/:follow" component={Users} />
           <Route path="/signup" component={Signup} />
+          <Route path="/explore" component={Explore} />
         </Switch>  
       </div>
     </Router>

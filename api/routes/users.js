@@ -170,18 +170,115 @@ router.post('/unfollow', (req, res, next) => {
   })();  
 })
 
+/**
+ * Get the name of the user for the Node in the followers/following list 
+ * From the profile page
+ */
 router.post('/username', (req, res, next) => {
+  //Get the email from the fetch 
   const getEmail = req.body.email;
 
   (async () => {
     admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
+      //Get the uid from the user's information
       const user = userRecord.toJSON();
       const uid = user.uid;
 
+      //Get the name from the collection
       const getName = await db.collection('user').doc(uid).get();
       const setName = getName.data().Name;
 
+      //Return the user's name
       return res.send({Name: setName});
+    })
+  })();
+})
+
+/**
+ * Returns all the posts for each uid
+ * @param {Ret} uid 
+ */
+async function getBlogPosts(uid) {
+  let getAllPosts = [];
+  //Get all the posts
+  const items = await db.collection('user').doc(uid).collection('posts').get();
+  //Get all the names
+  const name = await db.collection('user').doc(uid).get();
+          
+  items.forEach(title => {
+    //Store the name in each obj being pushed into the array
+    const obj = title.data();
+    obj.Name = name.data().Name;
+    obj.Email = name.data().Email;
+    getAllPosts.push(obj);
+  })
+  return getAllPosts; 
+}
+
+async function getUidFromEmail(arr) {
+  const array = [];
+  for(let user of arr) {
+    const getuid = admin.auth().getUserByEmail(user).then(async (userRecord) => {
+      return userRecord.toJSON().uid;
+    })
+    array.push(await getuid);
+  }
+
+  return await array;
+}
+
+/**
+ * Returns all the posts for each uid
+ * @param {Ret} uid 
+ */
+async function getBlogPosts(uid) {
+  let getAllPosts = [];
+  //Get all the posts
+  const items = await db.collection('user').doc(uid).collection('posts').get();
+  //Get all the names
+  const name = await db.collection('user').doc(uid).get();
+          
+  items.forEach(title => {
+    //Store the name in each obj being pushed into the array
+    const obj = title.data();
+    obj.Name = name.data().Name;
+    obj.Email = name.data().Email;
+    getAllPosts.push(obj);
+  })
+  return getAllPosts; 
+}
+
+router.post('/followerspost', (req, res, next) => {
+  const currUser = req.body.currUser;
+
+  (async () => {
+    admin.auth().getUserByEmail(currUser).then(async (userRecord) => { 
+      const user = userRecord.toJSON();
+      const uid = user.uid;
+
+      const getFollowers = await db.collection('user').doc(uid).collection('followers').get().then(snapshot => {
+        let arr = [];
+        snapshot.forEach(doc => {
+          console.log(doc.id, " => ", doc.data());
+          arr.push(doc.id);
+        })
+        return arr;
+      });
+
+      const getUids = await getUidFromEmail(getFollowers);
+      let getAllPosts = [];
+
+      for(let uid of getUids) {
+        let getPosts = await getBlogPosts(uid);
+        //Loop through each post and push to array
+        for(let post of getPosts) {
+          getAllPosts.push(post);
+        }
+      }
+
+      return res.send(getAllPosts);
+    }).catch(error => {
+      console.log(error);
     })
   })();
 })

@@ -1,10 +1,10 @@
 import React from 'react'
-import '../Css/Explore.css';
+import '../Css/Main.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import { withHistory } from 'react-router-dom';
 
-class Main extends React.Component {
+class Explore extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,18 +18,12 @@ class Main extends React.Component {
 
     componentDidMount() {
         Promise.all([
-        fetch("http://localhost:5000/users/followerspost", {
-            method: 'POST',
-            body: JSON.stringify({
-                currUser: sessionStorage.getItem('Email')
-            }),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
+        fetch("http://localhost:5000/backend/loadposts")
         .then(response => response.json()).then(data => {
             console.log(data);    
             this.setState({ Post: data });
+        }).catch(error => {
+            console.log("Error");
         }),   
         
         fetch("http://localhost:5000/backend/mylikes", {
@@ -56,15 +50,14 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div className="homepage">
+            <div className="explorepage">
                 <Navigation />
-                <div className="container-main">
-                    <section className="create-section" onClick={() => this.createPost()}>
-                        <h1>Create Post</h1>
-                    </section>
-                    
-                    <section className="content-section">
-                        <div className="content-div">
+                <div className="container-explore">                   
+                    <section className="explore-section">
+                        <div className="explore-header">
+                            <p>HELLO</p>
+                        </div>
+                        <div className="explore-div">
                             {this.state.Post.map(post => {
                                 return (
                                     <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
@@ -78,4 +71,4 @@ class Main extends React.Component {
     }
 }
 
-export default Main;
+export default Explore;
