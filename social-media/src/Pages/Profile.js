@@ -163,7 +163,7 @@ class Profile extends React.Component {
                         </section>
 
                         <section className="biography">
-                            <div className="name">
+                            <div className="profile-name">
                                 <h2>Amitesh Sharma</h2>
                                 {this.state.Email === getCurrentEmail ? null : (this.state.Follower ? 
                                     <button className="followed-button" onClick={() => this.unfollowClick()}>

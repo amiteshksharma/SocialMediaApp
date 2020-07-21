@@ -1,0 +1,124 @@
+import React from 'react';
+import Autosuggest from 'react-autosuggest';
+import AutosuggestHighlightMatch from 'autosuggest-highlight/match'
+import AutosuggestHighlightParse from 'autosuggest-highlight/parse'
+import '../Css/Searchbar.css';  
+
+class Searchbar extends React.Component {
+constructor() {
+    super();
+
+    this.state = {
+    value: '',
+    suggestions: []
+    };    
+
+    this.renderSuggestion = this.renderSuggestion.bind(this);
+    this.getSuggestionValue = this.getSuggestionValue.bind(this);
+    this.getSuggestions = this.getSuggestions.bind(this);
+    this.escapeRegexCharacters = this.escapeRegexCharacters.bind(this);
+}
+
+onChange = (event, { newValue, method }) => {
+    this.setState({
+    value: newValue
+    });
+};
+
+onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+    suggestions: this.getSuggestions(value)
+    });
+};
+
+onSuggestionsClearRequested = () => {
+    this.setState({
+    suggestions: []
+    });
+};
+
+escapeRegexCharacters(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+    
+getSuggestions(value) {
+    const escapedValue = this.escapeRegexCharacters(value.trim());
+    const people = [
+        {
+          first: 'Charlie',
+          last: 'Brown',
+          twitter: 'dancounsell'
+        },
+        {
+          first: 'Charlotte',
+          last: 'White',
+          twitter: 'mtnmissy'
+        },
+        {
+          first: 'Chloe',
+          last: 'Jones',
+          twitter: 'ladylexy'
+        },
+        {
+          first: 'Cooper',
+          last: 'King',
+          twitter: 'steveodom'
+        }
+      ];
+    
+    if (escapedValue === '') {
+        return [];
+    }
+    
+    const regex = new RegExp('\\b' + escapedValue, 'i');
+    
+    return people.filter(person => regex.test(this.getSuggestionValue(person)));
+}
+
+getSuggestionValue(suggestion) {
+    return `${suggestion.first} ${suggestion.last}`;
+}
+
+renderSuggestion(suggestion, { query }) {
+    const suggestionText = `${suggestion.first} ${suggestion.last}`;
+    const matches = AutosuggestHighlightMatch(suggestionText, query);
+    const parts = AutosuggestHighlightParse(suggestionText, matches);
+    
+    return (
+        <span className={'suggestion-content ' + suggestion.twitter}>
+        <span className="name">
+            {
+            parts.map((part, index) => {
+                const className = part.highlight ? 'highlight' : null;
+    
+                return (
+                <span className={className} key={index}>{part.text}</span>
+                );
+            })
+            }
+        </span>
+        </span>
+    );
+    }
+
+render() {
+    const { value, suggestions } = this.state;
+    const inputProps = {
+    placeholder: "Find Friends...",
+    value,
+    onChange: this.onChange
+    };
+
+    return (
+    <Autosuggest 
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={this.getSuggestionValue}
+        renderSuggestion={this.renderSuggestion}
+        inputProps={inputProps} />
+    );
+}
+}
+
+export default Searchbar;

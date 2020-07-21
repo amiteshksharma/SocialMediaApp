@@ -53,45 +53,10 @@
 
 /* Searchbar for searching for users */
 
-.search-users {
+.searchbar-section {
     position: absolute;
-    right: calc(1vw);
+    right: calc(2vw);
     top: calc(7vh);
-    padding: calc(0.6vw);
-    padding-bottom: calc(20vh);
-    border-radius: calc(1rem);
-    box-shadow: 1px 1px 10px grey;
-    display: flex;
-    flex-direction: row;
-}
-
-.searchbar {
-    border: 1px solid rgb(174, 174, 174);
-    border-radius: calc(1rem);
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-}
-
-.form-input {
-    border-bottom-right-radius: calc(1rem) !important;
-    border-top-right-radius: calc(1rem) !important;
-    border: none !important;
-} 
-
-.icon-border {
-    background-color: white;
-    border: none;
-    padding: calc(0.7vh);
-    padding-bottom: calc(0.1vh);
-    margin-right: calc(0rem);
-    border-right: none;
-    border-bottom-left-radius: calc(1rem);
-    border-top-left-radius: calc(1rem);
-}
-
-.form-input:hover + .icon-border {
-    border: 10px solid black !important;
 }
 
 /* Suggest follower styling, if the user doesn't have many posts */

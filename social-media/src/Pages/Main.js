@@ -1,11 +1,8 @@
 import React from 'react'
 import '../Css/Explore.css';
 import Navigation from '../Components/Navigation';
-import { AutoComplete } from 'primereact/autocomplete';
-import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
 import Tile from '../Components/Tile';
+import Searchbar from '../Components/Searchbar';
 import { withHistory } from 'react-router-dom';
 
 class Main extends React.Component {
@@ -100,19 +97,8 @@ class Main extends React.Component {
                         </div>
                     </section>
 
-                    <section className="search-users">
-                        <div className="searchbar">
-                            <div className="icon-border">
-                                <i className="pi pi-search" style={{fontWeight: '900'}}></i>
-                            </div>
-                            <AutoComplete value={this.state.User} onChange={(e) => this.setState({User: e.value})}
-                                suggestions={this.state.Username}
-                                completeMethod={this.displayUsernames.bind(this)} 
-                                size={47}
-                                placeholder={"Find usernames..."}
-                                inputClassName="form-input"
-                            />
-                        </div>
+                    <section className="searchbar-section">
+                        <Searchbar />
                     </section>
                 </div>
             </div>

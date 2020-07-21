@@ -55,7 +55,7 @@
     padding-bottom: calc(1vh);
 }
 
-.name {
+.profile-name {
     display: flex;
     flex-direction: row;
     margin-left: calc(0.5vw);
