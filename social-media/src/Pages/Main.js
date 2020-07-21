@@ -1,6 +1,10 @@
 import React from 'react'
 import '../Css/Explore.css';
 import Navigation from '../Components/Navigation';
+import { AutoComplete } from 'primereact/autocomplete';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 import Tile from '../Components/Tile';
 import { withHistory } from 'react-router-dom';
 
@@ -10,7 +14,9 @@ class Main extends React.Component {
         this.state = {
             Right: false,
             Post: [],
-            MyLikes: []
+            MyLikes: [],
+            Username: null,
+            UsernamesList: []
         }
 
         this.createPost = this.createPost.bind(this);
@@ -31,6 +37,12 @@ class Main extends React.Component {
             console.log(data);    
             this.setState({ Post: data });
         }),   
+
+        fetch("http://localhost:5000/users/getusernames")
+        .then(response => response.json()).then(data => {
+            console.log("Hello: ", data);    
+            this.setState({ UsernamesList: data });
+        }),
         
         fetch("http://localhost:5000/backend/mylikes", {
             method: 'POST',
@@ -54,6 +66,14 @@ class Main extends React.Component {
         this.props.history.push(`/create`);
     }
 
+    displayUsernames(event) {
+        let results = this.state.UsernamesList.filter((brand) => {
+             return brand.toLowerCase().startsWith(event.query.toLowerCase());
+        });
+    
+        this.setState({ Username: results });
+    }
+
     render() {
         return (
             <div className="homepage">
@@ -70,6 +90,28 @@ class Main extends React.Component {
                                     <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
                                 )
                             })}
+
+                            {this.state.Post.length <= 7 ? 
+                                <section className="suggest-follow">
+                                    <h1>You're feed looks empty, try adding users with the searchbar or through Explore</h1>
+                                </section> 
+                            : null}
+
+                        </div>
+                    </section>
+
+                    <section className="search-users">
+                        <div className="searchbar">
+                            <div className="icon-border">
+                                <i className="pi pi-search" style={{fontWeight: '900'}}></i>
+                            </div>
+                            <AutoComplete value={this.state.User} onChange={(e) => this.setState({User: e.value})}
+                                suggestions={this.state.Username}
+                                completeMethod={this.displayUsernames.bind(this)} 
+                                size={47}
+                                placeholder={"Find usernames..."}
+                                inputClassName="form-input"
+                            />
                         </div>
                     </section>
                 </div>

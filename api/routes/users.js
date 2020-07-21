@@ -283,4 +283,18 @@ router.post('/followerspost', (req, res, next) => {
   })();
 })
 
+router.get('/getusernames', (req, res, next) => {
+  (async () => {
+    let usernames = [];
+  
+    const users = db.collection('user');
+    const snapshot = await users.get();
+    snapshot.forEach(doc => {
+      usernames.push(doc.data().Name);
+    });
+  
+    return res.send(usernames);
+  })();
+})
+
 module.exports = router;

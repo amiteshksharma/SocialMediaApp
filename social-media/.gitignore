@@ -5,9 +5,9 @@
 /.pnp
 .pnp.js
 
-# Bashsource file
-/bashsource.ps1
-/.bashsource
+# Package-lock.json
+./package-lock.json
+
 .env
 config.js
 

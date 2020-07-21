@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
@@ -11,6 +12,7 @@
     "bootstrap": "^4.5.0",
     "dotenv": "^8.2.0",
     "firebase": "^7.15.5",
+    "primeicons": "^4.0.0",
     "primereact": "^4.2.2",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
