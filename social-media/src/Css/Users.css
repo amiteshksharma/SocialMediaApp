@@ -51,3 +51,32 @@
 .user-tab button:hover {
     text-decoration: underline;
 }
+
+/* The goback button to return to profile page */
+.profile-goback {
+    position: absolute;
+    left: calc(15vw);
+    top: calc(10vh);
+}
+
+.profile-goback button {
+    padding: calc(1vh);
+    padding-left: calc(2vw);
+    padding-right: calc(2vw);
+    border: none;
+    border-left: none;
+    border-radius: calc(1rem);
+    background-color: rgb(212, 230, 247);
+    font-size: calc(1.1vw);
+    transition: cubic-bezier(0.25, 0.35, 0.75, 1) 0.3s;
+}
+
+.profile-goback button:hover {
+    background-color: rgb(0, 123, 255);
+    color: white;
+    transition: cubic-bezier(0.25, 0.35, 0.75, 1) 0.3s;
+}
+
+.profile-goback button:focus {
+    outline: 0;
+}

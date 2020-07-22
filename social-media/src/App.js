@@ -9,7 +9,9 @@ import Signup from './Pages/Signup';
 import Users from './Pages/Users';
 import Explore from './Pages/Explore';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 function App() {
   return (

@@ -28,6 +28,7 @@
 .favorite-icon {
     position: absolute;
     right: calc(0.2vw);
+    cursor: pointer;
 }
 
 /* Display for the likes counter */

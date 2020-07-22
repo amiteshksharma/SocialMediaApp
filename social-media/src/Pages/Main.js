@@ -13,7 +13,8 @@ class Main extends React.Component {
             Post: [],
             MyLikes: [],
             Username: null,
-            UsernamesList: []
+            UsernamesList: [],
+            isEmpty: false
         }
 
         this.createPost = this.createPost.bind(this);
@@ -31,14 +32,7 @@ class Main extends React.Component {
             }
         })
         .then(response => response.json()).then(data => {
-            console.log(data);    
             this.setState({ Post: data });
-        }),   
-
-        fetch("http://localhost:5000/users/getusernames")
-        .then(response => response.json()).then(data => {
-            console.log("Hello: ", data);    
-            this.setState({ UsernamesList: data });
         }),
         
         fetch("http://localhost:5000/backend/mylikes", {
@@ -50,13 +44,17 @@ class Main extends React.Component {
                 'Content-type': 'application/json'
             }
             }).then(response => response.text()).then(data => {
-                this.setState({ MyLikes: data}, () => {
+                this.setState({ MyLikes: data }, () => {
                     console.log(this.state.MyLikes);
                 });
+
+                setTimeout(() => {
+                    this.setState({isEmpty: true})
+                }, 1000);
             }).catch(error => {
                 console.log("Error");
             }) 
-        ]) .then(console.log("hello"));
+        ]).then();
     }
 
     createPost() {
@@ -88,9 +86,15 @@ class Main extends React.Component {
                                 )
                             })}
 
-                            {this.state.Post.length <= 7 ? 
+                            {this.state.Post.length <= 7 && this.state.Post.length > 0 ? 
                                 <section className="suggest-follow">
-                                    <h1>You're feed looks empty, try adding users with the searchbar or through Explore</h1>
+                                    <h1>You're feed looks a little empty, try adding users with the searchbar or through Explore</h1>
+                                </section> 
+                            : null}
+
+                            {this.state.Post.length === 0 && this.state.isEmpty ? 
+                                <section className="suggest-follow">
+                                    <h1>You're feed is empty, try adding users with the searchbar or through Explore</h1>
                                 </section> 
                             : null}
 

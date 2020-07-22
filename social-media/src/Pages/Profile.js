@@ -154,7 +154,7 @@ class Profile extends React.Component {
             <div className="profile">
             <Navigation />
                 <div className="profile-layout">
-                    <div className="border-line">
+                    <div className="border-line-profile">
                         <section className="image-background">
                             <img src={Background} alt="Background" />
                             <div className="profile-icon">

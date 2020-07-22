@@ -9,31 +9,38 @@ constructor() {
     super();
 
     this.state = {
-    value: '',
-    suggestions: []
+        value: '',
+        suggestions: [],
+        Usernames: []
     };    
 
     this.renderSuggestion = this.renderSuggestion.bind(this);
-    this.getSuggestionValue = this.getSuggestionValue.bind(this);
     this.getSuggestions = this.getSuggestions.bind(this);
     this.escapeRegexCharacters = this.escapeRegexCharacters.bind(this);
 }
 
 onChange = (event, { newValue, method }) => {
     this.setState({
-    value: newValue
+        value: newValue
     });
 };
 
+componentDidMount() {
+    fetch("http://localhost:5000/users/getusernames")
+    .then(response => response.json()).then(data => {  
+        this.setState({ Usernames: data });
+    });
+}
+
 onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-    suggestions: this.getSuggestions(value)
+        suggestions: this.getSuggestions(value)
     });
 };
 
 onSuggestionsClearRequested = () => {
     this.setState({
-    suggestions: []
+        suggestions: []
     });
 };
 
@@ -43,44 +50,18 @@ escapeRegexCharacters(str) {
     
 getSuggestions(value) {
     const escapedValue = this.escapeRegexCharacters(value.trim());
-    const people = [
-        {
-          first: 'Charlie',
-          last: 'Brown',
-          twitter: 'dancounsell'
-        },
-        {
-          first: 'Charlotte',
-          last: 'White',
-          twitter: 'mtnmissy'
-        },
-        {
-          first: 'Chloe',
-          last: 'Jones',
-          twitter: 'ladylexy'
-        },
-        {
-          first: 'Cooper',
-          last: 'King',
-          twitter: 'steveodom'
-        }
-      ];
-    
+
     if (escapedValue === '') {
         return [];
     }
     
     const regex = new RegExp('\\b' + escapedValue, 'i');
     
-    return people.filter(person => regex.test(this.getSuggestionValue(person)));
-}
-
-getSuggestionValue(suggestion) {
-    return `${suggestion.first} ${suggestion.last}`;
+    return this.state.Usernames.filter(person => regex.test(person));
 }
 
 renderSuggestion(suggestion, { query }) {
-    const suggestionText = `${suggestion.first} ${suggestion.last}`;
+    const suggestionText = suggestion;
     const matches = AutosuggestHighlightMatch(suggestionText, query);
     const parts = AutosuggestHighlightParse(suggestionText, matches);
     
@@ -104,9 +85,9 @@ renderSuggestion(suggestion, { query }) {
 render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-    placeholder: "Find Friends...",
-    value,
-    onChange: this.onChange
+        placeholder: "Find Friends...",
+        value,
+        onChange: this.onChange
     };
 
     return (

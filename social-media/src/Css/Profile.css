@@ -1,5 +1,5 @@
 .profile {
-    background-color: rgb(212, 230, 247);
+    background-color: rgb(245, 245, 245);
     min-height: calc(100vh);
     height: auto;
 }
@@ -12,8 +12,8 @@
     justify-content: center;
 }
 
-.border-line {
-    width: 60%;
+.border-line-profile {
+    width: calc(50%);
     border-left: 1px solid black;
     border-right: 1px solid black;
     display: flex;
@@ -148,6 +148,7 @@
 
 .followers h2 {
     font-size: calc(1vw);
+    cursor: pointer;
 }
 
 .followers h2:hover {
