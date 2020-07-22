@@ -46,6 +46,7 @@ class Main extends React.Component {
             }).then(response => response.text()).then(data => {
                 this.setState({ MyLikes: data }, () => {
                     console.log(this.state.MyLikes);
+                    sessionStorage.setItem('mylikes', JSON.stringify(this.state.MyLikes));
                 });
 
                 setTimeout(() => {

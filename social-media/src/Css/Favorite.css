@@ -1,0 +1,19 @@
+/* Styling for the favorite icon */
+
+.favorite-icon {
+    position: absolute;
+    right: calc(0.2vw);
+    cursor: pointer;
+}
+
+/* Display for the likes counter */
+.display-likes {
+    position: absolute;
+    right: calc(2.4vw);
+    top: calc(0vh);
+    text-align: right;
+    min-width: calc(3vw);
+    width: auto;
+    font-size: calc(1.2vw);
+    font-weight: 600;
+}

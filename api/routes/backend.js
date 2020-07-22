@@ -372,4 +372,22 @@ router.post('/loadprofile', (req, res, next) => {
   })();
 })
 
+router.post('/getpost', (req, res, next) => {
+  const email = req.body.email;
+  const title = req.body.title;
+
+  (async () => {
+    const uid = await getUidOfUser(email);
+
+    const getName = await db.collection('user').doc(uid.uid).get();
+    const getPost = await db.collection('user').doc(uid.uid).collection('posts').doc(title).get();
+
+    let obj = {};
+    obj.name = getName.data().Name;
+    obj.post = getPost.data();
+
+    return res.send(obj);
+  })()
+})
+
 module.exports = router;

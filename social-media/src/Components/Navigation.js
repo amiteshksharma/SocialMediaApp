@@ -14,19 +14,22 @@ export default function Navigation() {
     
     return (
         <div className="navigation">
-        <Navbar bg="dark" variant="dark" className="w-100 pb-1 pt-1 justify-content-center">
-            <div className="navigation-links">
-                <Nav className="mr-5">
-                    <Nav.Link href="/home">Home</Nav.Link>
-                    <Nav.Link href="#features">Find Friends</Nav.Link>
-                    <Nav.Link href="/explore">Explore</Nav.Link>
-                    <Nav.Link href="#features">Notifications</Nav.Link>
-                    <Nav.Link href="#pricing">Contact</Nav.Link>
-                </Nav>
-            </div>
-            <Navbar.Brand href="#home" className="ml-auto pb-2">
-                <PersonIcon onClick={() => setRight({ Right: true})}/>          
-            </Navbar.Brand>
+        <Navbar bg="dark" expand="lg" variant="dark" className="w-100">
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <div className="navigation-links">
+                    <Nav className="mr-5">
+                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="#features">Find Friends</Nav.Link>
+                        <Nav.Link href="/explore">Explore</Nav.Link>
+                        <Nav.Link href="#features">Notifications</Nav.Link>
+                        <Nav.Link href="#pricing">Contact</Nav.Link>
+                    </Nav>
+                </div>
+                <Navbar.Brand href="#home" className="ml-auto pb-2">
+                    <PersonIcon onClick={() => setRight({ Right: true})}/>          
+                </Navbar.Brand>
+            </Navbar.Collapse>
         </Navbar>
 
         <SwipeableDrawer
