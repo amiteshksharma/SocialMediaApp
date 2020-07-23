@@ -2,11 +2,14 @@ import React from 'react';
 import '../Css/Profile.css';
 import Background from '../Images/Background.jpg';
 import Navigation from '../Components/Navigation';
+import SimpleMenu from '../Components/MenuItem';
 import ProfileIcon from '../Images/download.png';
 import CreateIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Tile from '../Components/Tile';
+import { Form } from 'react-bootstrap';
 
 class Profile extends React.Component {
 
@@ -18,12 +21,17 @@ class Profile extends React.Component {
             MyLikes: [],
             Follower: false,
             Following: 0,
-            Followers: 0
+            Followers: 0,
+            ReadOnly: true,
+            Bio: '',
+            Profile: {},
+            Anchor: null
         }
 
         this.followClick = this.followClick.bind(this);
         this.unfollowClick = this.unfollowClick.bind(this);
         this.redirectFollows = this.redirectFollows.bind(this);
+        this.saveBio = this.saveBio.bind(this);
     }
 
     followClick() {
@@ -62,14 +70,14 @@ class Profile extends React.Component {
         const email = this.props.match.params.email
         Promise.all([
             fetch(`http://localhost:5000/backend/posts/${email}`, {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json'
-            }
-            }).then(response => response.json()).then(data => {
-            console.log(data);
-            console.log(typeof data);
-            this.setState({ Posts: data });    
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+                }).then(response => response.json()).then(data => {
+                console.log(data);
+                console.log(typeof data);
+                this.setState({ Posts: data });    
             }),
 
             fetch("http://localhost:5000/backend/mylikes", {
@@ -84,6 +92,20 @@ class Profile extends React.Component {
                 this.setState({ MyLikes: data}, () => {
                     console.log(this.state.MyLikes);
                 });
+            }).catch(error => {
+                    console.log("Error");
+            }),
+
+            fetch("http://localhost:5000/settings/information", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: this.state.Email,
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => {
+                this.setState({Profile: data});
             }).catch(error => {
                     console.log("Error");
             }),
@@ -148,6 +170,28 @@ class Profile extends React.Component {
         }
     }
 
+    saveBio(e) {
+        console.log(this.state.ReadOnly);
+        this.setState({ReadOnly: !this.state.ReadOnly}, () => {
+            if(this.state.ReadOnly) {
+                fetch("http://localhost:5000/settings/bio", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: this.state.Email,
+                    bio: this.state.Bio
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+            }).catch(error => {
+                console.log("Error");
+            })
+            }
+        })   
+    }
+
     render() {
         const getCurrentEmail = sessionStorage.getItem("Email");
         return (
@@ -164,26 +208,33 @@ class Profile extends React.Component {
 
                         <section className="biography">
                             <div className="profile-name">
-                                <h2>Amitesh Sharma</h2>
-                                {this.state.Email === getCurrentEmail ? null : (this.state.Follower ? 
-                                    <button className="followed-button" onClick={() => this.unfollowClick()}>
-                                        Followed <CheckIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="checked-icon" />
-                                    </button> 
-                                    : 
-                                    <button className="follow-button" onClick={() => this.followClick()}>
-                                        Follow <AddIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="plus-icon" />
-                                    </button> 
+                                <h2>{this.state.Profile.Name}</h2>
+                                {this.state.Email !== sessionStorage.getItem('Email') ? null : 
+                                <CreateIcon style={{marginLeft: 'calc(1vw)', cursor: 'pointer'}} className="edit-profile" 
+                                onClick={(e) => this.saveBio()}/>}
+                                {this.state.Email === getCurrentEmail ? 
+                                    <div className="menu-icon">
+                                        <SimpleMenu />
+                                    </div> : 
+                                    (this.state.Follower ?
+                                        <button className="followed-button" onClick={() => this.unfollowClick()}>
+                                            Followed <CheckIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="checked-icon" />
+                                        </button> 
+                                        : 
+                                        <button className="follow-button" onClick={() => this.followClick()}>
+                                            Follow <AddIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="plus-icon" />
+                                        </button> 
                                     )  
                                 }
                             </div>
                             
                             <div className="description">
                                 <p>
-                                Welcome to my homepage! this is where the magic happens, and I really am excited
-                                To share my stories with the world here.    
+                                    <Form.Control plaintext={this.state.ReadOnly} readOnly={this.state.ReadOnly} defaultValue={this.state.Profile.Bio} 
+                                        as="textarea" rows="4" style={{width: 'calc(20vw)'}} onChange={(e) => this.setState({Bio: e.target.value})}
+                                        maxLength="210"
+                                    />  
                                 </p>
-
-                                <CreateIcon style={{marginLeft: 'calc(1vw)', cursor: 'pointer'}} className="edit-profile" onClick={() => console.log("Clicked")}/>
                             </div>
 
                             <div className="followers">

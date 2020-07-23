@@ -14,6 +14,7 @@ admin.initializeApp({
 
 const usersRouter = require('./routes/users');
 const backendRouter = require('./routes/backend');
+const profileRouter = require('./routes/profile');
 
 const app = express();
 
@@ -32,9 +33,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/", usersRouter);
 app.use("/users", usersRouter);
 
-// Routes to be determined later
+// Routes for liking and loading posts
 app.use("/backend", backendRouter);
 app.use("/backend/create", backendRouter);
+
+//Routes for the user's profile settings
+app.use("/settings", profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

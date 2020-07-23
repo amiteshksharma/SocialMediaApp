@@ -63,6 +63,21 @@
     position: relative;
 }
 
+/* The menu icon for when the user is on his own page */
+.menu-icon {
+    position: absolute;
+    right: calc(0vw);
+    top: calc(-5vh);
+    border-radius: calc(50%);
+    padding-top: calc(0.2vh);
+    padding-bottom: calc(0.2vh);
+    transition: 0.3s;
+}
+
+.menu-icon:hover {
+    background-color: none;
+}
+
 .follow-button, .followed-button {
     border: 2px solid rgb(0, 123, 255);
     border-radius: calc(6px);
@@ -123,9 +138,7 @@
 }
 
 .edit-profile {
-    position: absolute;
-    top: calc(-3.9vh);
-    right: calc(10.5vw);
+    margin-top: calc(1vh);
     transition: 0.2s;
 }
 
