@@ -2,11 +2,12 @@
     width: 100%;
     min-height: calc(94vh);
     display: flex;
-    justify-content: center;
+    justify-content: left;
+    padding-left: calc(25vw);
 }
 
 .border-post {
-    width: calc(50%);
+    width: calc(55%);
     border-left: 1px solid black;
     border-right: 1px solid black;
 }
@@ -19,15 +20,12 @@
     justify-content: center;
 }
 
+/* Styling for the header at the top for the post */
 .user-information-post {
     display: flex;
     flex-direction: row;
-}
-
-.fav-icon {
-    position: absolute;
-    right: 0;
-    top: calc(0.5vh);
+    margin-left: calc(0.5vw);
+    margin-top: calc(0.3vh);
 }
 
 .userinfo-name {
@@ -35,20 +33,87 @@
     margin-top: calc(1.8vh);
 }
 
+/* Styling for the favicon */
+.fav-icon {
+    position: absolute;
+    right: 0;
+    top: calc(0.4vh);
+}
+
+/* Styling for the post title */
+
 .post-title {
     margin-left: calc(10%);
     margin-right: calc(10%);
-    margin-top: calc(1vh);
+    margin-top: calc(4vh);
     text-align: center;
     max-width: calc(100%);
     margin-bottom: calc(-2vh);
 }
 
-.post-paragraph {
-    margin-left: calc(1vw);
-    margin-top: calc(1vh);
+.post-title h1 {
+    font-size: calc(1.3vw);
 }
 
 hr {
-    width: 80%;
+    width: 85%;
+}
+
+/* Styling for the paragraph below */
+.post-paragraph {
+    margin-left: calc(4vw);
+    margin-right: calc(4vw);
+    margin-top: calc(1vh);
+}
+
+.post-paragraph h1 {
+    font-size: calc(1vw);
+}
+
+/* Styling for the comment section */
+.comment-section {
+    box-shadow: 5px 5px 15px rgb(161, 161, 161);
+    border-radius: calc(1rem);
+    height: calc(90vh);
+    margin-top: calc(1.5vh);
+    width: calc(30%);
+    margin-left: calc(3vw);
+    overflow-y: auto;
+}
+
+.comment-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.comment-header h1 {
+    margin-top: calc(1vh);
+    font-size: calc(1.5vw);
+}
+
+.comment-header hr {
+    width: calc(70%);
+    margin-top: calc(-0.3vh);
+}
+
+/* The tile for the comment */
+.comment-tile {
+    border-bottom: 1px solid black;
+    border-radius: calc(0vw);
+    margin-right: calc(0.5rem);
+    margin-left: calc(0.5rem);
+    margin-bottom: calc(0.5rem);
+}
+
+.comment-tile h1 {
+    font-size: calc(1.2vw);
+    margin-left: calc(0.3vw);
+    color: rgb(16, 131, 177);
+}
+
+.comment-tile p {
+    font-size: calc(0.8vw);
+    margin-left: calc(0.7vw);
 }

@@ -194,60 +194,6 @@ router.post('/username', (req, res, next) => {
   })();
 })
 
-/**
- * Returns all the posts for each uid
- * @param {Ret} uid 
- */
-async function getBlogPosts(uid) {
-  let getAllPosts = [];
-  //Get all the posts
-  const items = await db.collection('user').doc(uid).collection('posts').get();
-  //Get all the names
-  const name = await db.collection('user').doc(uid).get();
-          
-  items.forEach(title => {
-    //Store the name in each obj being pushed into the array
-    const obj = title.data();
-    obj.Name = name.data().Name;
-    obj.Email = name.data().Email;
-    getAllPosts.push(obj);
-  })
-  return getAllPosts; 
-}
-
-async function getUidFromEmail(arr) {
-  const array = [];
-  for(let user of arr) {
-    const getuid = admin.auth().getUserByEmail(user).then(async (userRecord) => {
-      return userRecord.toJSON().uid;
-    })
-    array.push(await getuid);
-  }
-
-  return await array;
-}
-
-/**
- * Returns all the posts for each uid
- * @param {Ret} uid 
- */
-async function getBlogPosts(uid) {
-  let getAllPosts = [];
-  //Get all the posts
-  const items = await db.collection('user').doc(uid).collection('posts').get();
-  //Get all the names
-  const name = await db.collection('user').doc(uid).get();
-          
-  items.forEach(title => {
-    //Store the name in each obj being pushed into the array
-    const obj = title.data();
-    obj.Name = name.data().Name;
-    obj.Email = name.data().Email;
-    getAllPosts.push(obj);
-  })
-  return getAllPosts; 
-}
-
 router.post('/followerspost', (req, res, next) => {
   const currUser = req.body.currUser;
 
@@ -296,5 +242,74 @@ router.get('/getusernames', (req, res, next) => {
     return res.send(usernames);
   })();
 })
+
+/**
+ * -----------------------------------------
+ * BEGINNING OF HELPER METHODS FOR THIS FILE
+ * -----------------------------------------
+ */
+
+ /**
+ * Returns all the posts for each uid
+ * @param {Ret} uid 
+ */
+async function getBlogPosts(uid) {
+  let getAllPosts = [];
+  //Get all the posts
+  const items = await db.collection('user').doc(uid).collection('posts').get();
+  //Get all the names
+  const name = await db.collection('user').doc(uid).get();
+          
+  items.forEach(title => {
+    //Store the name in each obj being pushed into the array
+    const obj = title.data();
+    obj.Name = name.data().Name;
+    obj.Email = name.data().Email;
+    getAllPosts.push(obj);
+  })
+  return getAllPosts; 
+}
+
+/**
+ * Converts all the emails in the array to the user's uid
+ * @param {Array} arr Array containing emails
+ */
+async function getUidFromEmail(arr) {
+  //Intialize the array
+  const array = [];
+  //Loop through the 'arr' parameter
+  for(let user of arr) {
+    //Convert each email to the uid using getUserByEmail
+    const getuid = admin.auth().getUserByEmail(user).then(async (userRecord) => {
+      return userRecord.toJSON().uid;
+    })
+    
+    //Push the uid to the const array
+    array.push(await getuid);
+  }
+
+  return await array;
+}
+
+/**
+ * Returns all the posts for each uid
+ * @param {Ret} uid 
+ */
+async function getBlogPosts(uid) {
+  let getAllPosts = [];
+  //Get all the posts
+  const items = await db.collection('user').doc(uid).collection('posts').get();
+  //Get all the names
+  const name = await db.collection('user').doc(uid).get();
+          
+  items.forEach(title => {
+    //Store the name in each obj being pushed into the array
+    const obj = title.data();
+    obj.Name = name.data().Name;
+    obj.Email = name.data().Email;
+    getAllPosts.push(obj);
+  })
+  return getAllPosts; 
+}
 
 module.exports = router;

@@ -102,7 +102,7 @@ class Main extends React.Component {
                         </div>
                     </section>
 
-                    <section className="searchbar-section">
+                    <section className="searchbar-main">
                         <Searchbar />
                     </section>
                 </div>

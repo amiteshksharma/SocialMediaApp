@@ -2,6 +2,7 @@ import React from 'react'
 import '../Css/Main.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
+import Searchbar from '../Components/Searchbar';
 import { withHistory } from 'react-router-dom';
 
 class Explore extends React.Component {
@@ -52,10 +53,14 @@ class Explore extends React.Component {
         return (
             <div className="explorepage">
                 <Navigation />
-                <div className="container-explore">                   
+                <div className="container-explore">       
+                    <section className="create-section" onClick={() => this.createPost()}>
+                        <h1>Create Post</h1>
+                    </section>      
+
                     <section className="explore-section">
                         <div className="explore-header">
-                            <p>HELLO</p>
+                            {/* Figure out what to put here */}
                         </div>
                         <div className="explore-div">
                             {this.state.Post.map(post => {
@@ -64,6 +69,10 @@ class Explore extends React.Component {
                                 )
                             })}
                         </div>
+                    </section>
+
+                    <section className="searchbar-section">
+                        <Searchbar />
                     </section>
                 </div>
             </div>

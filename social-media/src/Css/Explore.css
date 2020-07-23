@@ -22,6 +22,15 @@
     align-items: center;
 }
 
+.create-section {
+    position: absolute;
+    left: calc(15vw);
+    top: calc(9vh);
+    padding: calc(0.2vw);
+    border-radius: calc(0.7vw);
+    transition: 0.3s;
+}
+
 .explore-header {
     width: 50%;
     border: 1px solid rgb(119, 118, 118);
@@ -40,9 +49,19 @@
     flex-direction: column;
 }
 
-/*
-    STYLING FOR DRAWERITEM.JS IN THE COMPONENTS FOLDER
- */
+/* STYLING FOR DRAWERITEM.JS IN THE COMPONENTS FOLDER */
 .right {
     width: calc(15vw);
+}
+
+/* Searchbar for searching for users */
+.searchbar-section {
+    position: absolute;
+    right: calc(1vw);
+    top: calc(8.5vh);
+    height: calc(40vh);
+    box-shadow: 2px 2px 10px rgb(80, 79, 79);
+    border-radius: calc(1rem);
+    padding: calc(1vw);
+    background-color: rgb(243, 243, 243);
 }

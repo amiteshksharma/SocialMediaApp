@@ -20,7 +20,6 @@ export default function Navigation() {
                 <div className="navigation-links">
                     <Nav className="mr-5">
                         <Nav.Link href="/home">Home</Nav.Link>
-                        <Nav.Link href="#features">Find Friends</Nav.Link>
                         <Nav.Link href="/explore">Explore</Nav.Link>
                         <Nav.Link href="#features">Notifications</Nav.Link>
                         <Nav.Link href="#pricing">Contact</Nav.Link>

@@ -51,22 +51,22 @@ class Post extends React.Component {
                     <div className="border-post">
                         <section className="post-style">
                             <div className="user-information-post">
-                            <Media>
-                                <img
-                                    width={64}
-                                    height={64}
-                                    className="mr-3"
-                                    src={ProfileIcon}
-                                    alt="Generic placeholder"
-                                />
-                                <Media.Body>
-                                    <h3 className="userinfo-name">{this.state.Post.name}</h3>
-                                </Media.Body>
-                            </Media>
+                                <Media>
+                                    <img
+                                        width={64}
+                                        height={64}
+                                        className="mr-3"
+                                        src={ProfileIcon}
+                                        alt="Generic placeholder"
+                                    />
+                                    <Media.Body>
+                                        <h3 className="userinfo-name">{this.state.Post.name}</h3>
+                                    </Media.Body>
+                                </Media>
 
-                            <div className="fav-icon">
-                                <Favorite Title={this.props.match.params.title} Email={this.props.match.params.email} />
-                            </div>
+                                <div className="fav-icon">
+                                    <Favorite Title={this.props.match.params.title} Email={this.props.match.params.email} />
+                                </div>
                             </div>
 
                             <div className="post-title">
@@ -80,6 +80,18 @@ class Post extends React.Component {
                             </div>
                         </section>
                     </div>
+
+                    <section className='comment-section'>
+                        <div className="comment-header">
+                            <h1>Comments</h1>
+                            <hr />
+                        </div>
+
+                        <div className="comment-tile">
+                            <h1>Amitesh Sharma</h1>
+                            <p>This is a great comment and I really think it ties into the what the post is saying</p>
+                        </div>
+                    </section>
                 </div>
             </div>
         )

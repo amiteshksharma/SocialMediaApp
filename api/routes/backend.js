@@ -84,43 +84,6 @@ router.get('/posts/:email', function(req, res, next) {
 });
 
 /**
- * Helper method for /loadposts
- * Returns all the uid in the database
- */
-async function getUid() {
-  let userUid = [];
-  
-  const users = db.collection('user');
-  const snapshot = await users.get();
-  snapshot.forEach(doc => {
-    userUid.push(doc.id);
-  });
-
-  return userUid;
-}
-
-/**
- * Returns all the posts for each uid
- * @param {Ret} uid 
- */
-async function getBlogPosts(uid) {
-  let getAllPosts = [];
-  //Get all the posts
-  const items = await db.collection('user').doc(uid).collection('posts').get();
-  //Get all the names
-  const name = await db.collection('user').doc(uid).get();
-          
-  items.forEach(title => {
-    //Store the name in each obj being pushed into the array
-    const obj = title.data();
-    obj.Name = name.data().Name;
-    obj.Email = name.data().Email;
-    getAllPosts.push(obj);
-  })
-  return getAllPosts; 
-}
-
-/**
  * Load all the posts for all users in the database
  * Used for the Search page
  */
@@ -148,40 +111,6 @@ router.get('/loadposts', (req, res, next) => {
     return await getAllPosts();
   })();
 })
-
-/**
- * Get the uid of the current user to add the post to his likes
- * @param {String} currUserEmail current user's email
- * @param {String} getTitle Title of the post
- */
-async function addLikeToAccount(currUserEmail, getTitle, getEmail) {
-  //Collect the user's uid
-  admin.auth().getUserByEmail(currUserEmail).then(async (userRecord) => {
-    const user = userRecord.toJSON();
-    //Store the user's uid
-    const getUid = user.uid;
-
-    //Add the post to current user's likes
-    const userLikes = await db.collection('user').doc(getUid).collection('likes').doc(getTitle).set({
-      Email: getEmail,
-      Title: getTitle 
-    }).then(() => {
-      //Console log success if it works
-      console.log("Success");
-    }).catch(error => {
-      //Console log the error
-      console.log(error);
-    })
-  })
-}
-
-async function getUidOfUser(email) {
-  return admin.auth().getUserByEmail(email).then(async (userRecord) => {
-    const user = userRecord.toJSON();
-    //Store the user's uid
-    return user;
-  })
-}
 
 /**
  * Adds a like to the post that was liked
@@ -372,22 +301,112 @@ router.post('/loadprofile', (req, res, next) => {
   })();
 })
 
+/**
+ * Get the post details to use for the Post.js page
+ */
 router.post('/getpost', (req, res, next) => {
+  //Get the user's email and title from the fetch
   const email = req.body.email;
   const title = req.body.title;
 
   (async () => {
+    //Get the uid of the user
     const uid = await getUidOfUser(email);
 
+    //Get the user's name
     const getName = await db.collection('user').doc(uid.uid).get();
+    //Get the details of the specific post
     const getPost = await db.collection('user').doc(uid.uid).collection('posts').doc(title).get();
 
+    //Assign it to an object and push it
     let obj = {};
     obj.name = getName.data().Name;
     obj.post = getPost.data();
 
+    //Return the object containing the post and name
     return res.send(obj);
   })()
 })
+
+/**
+ * -----------------------------------------
+ * BEGINNING OF HELPER METHODS FOR THIS FILE
+ * -----------------------------------------
+ */
+
+/**
+ * Return the uid of the email that is passed
+ * @param {String} email Used to get the uid of the user
+ */
+async function getUidOfUser(email) {
+  return admin.auth().getUserByEmail(email).then(async (userRecord) => {
+    const user = userRecord.toJSON();
+    //Store the user's uid
+    return user;
+  })
+}
+
+/**
+ * Get the uid of the current user to add the post to his likes
+ * @param {String} currUserEmail current user's email
+ * @param {String} getTitle Title of the post
+ */
+async function addLikeToAccount(currUserEmail, getTitle, getEmail) {
+  //Collect the user's uid
+  admin.auth().getUserByEmail(currUserEmail).then(async (userRecord) => {
+    const user = userRecord.toJSON();
+    //Store the user's uid
+    const getUid = user.uid;
+
+    //Add the post to current user's likes
+    const userLikes = await db.collection('user').doc(getUid).collection('likes').doc(getTitle).set({
+      Email: getEmail,
+      Title: getTitle 
+    }).then(() => {
+      //Console log success if it works
+      console.log("Success");
+    }).catch(error => {
+      //Console log the error
+      console.log(error);
+    })
+  })
+}
+
+/**
+ * Helper method for /loadposts
+ * Returns all the uid in the database
+ */
+async function getUid() {
+  let userUid = [];
+  
+  const users = db.collection('user');
+  const snapshot = await users.get();
+  snapshot.forEach(doc => {
+    userUid.push(doc.id);
+  });
+
+  return userUid;
+}
+
+/**
+ * Returns all the posts for each uid
+ * @param {Ret} uid 
+ */
+async function getBlogPosts(uid) {
+  let getAllPosts = [];
+  //Get all the posts
+  const items = await db.collection('user').doc(uid).collection('posts').get();
+  //Get all the names
+  const name = await db.collection('user').doc(uid).get();
+          
+  items.forEach(title => {
+    //Store the name in each obj being pushed into the array
+    const obj = title.data();
+    obj.Name = name.data().Name;
+    obj.Email = name.data().Email;
+    getAllPosts.push(obj);
+  })
+  return getAllPosts; 
+}
 
 module.exports = router;
