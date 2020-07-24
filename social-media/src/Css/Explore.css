@@ -6,7 +6,7 @@
     width: 100%;
     height: auto;
     min-height: calc(100vh);
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(21, 32, 43);
 }
 
 .container-explore {
@@ -22,9 +22,21 @@
     align-items: center;
 }
 
+.explore-content-div {
+    width: calc(40%);
+    border: 1px solid white;
+    border-top: none;
+    border-bottom: none;
+    height: auto;
+    min-height: calc(100vh);
+    height: auto;
+    display: flex;
+    flex-direction: column;   
+}
+
 .create-section {
     position: absolute;
-    left: calc(15vw);
+    left: calc(18vw);
     top: calc(9vh);
     padding: calc(0.2vw);
     border-radius: calc(0.7vw);
@@ -32,19 +44,26 @@
 }
 
 .explore-header {
-    width: 50%;
-    border: 1px solid rgb(119, 118, 118);
-    border-top: none;
-    
+    border-bottom: 1px solid white;
+    color: white;
+    display: flex;
+    flex-direction: row;
+}
+
+.explore-header h2 {
+    margin-bottom: calc(1vh);
+    margin-top: calc(1vh);
+    margin-left: calc(0.7vw);
+    font-size: calc(1.3vw);
 }
 
 .explore-div {
-    width: 50%;
-    border: 1px solid rgb(119, 118, 118);
+    width: calc(40%);
+    border: 1px solid white;
     border-top: none;
     border-bottom: none;
     height: auto;
-    min-height: calc(94vh);
+    min-height: calc(100vh);
     display: flex;
     flex-direction: column;
 }
@@ -57,11 +76,11 @@
 /* Searchbar for searching for users */
 .searchbar-section {
     position: absolute;
-    right: calc(1vw);
-    top: calc(8.5vh);
-    height: calc(40vh);
+    right: calc(6vw);
+    top: calc(5.5vh);
+    height: calc(8vh);
     box-shadow: 2px 2px 10px rgb(80, 79, 79);
     border-radius: calc(1rem);
     padding: calc(1vw);
-    background-color: rgb(243, 243, 243);
+    background-color: rgb(29, 49, 70);
 }

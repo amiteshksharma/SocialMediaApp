@@ -9,8 +9,8 @@
 /* Display for the likes counter */
 .display-likes {
     position: absolute;
-    right: calc(2.4vw);
-    top: calc(0vh);
+    right: calc(1.9vw);
+    top: calc(-0.4vh);
     text-align: right;
     min-width: calc(3vw);
     width: auto;

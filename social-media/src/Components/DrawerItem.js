@@ -30,6 +30,7 @@ export default function DrawerItem(props) {
 
   const profile = () => {
     history.push(`/profile/${email}`);
+    window.location.reload(false);
   }
   
   console.log(props.handler);

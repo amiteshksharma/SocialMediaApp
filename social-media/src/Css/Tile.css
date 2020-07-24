@@ -2,7 +2,7 @@
 
 .tile-container {
     width: 100%;
-    border-bottom: 1px solid rgb(78, 76, 76);
+    border-bottom: 1px solid white;
     position: relative;
     padding-bottom: calc(1.5vh);
 }
@@ -13,6 +13,7 @@
 
 .tile-author {
     width: calc(100%);
+    color: white;
     display: flex;
     flex-direction: row;
 }
@@ -23,12 +24,21 @@
     margin-left: calc(0.4vw);
 }
 
+.profile-link a { 
+    color: rgb(148, 148, 148);
+}
+
+.profile-link a:hover {
+    color: rgb(148, 148, 148);
+}
+
 /* Styling for the title and summary of the post */
 
 .title-section, .summary-section {
     width: auto;
     margin-top: calc(0.5vh);
     margin-left: calc(2vw); 
+    color: white;
 }
 
 .title-section {
@@ -38,11 +48,18 @@
     max-width: 100%;
 }
 
+.title h3 {
+    font-size: calc(1.2vw);
+    text-overflow: ellipsis; /* will make [...] at the end */
+    width: calc(37vw); /* change to your preferences */
+    white-space: initial;
+    overflow: hidden; /* older browsers */    
+}
 
-.summary h3{
+.summary h3 {
     font-size: calc(1vw);
     text-overflow: ellipsis; /* will make [...] at the end */
-    width: calc(47vw); /* change to your preferences */
-    white-space: nowrap; /* paragraph to one line */
+    width: calc(37vw); /* change to your preferences */
+    white-space: nowrap;
     overflow: hidden; /* older browsers */
 }

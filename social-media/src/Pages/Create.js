@@ -37,7 +37,9 @@ class Create extends React.Component {
                     <div className="title">
                         <Form.Group controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control as="textarea" rows="1" onChange={(e) => this.setState({Title: e.target.value})}/>
+                            <Form.Control as="textarea" rows="1" onChange={(e) => this.setState({Title: e.target.value})}
+                                maxLength={"70"}
+                            />
                         </Form.Group>
                     </div>
 

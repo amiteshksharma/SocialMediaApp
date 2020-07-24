@@ -2,6 +2,7 @@ import React from 'react';
 import '../Css/Profile.css';
 import Background from '../Images/Background.jpg';
 import Navigation from '../Components/Navigation';
+import Searchbar from '../Components/Searchbar';
 import SimpleMenu from '../Components/MenuItem';
 import ProfileIcon from '../Images/download.png';
 import CreateIcon from '@material-ui/icons/Create';
@@ -196,8 +197,11 @@ class Profile extends React.Component {
         const getCurrentEmail = sessionStorage.getItem("Email");
         return (
             <div className="profile">
-            <Navigation />
                 <div className="profile-layout">
+                    <section className="profile-navbar">
+                        <Navigation eventKey="4" />
+                    </section>
+
                     <div className="border-line-profile">
                         <section className="image-background">
                             <img src={Background} alt="Background" />
@@ -231,7 +235,8 @@ class Profile extends React.Component {
                             <div className="description">
                                 <p>
                                     <Form.Control plaintext={this.state.ReadOnly} readOnly={this.state.ReadOnly} defaultValue={this.state.Profile.Bio} 
-                                        as="textarea" rows="4" style={{width: 'calc(20vw)'}} onChange={(e) => this.setState({Bio: e.target.value})}
+                                        as="textarea" rows="4" style={{width: 'calc(20vw)', color: 'white', backgroundColor: 'rgb(21, 32, 43)'}} 
+                                        onChange={(e) => this.setState({Bio: e.target.value})}
                                         maxLength="210"
                                     />  
                                 </p>
@@ -239,7 +244,7 @@ class Profile extends React.Component {
 
                             <div className="followers">
                                 <h2 onClick={() => this.redirectFollows("followers")}>{this.state.Followers} Followers</h2>
-                                <span></span>
+                                <span>|</span>
                                 <h2 onClick={() => this.redirectFollows("following")}>{this.state.Following} Following</h2>   
                             </div>
                         </section>
@@ -254,6 +259,10 @@ class Profile extends React.Component {
                             </div>
                         </section>
                     </div>
+
+                    <section className="searchbar-profile">
+                        <Searchbar />
+                    </section>
                 </div>
             </div>
         )

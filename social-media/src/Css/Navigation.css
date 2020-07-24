@@ -5,8 +5,6 @@
  .navigation {
     width: 100%;
     display: flex;
-    justify-content: center;
-    text-align: center;
 }
 
 .navbar {
@@ -14,18 +12,26 @@
 }
 
 .nav-link {
+    margin-bottom: calc(0.5vh);
     color: white !important;
     z-index: 1 !important;
+    font-size: calc(1.1vw) !important;
 }
 
 .nav-link:hover {
-    color: rgb(204, 204, 204) !important;
+    background-color: rgb(21, 97, 160) !important;
+    border-radius: calc(2rem);
+}
+
+.nav-link.active {
+    color: white !important;
+    background-color: rgb(21, 97, 160) !important;
+    border-radius: calc(2rem);
 }
 
 .navigation-links {
     width: 100%;
     display: flex;
-    justify-content: center;
 }
 
 /* 

@@ -4,6 +4,8 @@ import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import Searchbar from '../Components/Searchbar';
 import { withHistory } from 'react-router-dom';
+import HomeIcon from '@material-ui/icons/Home';
+import { Nav } from 'react-bootstrap';
 
 class Main extends React.Component {
     constructor(props) {
@@ -16,8 +18,6 @@ class Main extends React.Component {
             UsernamesList: [],
             isEmpty: false
         }
-
-        this.createPost = this.createPost.bind(this);
     }
 
     componentDidMount() {
@@ -58,10 +58,6 @@ class Main extends React.Component {
         ]).then();
     }
 
-    createPost() {
-        this.props.history.push(`/create`);
-    }
-
     displayUsernames(event) {
         let results = this.state.UsernamesList.filter((brand) => {
              return brand.toLowerCase().startsWith(event.query.toLowerCase());
@@ -73,14 +69,17 @@ class Main extends React.Component {
     render() {
         return (
             <div className="homepage">
-                <Navigation />
                 <div className="container-main">
-                    <section className="create-section" onClick={() => this.createPost()}>
-                        <h1>Create Post</h1>
+                    <section className="create-section">
+                        <Navigation eventKey="1" />
                     </section>
                     
                     <section className="content-section">
                         <div className="content-div">
+                            <div className="main-header">
+                                <HomeIcon style={{marginTop: 'calc(0.7vh)'}} fontSize="large" />
+                                <h2>Home</h2>
+                            </div>
                             {this.state.Post.map(post => {
                                 return (
                                     <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>

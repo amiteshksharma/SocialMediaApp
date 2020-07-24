@@ -4,6 +4,7 @@ import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import Searchbar from '../Components/Searchbar';
 import { withHistory } from 'react-router-dom';
+import ExploreIcon from '@material-ui/icons/Explore';
 
 class Explore extends React.Component {
     constructor(props) {
@@ -52,21 +53,25 @@ class Explore extends React.Component {
     render() {
         return (
             <div className="explorepage">
-                <Navigation />
-                <div className="container-explore">       
-                    <section className="create-section" onClick={() => this.createPost()}>
-                        <h1>Create Post</h1>
-                    </section>      
-
+                <div className="container-explore">
+                    <section className="create-section">
+                        <Navigation eventKey="2" />
+                    </section>
+                    
                     <section className="explore-section">
-                        <div className="explore-header">
-                            {/* Figure out what to put here */}
-                        </div>
-                        <div className="explore-div">
+                        <div className="explore-content-div">
+                            <div className="explore-header">
+                                <ExploreIcon style={{marginTop: 'calc(0.7vh)'}} fontSize="large" />
+                                <h2>Explore</h2>
+                            </div>
                             {this.state.Post.map(post => {
-                                return (
-                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
-                                )
+                                if(post.Email === sessionStorage.getItem('Email')) {
+                                    return;
+                                } else {
+                                    return (
+                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
+                                    )
+                                }
                             })}
                         </div>
                     </section>

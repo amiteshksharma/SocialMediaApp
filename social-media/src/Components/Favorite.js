@@ -93,9 +93,9 @@ export default function Favorite(props) {
         </div>
         <div className="favorite-icon" onClick={() => setFavorite({Favorite: !favorite.Favorite})}>
             {favorite.Favorite ? 
-                <FavoriteBorderIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorite" onClick={like}/> 
+                <FavoriteBorderIcon color="light" style={{fontSize: 'calc(1.5vw)'}} className="favorite" onClick={like}/> 
                 : 
-                <FavoriteIcon color="primary" style={{fontSize: 'calc(2vw)'}} className="favorited" onClick={unlike}/> 
+                <FavoriteIcon color="light" style={{fontSize: 'calc(1.5vw)'}} className="favorited" onClick={unlike}/> 
             }
         </div>
         </section>
