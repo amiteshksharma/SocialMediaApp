@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from '../Components/Navigation';
 import Node from '../Components/Node';
+import Searchbar from '../Components/Searchbar';
 import '../Css/Users.css';
 
 class Users extends React.Component {
@@ -55,8 +56,11 @@ class Users extends React.Component {
         console.log(this.state.Following);
         return (
             <div className="users">
-            <Navigation />
                 <div className="users-layout">
+                    <section className="create-section">
+                        <Navigation eventKey="4" />
+                    </section>
+
                     <div className="profile-goback">
                         <button onClick={() => this.props.history.push(`/profile/${this.props.match.params.email}`)}> 
                             <i className="pi pi-caret-left" style={{fontSize: 'calc(1.1rem)', paddingRight: 'calc(0.3vw)'}}></i>Return to profile
@@ -92,6 +96,10 @@ class Users extends React.Component {
                             </div>
                         </section>
                     </div>
+
+                    <section className="searchbar-section">
+                        <Searchbar />
+                    </section>
                 </div>
             </div>
         )

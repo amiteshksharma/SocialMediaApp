@@ -328,6 +328,33 @@ router.post('/getpost', (req, res, next) => {
   })()
 })
 
+/**
+ * Gets all the comments under a single post
+ */
+router.post('/getcomment', (req, res, next) => {
+  //Takes in an email and title of the post
+  const email = req.body.email;
+  const title = req.body.title;
+
+  (async () => {
+    //Get the uid of the user
+    const uid = await getUidOfUser(email);
+
+    //get the comments to the specific post
+    const setComment = await db.collection('user').doc(uid.uid).collection('posts')
+    .doc(title).collection('comment').get();
+
+    //initialize and array storing all the comment data
+    let comments = [];
+    setComment.forEach(comment => {
+      comments.push(comment.data())
+    })
+
+    //Return the array of comments
+    return res.send(comments);
+  })()
+})
+
 router.post('/comment', (req, res, next) => {
   const userEmail = req.body.userEmail;
   const email = req.body.email;

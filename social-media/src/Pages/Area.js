@@ -1,10 +1,10 @@
 import React from 'react'
-import '../Css/Explore.css';
+import '../Css/Area.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import Searchbar from '../Components/Searchbar';
 import { withHistory } from 'react-router-dom';
-import HomeIcon from '@material-ui/icons/Home';
+import PublicIcon from '@material-ui/icons/Public';
 import { Nav } from 'react-bootstrap';
 
 class Main extends React.Component {
@@ -33,11 +33,6 @@ class Main extends React.Component {
         })
         .then(response => response.json()).then(data => {
             this.setState({ Post: data });
-        }),
-
-        fetch("http://localhost:5000/users/usersnear")
-        .then(response => response.json()).then(data => {  
-            console.log(data);
         }),
         
         fetch("http://localhost:5000/backend/mylikes", {
@@ -73,36 +68,23 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div className="homepage">
-                <div className="container-main">
+            <div className="area-page">
+                <div className="container-area">
                     <section className="create-section">
-                        <Navigation eventKey="1" />
+                        <Navigation eventKey="3" />
                     </section>
                     
                     <section className="content-section">
                         <div className="content-div">
-                            <div className="main-header">
-                                <HomeIcon style={{marginTop: 'calc(0.7vh)'}} fontSize="large" />
-                                <h2>Home</h2>
+                            <div className="area-header">
+                                <PublicIcon style={{marginTop: 'calc(0.7vh)'}} fontSize="large" />
+                                <h2>Global Explore</h2>
                             </div>
                             {this.state.Post.map(post => {
                                 return (
                                     <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
                                 )
                             })}
-
-                            {this.state.Post.length <= 7 && this.state.Post.length > 0 ? 
-                                <section className="suggest-follow">
-                                    <h1>You're feed looks a little empty, try adding users with the searchbar or through Explore</h1>
-                                </section> 
-                            : null}
-
-                            {this.state.Post.length === 0 && this.state.isEmpty ? 
-                                <section className="suggest-follow">
-                                    <h1>You're feed is empty, try adding users with the searchbar or through Explore</h1>
-                                </section> 
-                            : null}
-
                         </div>
                     </section>
 

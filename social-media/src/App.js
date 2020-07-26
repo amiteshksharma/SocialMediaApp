@@ -9,6 +9,7 @@ import Signup from './Pages/Signup';
 import Users from './Pages/Users';
 import Explore from './Pages/Explore';
 import Post from './Pages/Post';
+import Area from './Pages/Area';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -20,6 +21,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={Login}></Route>
+          <Route exact path="/area" component={Area} />
           <Route path="/home" component={Main} />
           <Route path="/create" component={Create} />
           <Route exact path="/profile/:email" component={Profile} />

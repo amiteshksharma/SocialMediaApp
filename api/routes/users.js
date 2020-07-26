@@ -41,7 +41,8 @@ router.post('/register', function(req, res, next) {
       // console.log(user);
       db.collection('user').doc(user.uid).set({
         Email: user.email,
-        Name: user.displayName
+        Name: user.displayName,
+        Bio: "Your bio is default to this message. Click the pencil to edit it."
       });
       //Send the obj back to the frontend to use for other methods
       const obj = {
@@ -194,26 +195,33 @@ router.post('/username', (req, res, next) => {
   })();
 })
 
+/**
+ * Get all the posts of the user's following list
+ */
 router.post('/followerspost', (req, res, next) => {
+  //Get the mail of the current user
   const currUser = req.body.currUser;
 
   (async () => {
     admin.auth().getUserByEmail(currUser).then(async (userRecord) => { 
+      //Get the current user's uid
       const user = userRecord.toJSON();
       const uid = user.uid;
 
-      const getFollowers = await db.collection('user').doc(uid).collection('followers').get().then(snapshot => {
+      //Get the list of followers from FireStore
+      const getFollowers = await db.collection('user').doc(uid).collection('following').get().then(snapshot => {
         let arr = [];
         snapshot.forEach(doc => {
-          console.log(doc.id, " => ", doc.data());
           arr.push(doc.id);
         })
         return arr;
       });
 
+      //Convert all emails to uids
       const getUids = await getUidFromEmail(getFollowers);
       let getAllPosts = [];
 
+      //Push all the posts of each uid into array
       for(let uid of getUids) {
         let getPosts = await getBlogPosts(uid);
         //Loop through each post and push to array
@@ -222,6 +230,7 @@ router.post('/followerspost', (req, res, next) => {
         }
       }
 
+      //Return Array containing all posts
       return res.send(getAllPosts);
     }).catch(error => {
       console.log(error);
@@ -229,18 +238,38 @@ router.post('/followerspost', (req, res, next) => {
   })();
 })
 
+/**
+ * Return the usernames of all the users
+ * Used for the searchbar
+ */
 router.get('/getusernames', (req, res, next) => {
   (async () => {
     let usernames = [];
   
+    //Get the users
     const users = db.collection('user');
     const snapshot = await users.get();
+
+    //Push each user's name into the array
     snapshot.forEach(doc => {
       usernames.push(doc.data().Name);
     });
   
+    //Return the array containing all the user's names
     return res.send(usernames);
   })();
+})
+
+router.get('/usersnear', (req, res, next) => {
+  (async () =>{
+    const usersLocation = db.collection('user').where("State", "==", "CA").get().then(snap => {
+      snap.forEach(doc => {
+        console.log("State: ",  doc.id, " => ", doc.data());
+      })
+    });
+  })()
+
+  return res.send("hello");
 })
 
 /**

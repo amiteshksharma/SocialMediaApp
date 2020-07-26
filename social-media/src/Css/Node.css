@@ -2,6 +2,8 @@
     width: 100%;
     border-bottom: 1px solid black;
     position: relative;
+    padding-top: calc(1vh);
+    padding-bottom: calc(1vh);
 }
 
 /* The profile icon and Name of the user */
@@ -14,6 +16,7 @@
     font-size: calc(1.2vw);
     margin-top: calc(1vh);
     margin-left: calc(0.3vw);
+    color: white;
 }
 
 /* The display of the user's bio in the Node */
@@ -24,6 +27,7 @@
 
 .bio h4 {
     font-size: calc(0.9vw);
+    color: white;
 }
 
 /* The 'followed' button */

@@ -1,6 +1,6 @@
 /* General layout for the page */
 .users {
-    background-color: rgb(212, 230, 247);
+    background-color: rgb(21, 32, 43);
     min-height: calc(100vh);
     height: auto;
 }
@@ -17,8 +17,8 @@
 /* The outer border line */
 .border-line {
     width: 40%;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
     display: flex;
     flex-direction: column;
 }
@@ -33,9 +33,9 @@
     width: calc(50%);
     border: none;
     height: calc(6vh);
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid white;
     font-size: calc(1.5vw);
-    color: black;
+    color: white;
 }
 
 .user-tab button:focus {
@@ -45,7 +45,7 @@
 }
 
 .user-tab button:first-child {
-    border-right: 1px solid black;
+    border-right: 1px solid white;
 }
 
 .user-tab button:hover {
@@ -56,7 +56,7 @@
 .profile-goback {
     position: absolute;
     left: calc(15vw);
-    top: calc(10vh);
+    top: calc(3vh);
 }
 
 .profile-goback button {
@@ -66,13 +66,14 @@
     border: none;
     border-left: none;
     border-radius: calc(1rem);
-    background-color: rgb(212, 230, 247);
+    background-color: rgb(21, 32, 43);
+    color: white;
     font-size: calc(1.1vw);
     transition: cubic-bezier(0.25, 0.35, 0.75, 1) 0.3s;
 }
 
 .profile-goback button:hover {
-    background-color: rgb(0, 123, 255);
+    background-color: rgb(21, 97, 160);
     color: white;
     transition: cubic-bezier(0.25, 0.35, 0.75, 1) 0.3s;
 }

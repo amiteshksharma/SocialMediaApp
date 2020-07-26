@@ -1,0 +1,76 @@
+/*
+    STYLING FOR MAIN.JS
+ */
+
+ .area-page {
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh);
+    background-color: rgb(21, 32, 43);
+}
+
+.container-area {
+    display: flex;
+    flex-direction: row;
+}
+
+.create-section {
+    position: absolute;
+    left: calc(18vw);
+    top: calc(9vh);
+    padding: calc(0.2vw);
+    border-radius: calc(0.7vw);
+    transition: 0.3s;
+}
+
+.content-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-div {
+    width: calc(40%);
+    border: 1px solid white;
+    border-top: none;
+    border-bottom: none;
+    height: auto;
+    min-height: calc(100vh);
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.area-header {
+    border-bottom: 1px solid white;
+    color: white;
+    display: flex;
+    flex-direction: row;
+}
+
+.area-header h2 {
+    margin-bottom: calc(1vh);
+    margin-top: calc(1vh);
+    margin-left: calc(0.7vw);
+    font-size: calc(1.3vw);
+}
+
+/* Searchbar for searching for users */
+.searchbar-main {
+    position: absolute;
+    right: calc(6vw);
+    top: calc(5.5vh);
+    height: calc(8vh);
+    box-shadow: 2px 2px 10px rgb(0, 0, 0);
+    border-radius: calc(1rem);
+    padding: calc(1vw);
+    background-color: rgb(29, 49, 70);
+}
+
+/*
+    STYLING FOR DRAWERITEM.JS IN THE COMPONENTS FOLDER
+ */
+.right {
+    width: calc(15vw);
+}

@@ -23,7 +23,7 @@ export default function Navigation(props) {
         <Nav defaultActiveKey={props.eventKey} className="flex-column" >
             <Nav.Link eventKey="1" onClick={(e) => history.push('/home')}>Home</Nav.Link>
             <Nav.Link eventKey="2" onClick={(e) => history.push('/explore')}>Explore</Nav.Link>
-            <Nav.Link eventKey="3">Area Search</Nav.Link>
+            <Nav.Link eventKey="3" onClick={(e) => history.push('/area')}>Area Search</Nav.Link>
             <Nav.Link eventKey="4" onClick={(e) => setRight({Right: true})}>Profile</Nav.Link>
             <Nav.Link eventKey="5" onClick={(e) => createPost()}>Create Post</Nav.Link>
         </Nav>

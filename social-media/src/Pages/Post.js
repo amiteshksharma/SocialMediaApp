@@ -18,17 +18,20 @@ class Post extends React.Component {
                     Body: ''
                 }
             },
-            Comment: ''
+            Comment: '',
+            CommentPost: []
         }
 
         this.enterComment = this.enterComment.bind(this);
+        this.compareObjects = this.compareObjects.bind(this);
     }
 
     componentDidMount() {
         const getEmail = this.props.match.params.email;
         const getTitle = this.props.match.params.title;
 
-        fetch("http://localhost:5000/backend/getpost", {
+        Promise.all([
+            fetch("http://localhost:5000/backend/getpost", {
             method: 'POST',
             body: JSON.stringify({
                 email: getEmail,
@@ -44,7 +47,52 @@ class Post extends React.Component {
                 console.log(this.state.Post.post.Title );
             }).catch(error => {
                 console.log("Error");
-            }) 
+            }),
+
+            fetch("http://localhost:5000/backend/getcomment", {
+            method: 'POST',
+            body: JSON.stringify({
+                email: getEmail,
+                title: getTitle
+            }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                this.setState({CommentPost: data});
+            }).catch(error => {
+                console.log("Error");
+            })
+        ])
+    }
+
+    componentWillUpdate() {
+        const getEmail = this.props.match.params.email;
+        const getTitle = this.props.match.params.title;
+
+        fetch("http://localhost:5000/backend/getcomment", {
+            method: 'POST',
+            body: JSON.stringify({
+                email: getEmail,
+                title: getTitle
+            }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+            }).then(response => response.json()).then(data => {
+                console.log(data)
+                console.log(this.state.CommentPost);
+                console.log(this.compareObjects(data, this.state.CommentPost));
+                if(this.compareObjects(data, this.state.CommentPost)) {
+                    //Do nothing, avoid infinite loop
+                } else {
+                    this.setState({CommentPost: data});
+                    return;
+                }
+            }).catch(error => {
+                console.log("Error");
+            })    
     }
 
     enterComment() {
@@ -68,6 +116,17 @@ class Post extends React.Component {
             }).catch(error => {
                 console.log("Error");
             }) 
+    }
+
+    compareObjects(objOne, objTwo) {
+        let objectsAreSame = true;
+        for(let obj in objOne) {
+            if(objOne[obj].Comment !== objTwo[obj].Comment) {
+                objectsAreSame = false;
+                break;
+            }
+        }
+        return objectsAreSame;
     }
 
     render() {
@@ -123,16 +182,20 @@ class Post extends React.Component {
                                 as="textarea" rows="4" 
                                 style={{width: 'calc(18vw)', color: 'white', backgroundColor: 'rgb(21, 32, 43)', marginLeft: 'calc(1.2vw)'}} 
                                 onChange={(e) => this.setState({Comment: e.target.value})}
-                                maxLength="350"
+                                maxLength="275"
                             /> 
                             <Button variant="dark" onClick={() => this.enterComment()}>Comment</Button>{' '}
                             <hr style={{width: 'calc(95%)'}}/> 
                         </div>
 
-                        <div className="comment-tile">
-                            <h1>Amitesh Sharma</h1>
-                            <p>This is a great comment and I really think it ties into the what the post is saying</p>
-                        </div>
+                        {this.state.CommentPost.map(comment => {
+                            return (
+                                <div className="comment-tile">
+                                    <h1>{comment.Name}</h1>
+                                    <p>{comment.Comment}</p>
+                                </div>
+                            )
+                        })}
                     </section>
                 </div>
             </div>
