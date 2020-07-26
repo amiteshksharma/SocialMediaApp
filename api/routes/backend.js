@@ -328,11 +328,50 @@ router.post('/getpost', (req, res, next) => {
   })()
 })
 
+router.post('/comment', (req, res, next) => {
+  const userEmail = req.body.userEmail;
+  const email = req.body.email;
+  const title = req.body.title;
+  const comment = req.body.comments;
+
+  (async () => {
+    //Get the uid of the user
+    const uid = await getUidOfUser(email);
+    //Get the uid of the current user
+    const currUid = await getUidOfUser(userEmail);
+
+    //set the comment to the specific post
+    const setComment = await db.collection('user').doc(uid.uid).collection('posts')
+    .doc(title).collection('comment').doc(makeid()).set({
+      Name: currUid.displayName,
+      Comment: comment 
+    });
+
+    //Return true if it works
+    return res.send(true);
+  })()
+})
+
 /**
  * -----------------------------------------
  * BEGINNING OF HELPER METHODS FOR THIS FILE
  * -----------------------------------------
  */
+
+/**
+* Method to generate a random String to store comments in the database
+*/
+function makeid() {
+  var result = '';
+  //The characters to select from
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  //Loop through the characters and get a random char and append to 'results
+  for ( var i = 0; i < 15; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 /**
  * Return the uid of the email that is passed

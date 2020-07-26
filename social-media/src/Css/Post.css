@@ -1,36 +1,49 @@
+.postpage {
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh);
+    background-color: rgb(21, 32, 43);
+}
+
 .post-container {
-    width: 100%;
-    min-height: calc(94vh);
     display: flex;
-    justify-content: left;
-    padding-left: calc(25vw);
+    flex-direction: row;
 }
 
-.border-post {
-    width: calc(55%);
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-}
-
-.post-style {
-    position: relative;
-    width: 100%;
+.post-section {
+    width: calc(100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.post-style {
+    width: calc(40%);
+    border: 1px solid white;
+    border-top: none;
+    border-bottom: none;
+    height: auto;
+    min-height: calc(100vh);
+    height: auto;
+    display: flex;
+    flex-direction: column;   
 }
 
 /* Styling for the header at the top for the post */
 .user-information-post {
+    position: relative;
     display: flex;
     flex-direction: row;
     margin-left: calc(0.5vw);
     margin-top: calc(0.3vh);
+    color: white;
 }
 
 .userinfo-name {
     font-size: calc(2.5vh) !important;
     margin-top: calc(1.8vh);
+    color: white;
 }
 
 /* Styling for the favicon */
@@ -53,10 +66,12 @@
 
 .post-title h1 {
     font-size: calc(1.3vw);
+    color: white;
 }
 
 hr {
     width: 85%;
+    background-color: white;
 }
 
 /* Styling for the paragraph below */
@@ -68,15 +83,19 @@ hr {
 
 .post-paragraph h1 {
     font-size: calc(1vw);
+    color: white;
 }
 
 /* Styling for the comment section */
 .comment-section {
-    box-shadow: 5px 5px 15px rgb(161, 161, 161);
+    position: absolute;
+    right: calc(4vw);
+    top: calc(1vh);
+    box-shadow: 5px 5px 15px rgb(0, 0, 0);
     border-radius: calc(1rem);
     height: calc(90vh);
     margin-top: calc(1.5vh);
-    width: calc(30%);
+    width: calc(20%);
     margin-left: calc(3vw);
     overflow-y: auto;
 }
@@ -98,13 +117,22 @@ hr {
     margin-top: calc(-0.3vh);
 }
 
+.comment-box .btn {
+    margin-left: calc(14.2vw) !important;
+}
+
 /* The tile for the comment */
 .comment-tile {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid white;
     border-radius: calc(0vw);
     margin-right: calc(0.5rem);
     margin-left: calc(0.5rem);
     margin-bottom: calc(0.5rem);
+    color: white;
+}
+
+.comment-header {
+    color: white;
 }
 
 .comment-tile h1 {
@@ -115,5 +143,15 @@ hr {
 
 .comment-tile p {
     font-size: calc(0.8vw);
+    color: white;
     margin-left: calc(0.7vw);
+}
+
+.create-section {
+    position: absolute;
+    left: calc(18vw);
+    top: calc(9vh);
+    padding: calc(0.2vw);
+    border-radius: calc(0.7vw);
+    transition: 0.3s;
 }
