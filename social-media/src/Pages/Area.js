@@ -22,7 +22,7 @@ class Main extends React.Component {
 
     componentDidMount() {
         Promise.all([
-        fetch("http://localhost:5000/users/followerspost", {
+        fetch("https://bloggers-spot.herokuapp.com//users/followerspost", {
             method: 'POST',
             body: JSON.stringify({
                 currUser: sessionStorage.getItem('Email')
@@ -35,7 +35,7 @@ class Main extends React.Component {
             this.setState({ Post: data });
         }),
         
-        fetch("http://localhost:5000/backend/mylikes", {
+        fetch("https://bloggers-spot.herokuapp.com//backend/mylikes", {
             method: 'POST',
             body: JSON.stringify({
                 email: sessionStorage.getItem('Email'),

@@ -31,7 +31,7 @@ class Post extends React.Component {
         const getTitle = this.props.match.params.title;
 
         Promise.all([
-            fetch("http://localhost:5000/backend/getpost", {
+            fetch("https://bloggers-spot.herokuapp.com//backend/getpost", {
             method: 'POST',
             body: JSON.stringify({
                 email: getEmail,
@@ -49,7 +49,7 @@ class Post extends React.Component {
                 console.log("Error");
             }),
 
-            fetch("http://localhost:5000/backend/getcomment", {
+            fetch("https://bloggers-spot.herokuapp.com//backend/getcomment", {
             method: 'POST',
             body: JSON.stringify({
                 email: getEmail,
@@ -71,7 +71,7 @@ class Post extends React.Component {
         const getEmail = this.props.match.params.email;
         const getTitle = this.props.match.params.title;
 
-        fetch("http://localhost:5000/backend/getcomment", {
+        fetch("https://bloggers-spot.herokuapp.com//backend/getcomment", {
             method: 'POST',
             body: JSON.stringify({
                 email: getEmail,
@@ -99,7 +99,7 @@ class Post extends React.Component {
         const getEmail = this.props.match.params.email;
         const getTitle = this.props.match.params.title;
 
-        fetch("http://localhost:5000/backend/comment", {
+        fetch("https://bloggers-spot.herokuapp.com//backend/comment", {
             method: 'POST',
             body: JSON.stringify({
                 email: getEmail,

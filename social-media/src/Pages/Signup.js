@@ -22,7 +22,7 @@ class Login extends React.Component {
     console.log(this.state.Password);
     console.log(this.state.Name);
     this.setState({ Loading: true});
-    fetch("http://localhost:5000/users/register", {
+    fetch("https://bloggers-spot.herokuapp.com//users/register", {
       method: 'POST',
       body: JSON.stringify({
         name: this.state.Name,

@@ -17,7 +17,7 @@ class Users extends React.Component {
 
     componentDidMount() {
         Promise.all([
-            fetch("http://localhost:5000/backend/loadprofile", {
+            fetch("https://bloggers-spot.herokuapp.com//backend/loadprofile", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: this.state.Email,
@@ -33,7 +33,7 @@ class Users extends React.Component {
                 console.log("Error");
             }),
 
-            fetch("http://localhost:5000/backend/loadprofile", {
+            fetch("https://bloggers-spot.herokuapp.com//backend/loadprofile", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: this.state.Email,

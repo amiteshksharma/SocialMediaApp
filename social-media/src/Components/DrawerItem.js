@@ -16,7 +16,7 @@ export default function DrawerItem(props) {
   
   const logout = () => {
     console.log("here");
-    fetch("http://localhost:5000/users/logout")
+    fetch("https://bloggers-spot.herokuapp.com//users/logout")
         .then(response => response.text())
         .then(data => {
           console.log(data);

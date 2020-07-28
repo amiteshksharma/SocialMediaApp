@@ -36,7 +36,7 @@ class Profile extends React.Component {
     }
 
     followClick() {
-        fetch(`http://localhost:5000/users/follow`, {
+        fetch(`https://bloggers-spot.herokuapp.com//users/follow`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -52,7 +52,7 @@ class Profile extends React.Component {
     }
 
     unfollowClick() {
-        fetch(`http://localhost:5000/users/unfollow`, {
+        fetch(`https://bloggers-spot.herokuapp.com//users/unfollow`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -70,7 +70,7 @@ class Profile extends React.Component {
     componentDidMount() {
         const email = this.props.match.params.email
         Promise.all([
-            fetch(`http://localhost:5000/backend/posts/${email}`, {
+            fetch(`https://bloggers-spot.herokuapp.com//backend/posts/${email}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json'
@@ -81,7 +81,7 @@ class Profile extends React.Component {
                 this.setState({ Posts: data });    
             }),
 
-            fetch("http://localhost:5000/backend/mylikes", {
+            fetch("https://bloggers-spot.herokuapp.com//backend/mylikes", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: sessionStorage.getItem('Email'),
@@ -97,7 +97,7 @@ class Profile extends React.Component {
                     console.log("Error");
             }),
 
-            fetch("http://localhost:5000/settings/information", {
+            fetch("https://bloggers-spot.herokuapp.com//settings/information", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: this.state.Email,
@@ -111,7 +111,7 @@ class Profile extends React.Component {
                     console.log("Error");
             }),
 
-            fetch("http://localhost:5000/backend/followlist", {
+            fetch("https://bloggers-spot.herokuapp.com//backend/followlist", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: sessionStorage.getItem('Email'),
@@ -128,7 +128,7 @@ class Profile extends React.Component {
                 console.log("Error");
             }),
 
-            fetch("http://localhost:5000/backend/loadprofile", {
+            fetch("https://bloggers-spot.herokuapp.com//backend/loadprofile", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: this.state.Email,
@@ -144,7 +144,7 @@ class Profile extends React.Component {
                 console.log("Error");
             }),
 
-            fetch("http://localhost:5000/backend/loadprofile", {
+            fetch("https://bloggers-spot.herokuapp.com//backend/loadprofile", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: this.state.Email,
@@ -175,7 +175,7 @@ class Profile extends React.Component {
         console.log(this.state.ReadOnly);
         this.setState({ReadOnly: !this.state.ReadOnly}, () => {
             if(this.state.ReadOnly) {
-                fetch("http://localhost:5000/settings/bio", {
+                fetch("https://bloggers-spot.herokuapp.com//settings/bio", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: this.state.Email,
