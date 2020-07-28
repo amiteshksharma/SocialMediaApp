@@ -22,27 +22,27 @@ Features to come:
 All npm packages currently added to the project(for my own keeping)
 
 For the backend:
-  dotenv
-  firebase
-  firebase-tools
-  firebase-admin
-  firebase-functions
-  firebase-tools
-  lodash
-  morgan
-  cors
-  cookie-parser
+  - dotenv
+  - firebase
+  - firebase-tools
+  - firebase-admin
+  - firebase-functions
+  - firebase-tools
+  - lodash
+  - morgan
+  - cors
+  - cookie-parser
 
 For the frontend:
-  react-autosuggest
-  react-bootstrap
-  bootstrap
-  react-router-dom
-  primeicons (May not be used in the project at all)
-  primereact (May not be used in the project at all)
-  @material-ui/core
-  @material-ui/icons
-  @fortawesome/fontawesome-svg-core
+  - react-autosuggest
+  - react-bootstrap
+  - bootstrap
+  - react-router-dom
+  - primeicons (May not be used in the project at all)
+  - primereact (May not be used in the project at all)
+  - @material-ui/core
+  - @material-ui/icons
+  - @fortawesome/fontawesome-svg-core
 
 Storing all data using Firestore storage from Firebase.
 
