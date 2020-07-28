@@ -21,7 +21,7 @@ export default function Favorite(props) {
     }
 
     const loadTotalLikes = () => {
-        fetch("https://bloggers-spot.herokuapp.com//backend/loadlikes", {
+        fetch("https://bloggers-spot.herokuapp.com/backend/loadlikes", {
         method: 'POST',
         body: JSON.stringify({
             email: props.Email,
@@ -40,7 +40,7 @@ export default function Favorite(props) {
     }
 
     const like = () => {
-        fetch("https://bloggers-spot.herokuapp.com//backend/postlike", {
+        fetch("https://bloggers-spot.herokuapp.com/backend/postlike", {
         method: 'POST',
         body: JSON.stringify({
             currentEmail: sessionStorage.getItem('Email'),
@@ -61,7 +61,7 @@ export default function Favorite(props) {
 
     const unlike = () => {
         console.log("here");
-        fetch("https://bloggers-spot.herokuapp.com//backend/unlike", {
+        fetch("https://bloggers-spot.herokuapp.com/backend/unlike", {
         method: 'POST',
         body: JSON.stringify({
             currEmail: sessionStorage.getItem('Email'),

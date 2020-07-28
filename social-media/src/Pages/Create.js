@@ -15,7 +15,7 @@ class Create extends React.Component {
     }
 
     submitPost() {
-        fetch("https://bloggers-spot.herokuapp.com//backend/create", {
+        fetch("https://bloggers-spot.herokuapp.com/backend/create", {
             method: 'POST',
             body: JSON.stringify({
                 title: this.state.Title,
