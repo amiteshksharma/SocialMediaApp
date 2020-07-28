@@ -6,9 +6,15 @@ const logger = require('morgan');
 const cors = require("cors");
 const admin = require('firebase-admin');
 
-const serviceAccount = require("./routes/firebaseSocialMediaKey.json");
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    "client_email": process.env.CLIENT_EMAIL,
+    "private_key": process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+    "project_id": process.env.PROJECT_ID,
+    "private_key_id": process.env.PRIVATE_KEY_ID,
+    "client_id": process.env.CLIENT_ID,
+    "type": process.env.TYPE    
+  }),
   databaseURL: "https://fir-api-9a206..firebaseio.com"
 });
 
