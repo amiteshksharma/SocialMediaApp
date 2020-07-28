@@ -20,7 +20,7 @@ class Explore extends React.Component {
 
     componentDidMount() {
         Promise.all([
-        fetch("https://bloggers-spot.herokuapp.com/backend/loadposts")
+        fetch("/backend/loadposts")
         .then(response => response.json()).then(data => {
             console.log(data);    
             this.setState({ Post: data });
@@ -28,7 +28,7 @@ class Explore extends React.Component {
             console.log("Error");
         }),   
         
-        fetch("https://bloggers-spot.herokuapp.com/backend/mylikes", {
+        fetch("/backend/mylikes", {
             method: 'POST',
             body: JSON.stringify({
                 email: sessionStorage.getItem('Email'),

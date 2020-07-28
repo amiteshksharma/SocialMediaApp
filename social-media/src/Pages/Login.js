@@ -21,7 +21,7 @@ class Login extends React.Component {
   loginRequest() {
     console.log(this.state.Email);
     console.log(this.state.Password);
-    fetch("https://bloggers-spot.herokuapp.com/users/login", {
+    fetch("/users/login", {
       method: 'POST',
       body: JSON.stringify({
         email: this.state.Email,

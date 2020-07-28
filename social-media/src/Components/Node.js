@@ -11,7 +11,7 @@ export default function Node(props) {
     const [follower, setFollower] = useState({Following: false});
 
     useEffect(() => {
-        fetch("https://bloggers-spot.herokuapp.com/users/username", {
+        fetch("/users/username", {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -22,7 +22,7 @@ export default function Node(props) {
         }).then(response => response.json())
         .then(data => {
             setName({Name: data.Name});
-            fetch("https://bloggers-spot.herokuapp.com/backend/followlist", {
+            fetch("/backend/followlist", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: sessionStorage.getItem('Email'),
@@ -43,7 +43,7 @@ export default function Node(props) {
     }, []);
 
     const followClick = () => {
-        fetch(`https://bloggers-spot.herokuapp.com/users/follow`, {
+        fetch(`/users/follow`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -59,7 +59,7 @@ export default function Node(props) {
     }
 
     const unfollowClick = () => {
-        fetch(`https://bloggers-spot.herokuapp.com/users/unfollow`, {
+        fetch(`/users/unfollow`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

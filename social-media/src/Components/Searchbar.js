@@ -27,7 +27,7 @@ class Searchbar extends React.Component {
     };
 
     componentDidMount() {
-        fetch("https://bloggers-spot.herokuapp.com/users/getusernames")
+        fetch("/users/getusernames")
         .then(response => response.json()).then(data => {  
             this.setState({ Usernames: data });
         });
