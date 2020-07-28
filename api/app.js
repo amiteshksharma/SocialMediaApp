@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require("cors");
 const admin = require('firebase-admin');
+require('dotenv').config();
 
 admin.initializeApp({
   credential: admin.credential.cert({

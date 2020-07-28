@@ -22,7 +22,7 @@ export default function Tile(props) {
     return (
         <div className="tile-container" >
             <section className="tile-author">
-                <AccountCircleIcon color="light" style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
+                <AccountCircleIcon style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
                 <h6 className="profile-link"><a href={`/profile/${props.Name}`}>{props.Name}</a></h6>
                 <Favorite Title={props.Title} Email={props.Email} />
             </section>

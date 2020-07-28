@@ -52,6 +52,7 @@ class Searchbar extends React.Component {
     getSuggestionValue(suggestion){
         this.setState({value: suggestion}, () => {
             this.props.history.push(`/profile/${suggestion}`);
+            window.location.reload(false);
         });
         return suggestion;
     } 
