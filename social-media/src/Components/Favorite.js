@@ -9,13 +9,13 @@ export default function Favorite(props) {
     const [likes, setLikes] = useState({Likes: 0});
 
     const checkIsLiked = () => {
-        const getMyLikes = JSON.parse(sessionStorage.getItem('mylikes'));
-        const parseMyLikes = JSON.parse(getMyLikes);
-        if(parseMyLikes === undefined) {
+        const myLikes = props.myLikes;
+        console.log(myLikes);
+        if(myLikes === undefined) {
             return;
         }
         
-        if(parseMyLikes.includes(props.Title)) {
+        if(myLikes.includes(props.Title)) {
             setFavorite({ Favorite: false});
         }   
     }
@@ -31,7 +31,6 @@ export default function Favorite(props) {
             'Content-type': 'application/json'
         }
         }).then(response => response.json()).then(data => {
-            console.log(data); 
             setLikes({Likes: data.Likes});
             
         }).catch(error => {
@@ -50,8 +49,7 @@ export default function Favorite(props) {
         headers: {
             'Content-type': 'application/json'
         }
-        }).then(response => response.text()).then(data => {
-            console.log(data);    
+        }).then(response => response.text()).then(data => { 
             loadTotalLikes();
             console.log("here");
         }).catch(error => {
@@ -71,15 +69,13 @@ export default function Favorite(props) {
         headers: {
             'Content-type': 'application/json'
         }
-        }).then(response => response.text()).then(data => {
-            console.log(data);    
+        }).then(response => response.text()).then(data => {  
             loadTotalLikes();
             console.log("here");
         }).catch(error => {
             console.log("Error");
         });
     }
-
 
     useEffect(() => {
         checkIsLiked();

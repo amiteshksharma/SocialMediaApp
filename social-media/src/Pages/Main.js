@@ -3,9 +3,7 @@ import '../Css/Explore.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import Searchbar from '../Components/Searchbar';
-import { withHistory } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
-import { Nav } from 'react-bootstrap';
 
 class Main extends React.Component {
     constructor(props) {
@@ -48,10 +46,9 @@ class Main extends React.Component {
             headers: {
                 'Content-type': 'application/json'
             }
-            }).then(response => response.text()).then(data => {
+            }).then(response => response.json()).then(data => {
                 this.setState({ MyLikes: data }, () => {
                     console.log(this.state.MyLikes);
-                    sessionStorage.setItem('mylikes', JSON.stringify(this.state.MyLikes));
                 });
 
                 setTimeout(() => {

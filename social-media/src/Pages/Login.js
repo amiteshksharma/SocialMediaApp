@@ -1,7 +1,6 @@
 import React from 'react';
 import '../Css/Login.css';
 import Form from 'react-bootstrap/Form';
-import { withRouter } from 'react-router-dom';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap'; 
 
 class Login extends React.Component {
@@ -31,6 +30,7 @@ class Login extends React.Component {
         'Content-type': 'application/json'
       }
     }).then(response => response.json()).then(data => {
+      console.log(data);
       sessionStorage.setItem('Email', data.Email);
       sessionStorage.setItem('Name', data.Name);
       this.props.history.push('/home');

@@ -3,7 +3,6 @@ import '../Css/Main.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import Searchbar from '../Components/Searchbar';
-import { withHistory } from 'react-router-dom';
 import ExploreIcon from '@material-ui/icons/Explore';
 
 class Explore extends React.Component {
@@ -21,8 +20,7 @@ class Explore extends React.Component {
     componentDidMount() {
         Promise.all([
         fetch("/backend/loadposts")
-        .then(response => response.json()).then(data => {
-            console.log(data);    
+        .then(response => response.json()).then(data => {  
             this.setState({ Post: data });
         }).catch(error => {
             console.log("Error");
@@ -36,7 +34,8 @@ class Explore extends React.Component {
             headers: {
                 'Content-type': 'application/json'
             }
-            }).then(response => response.text()).then(data => {
+            }).then(response => response.json()).then(data => {
+                console.log(data);
                 this.setState({ MyLikes: data}, () => {
                     console.log(this.state.MyLikes);
                 });

@@ -3,9 +3,7 @@ import '../Css/Area.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import Searchbar from '../Components/Searchbar';
-import { withHistory } from 'react-router-dom';
 import PublicIcon from '@material-ui/icons/Public';
-import { Nav } from 'react-bootstrap';
 
 class Main extends React.Component {
     constructor(props) {

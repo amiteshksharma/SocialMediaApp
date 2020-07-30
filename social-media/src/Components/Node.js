@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
-import { useParams } from "react-router-dom";
 import '../Css/Node.css';
 
 export default function Node(props) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../Css/Tile.css';
 import Favorite from './Favorite.js';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -24,7 +24,7 @@ export default function Tile(props) {
             <section className="tile-author">
                 <AccountCircleIcon style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
                 <h6 className="profile-link"><a href={`/profile/${props.Name}`}>{props.Name}</a></h6>
-                <Favorite Title={props.Title} Email={props.Email} />
+                <Favorite Title={props.Title} Email={props.Email} myLikes={props.isLiked} />
             </section>
 
             <div onClick={(e) => handleClick(e)}>

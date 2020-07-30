@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
-import PersonIcon from '@material-ui/icons/Person';
+import React from 'react';
+import { Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import DrawerItem from '../Components/DrawerItem';
 import '../Css/Navigation.css';
 
 export default function Navigation(props) {
-    const [right, setRight] = useState({Right: false});
+    console.log(sessionStorage.getItem('Email'));
     const history = useHistory();
-
-    const handler = () => {
-        setRight({Right: false});    
-    }
 
     const createPost = (e) => {
         history.push(`/create`);
     }
+
+    const logout = () => {
+        console.log("here");
+        fetch("/users/logout")
+            .then(response => response.text())
+            .then(data => {
+              console.log(data);
+              if(data === 'True') {
+                let path = `/`; 
+                sessionStorage.clear();
+                history.push(path);
+              }     
+          });
+      }
+
+      const profile = () => {
+        const email = sessionStorage.getItem("Email");
+        history.push(`/profile/${email}`);
+        window.location.reload(false);
+      }
     
     return (
         <div className="navigation">
@@ -24,18 +37,10 @@ export default function Navigation(props) {
             <Nav.Link eventKey="1" onClick={(e) => history.push('/home')}>Home</Nav.Link>
             <Nav.Link eventKey="2" onClick={(e) => history.push('/explore')}>Explore</Nav.Link>
             <Nav.Link eventKey="3" onClick={(e) => history.push('/area')}>Area Search</Nav.Link>
-            <Nav.Link eventKey="4" onClick={(e) => setRight({Right: true})}>Profile</Nav.Link>
-            <Nav.Link eventKey="5" onClick={(e) => createPost()}>Create Post</Nav.Link>
+            <Nav.Link eventKey="4" onClick={(e) => profile()}>Profile</Nav.Link>
+            <Nav.Link eventKey="5" onClick={(e) => logout()}>Logout</Nav.Link>
+            <Nav.Link eventKey="6" onClick={(e) => createPost()}>Create Post</Nav.Link>
         </Nav>
-
-        <SwipeableDrawer
-            anchor={'left'}
-            open={right.Right}
-            onClose={() => setRight({ Right: false})}
-            onOpen={() => setRight({ Right: true})}
-        >
-            {<DrawerItem handler={handler}/>}
-        </SwipeableDrawer>
     </div>
     )
 }

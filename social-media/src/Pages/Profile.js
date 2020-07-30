@@ -8,7 +8,6 @@ import ProfileIcon from '../Images/download.png';
 import CreateIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Tile from '../Components/Tile';
 import { Form } from 'react-bootstrap';
 
@@ -76,8 +75,6 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
                 }).then(response => response.json()).then(data => {
-                console.log(data);
-                console.log(typeof data);
                 this.setState({ Posts: data });    
             }),
 
