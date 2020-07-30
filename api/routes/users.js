@@ -28,6 +28,7 @@ router.post('/register', function(req, res, next) {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
+  const state = req.body.state;
   
   //Create the user with the variables above
   admin.auth().createUser({
@@ -42,12 +43,13 @@ router.post('/register', function(req, res, next) {
       db.collection('user').doc(user.uid).set({
         Email: user.email,
         Name: user.displayName,
-        Bio: "Your bio is default to this message. Click the pencil to edit it."
+        Bio: "Your bio is default to this message. Click the pencil to edit it.",
+        State: state
       });
       //Send the obj back to the frontend to use for other methods
       const obj = {
         Email: email,
-        Uid: user.uid,
+        State: state,
         Name: user.displayName
       };
   
@@ -188,9 +190,10 @@ router.post('/username', (req, res, next) => {
       //Get the name from the collection
       const getName = await db.collection('user').doc(uid).get();
       const setName = getName.data().Name;
+      const setBio = getName.data().Bio;
 
       //Return the user's name
-      return res.send({Name: setName});
+      return res.send({Name: setName, Bio: setBio});
     })
   })();
 })
@@ -260,16 +263,24 @@ router.get('/getusernames', (req, res, next) => {
   })();
 })
 
-router.get('/usersnear', (req, res, next) => {
-  (async () =>{
-    const usersLocation = db.collection('user').where("State", "==", "CA").get().then(snap => {
-      snap.forEach(doc => {
-        console.log("State: ",  doc.id, " => ", doc.data());
+router.post('/usersnear', (req, res, next) => {
+  const states = req.body.statelist;
+  (async () => {
+    const list = [];
+    for(let state of states) {
+      console.log("State => ", state)
+      const usersLocation = await db.collection('user').where("State", "==", state).get().then(snap => {
+        snap.forEach(doc => {
+          list.push({
+            Name: doc.data().Name,
+            Bio: doc.data().Bio
+          });
+        })
       })
-    });
-  })()
+    }
 
-  return res.send("hello");
+    return res.send(list);
+  })()
 })
 
 /**

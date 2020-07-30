@@ -7,6 +7,7 @@ import '../Css/Node.css';
 export default function Node(props) {
 
     const [name, setName] = useState({Name: ''});
+    const [bio, setBio] = useState({Bio: ''})
     const [follower, setFollower] = useState({Following: false});
 
     useEffect(() => {
@@ -21,6 +22,7 @@ export default function Node(props) {
         }).then(response => response.json())
         .then(data => {
             setName({Name: data.Name});
+            setBio({Bio: data.Bio});
             fetch("/backend/followlist", {
                 method: 'POST',
                 body: JSON.stringify({
@@ -39,6 +41,10 @@ export default function Node(props) {
                 console.log("Error");
             })
         })
+
+        if(props.getName) {
+            setName({Name: props.getName})
+        }
     }, []);
 
     const followClick = () => {
@@ -77,11 +83,11 @@ export default function Node(props) {
         <div className="node-container">
             <section className="information">
                 <AccountCircleIcon color="primary" style={{fontSize: 'calc(2.5vw)'}} />
-                <h2>{name.Name}</h2>
+                <h2>{props.name ? props.name : name.Name}</h2>
             </section>
 
             <section className="bio">
-                <h4>This is a bio that I use for no reason and I am writing filing text to see how this looks and I don'tk now what to say</h4>
+                <h4>{props.bio ? props.bio : bio.Bio}</h4>
             </section>
 
             {props.following === 'ME' ? null : 

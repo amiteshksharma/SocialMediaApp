@@ -2,6 +2,7 @@ import React from 'react';
 import '../Css/Login.css';
 import Form from 'react-bootstrap/Form';
 import { Container, Row, Col, Button, Spinner } from 'react-bootstrap'; 
+import State from '../Components/StatesSignup';
 
 class Login extends React.Component {
 
@@ -11,10 +12,12 @@ class Login extends React.Component {
       Name: '',
       Email: '',
       Password: '',
+      State: 'AL',
       Loading: false
     }
 
     this.signUpRequest = this.signUpRequest.bind(this);
+    this.setUserState = this.setUserState.bind(this);
   }
 
   signUpRequest() {
@@ -27,7 +30,8 @@ class Login extends React.Component {
       body: JSON.stringify({
         name: this.state.Name,
         email: this.state.Email,
-        password: this.state.Password
+        password: this.state.Password,
+        state: this.state.State
       }),
       headers: {
         'Content-type': 'application/json'
@@ -45,6 +49,9 @@ class Login extends React.Component {
       });
   }
 
+  setUserState(value) {
+    this.setState({State: value}, () => console.log(this.state.State));
+  }
 
   render() {
     return (
@@ -65,11 +72,18 @@ class Login extends React.Component {
                       <Form.Control type="text" placeholder="Enter name" 
                       onChange={(e) => this.setState({ Name: e.target.value})}/>
                     </Form.Group>
+                    
+                    <Form.Group controlId="formGroupEmail">
+                      <div><Form.Label>State</Form.Label></div>
+                      <State selected={this.setUserState} />
+                    </Form.Group>
+
                     <Form.Group controlId="formGroupEmail">
                       <div><Form.Label>Email address</Form.Label></div>
                       <Form.Control type="email" placeholder="Enter email" 
                       onChange={(e) => this.setState({ Email: e.target.value})}/>
                     </Form.Group>
+
                     <Form.Group controlId="formGroupPassword">
                       <div><Form.Label>Password</Form.Label></div>
                       <Form.Control type="password" placeholder="Password" 

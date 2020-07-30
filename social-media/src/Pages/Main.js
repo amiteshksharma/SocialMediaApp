@@ -32,11 +32,6 @@ class Main extends React.Component {
         .then(response => response.json()).then(data => {
             this.setState({ Post: data });
         }),
-
-        fetch("/users/usersnear")
-        .then(response => response.json()).then(data => {  
-            console.log(data);
-        }),
         
         fetch("/backend/mylikes", {
             method: 'POST',

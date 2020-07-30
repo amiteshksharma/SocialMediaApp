@@ -355,7 +355,12 @@ router.post('/getcomment', (req, res, next) => {
   })()
 })
 
+/**
+ * Adds comment to a post
+ */
 router.post('/comment', (req, res, next) => {
+  //Takes in the currUser's email, the email and title of post, 
+  //And comment from the currUser
   const userEmail = req.body.userEmail;
   const email = req.body.email;
   const title = req.body.title;

@@ -1,8 +1,9 @@
 import React from 'react'
 import '../Css/Area.css';
 import Navigation from '../Components/Navigation';
-import Tile from '../Components/Tile';
+import Node from '../Components/Node';
 import Searchbar from '../Components/Searchbar';
+import States from '../Components/States';
 import PublicIcon from '@material-ui/icons/Public';
 
 class Main extends React.Component {
@@ -12,35 +13,25 @@ class Main extends React.Component {
             Right: false,
             Post: [],
             MyLikes: [],
+            GetStates: [],
             Username: null,
             UsernamesList: [],
             isEmpty: false
         }
+
+        this.states = this.states.bind(this);
     }
 
     componentDidMount() {
         Promise.all([
-        fetch("/users/followerspost", {
-            method: 'POST',
-            body: JSON.stringify({
-                currUser: sessionStorage.getItem('Email')
-            }),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
-        .then(response => response.json()).then(data => {
-            this.setState({ Post: data });
-        }),
-        
-        fetch("/backend/mylikes", {
-            method: 'POST',
-            body: JSON.stringify({
-                email: sessionStorage.getItem('Email'),
-            }),
-            headers: {
-                'Content-type': 'application/json'
-            }
+            fetch("/backend/mylikes", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: sessionStorage.getItem('Email'),
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
             }).then(response => response.text()).then(data => {
                 this.setState({ MyLikes: data }, () => {
                     console.log(this.state.MyLikes);
@@ -52,7 +43,7 @@ class Main extends React.Component {
                 }, 1000);
             }).catch(error => {
                 console.log("Error");
-            }) 
+            }),
         ]).then();
     }
 
@@ -63,6 +54,10 @@ class Main extends React.Component {
     
         this.setState({ Username: results });
     }
+
+    states(value) {
+        this.setState({GetStates: value}, () => console.log(this.state.GetStates));
+    } 
 
     render() {
         return (
@@ -76,11 +71,12 @@ class Main extends React.Component {
                         <div className="content-div">
                             <div className="area-header">
                                 <PublicIcon style={{marginTop: 'calc(0.7vh)'}} fontSize="large" />
-                                <h2>Global Explore</h2>
+                                <h2>Area Explore</h2>
+                                <States selected={this.states}/>
                             </div>
-                            {this.state.Post.map(post => {
+                            {this.state.GetStates.map(post => {
                                 return (
-                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
+                                    <Node name={post.Name} bio={post.Bio} />
                                 )
                             })}
                         </div>
