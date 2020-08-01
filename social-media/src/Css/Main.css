@@ -7,7 +7,7 @@
     height: auto;
     min-height: calc(100vh);
     /* background-color: rgb(21, 32, 43); */
-    background-color: #102738;
+    background-color: rgb(21, 32, 43);
 }
 
 .container-main {

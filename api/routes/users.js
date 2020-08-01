@@ -112,6 +112,8 @@ router.post('/follow', (req, res, next) => {
   //Get the email of the current user and the profile user's email
   const userEmail = req.body.userEmail;
   const profileEmail = req.body.profileEmail;
+  console.log(profileEmail);
+  console.log(userEmail);
   
   (async () => {
     admin.auth().getUserByEmail(userEmail).then(async (userRecord) => {
@@ -191,9 +193,10 @@ router.post('/username', (req, res, next) => {
       const getName = await db.collection('user').doc(uid).get();
       const setName = getName.data().Name;
       const setBio = getName.data().Bio;
+      const setEmail = getName.data().Email;
 
       //Return the user's name
-      return res.send({Name: setName, Bio: setBio});
+      return res.send({Name: setName, Bio: setBio, Email: setEmail});
     })
   })();
 })
@@ -215,6 +218,8 @@ router.post('/followerspost', (req, res, next) => {
       const getFollowers = await db.collection('user').doc(uid).collection('following').get().then(snapshot => {
         let arr = [];
         snapshot.forEach(doc => {
+          console.log(doc.data());
+          console.log(doc.id);
           arr.push(doc.id);
         })
         return arr;
@@ -247,7 +252,7 @@ router.post('/followerspost', (req, res, next) => {
  */
 router.get('/getusernames', (req, res, next) => {
   (async () => {
-    let usernames = [];
+    let usernames = {};
   
     //Get the users
     const users = db.collection('user');
@@ -255,7 +260,9 @@ router.get('/getusernames', (req, res, next) => {
 
     //Push each user's name into the array
     snapshot.forEach(doc => {
-      usernames.push(doc.data().Name);
+      let name = doc.data().Name;
+      let email = doc.data().Email;
+      usernames[name] = email;
     });
   
     //Return the array containing all the user's names
@@ -273,7 +280,8 @@ router.post('/usersnear', (req, res, next) => {
         snap.forEach(doc => {
           list.push({
             Name: doc.data().Name,
-            Bio: doc.data().Bio
+            Bio: doc.data().Bio,
+            Email: doc.data().Email
           });
         })
       })
@@ -319,6 +327,7 @@ async function getUidFromEmail(arr) {
   const array = [];
   //Loop through the 'arr' parameter
   for(let user of arr) {
+    console.log(user);
     //Convert each email to the uid using getUserByEmail
     const getuid = admin.auth().getUserByEmail(user).then(async (userRecord) => {
       return userRecord.toJSON().uid;

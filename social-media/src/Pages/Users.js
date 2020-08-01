@@ -11,7 +11,8 @@ class Users extends React.Component {
         this.state = {
             Email: this.props.match.params.email,
             Followers: [],
-            Following: []
+            Following: [],
+            UserFollowing: []
         }
     }
 
@@ -29,6 +30,22 @@ class Users extends React.Component {
             }).then(response => response.json()).then(data => {
                 console.log(data);
                 this.setState({Following: data});
+            }).catch(error => {
+                console.log("Error");
+            }),
+
+            fetch("/backend/loadprofile", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: sessionStorage.getItem('Email'),
+                    follow: 'following'
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => {
+                console.log("Here: ", data);
+                this.setState({UserFollowing: data});
             }).catch(error => {
                 console.log("Error");
             }),
@@ -81,18 +98,26 @@ class Users extends React.Component {
                                         let isFollowing = false;
                                         if(follower === sessionStorage.getItem('Email')) {
                                             isFollowing = "ME"
-                                        } else if(this.state.Following.length === 0) {
+                                        } else if(this.state.Followers .length === 0) {
                                             isFollowing = "No Followers";
-                                        } else if(this.state.Following.includes(follower)) {
+                                        } else if(this.state.Followers.includes(follower)) {
                                             isFollowing = true;
                                         }
 
                                         return <Node user={follower} email={follower} following={isFollowing}/> }) 
                                     : 
                                     
-                                    this.state.Following.map(following => (
-                                        <Node user={this.state.Email} email={following} following={true} />
-                                    )) }
+                                    this.state.Following.map(following => {
+                                        let isFollowing = false;
+                                        if(following === sessionStorage.getItem('Email')) {
+                                            isFollowing = "ME"
+                                        } else if(this.state.Followers.length === 0) {
+                                            isFollowing = "No Followers";
+                                        } else if(this.state.UserFollowing.includes(following)) {
+                                            isFollowing = true;
+                                        }
+                                        return ( <Node user={this.state.Email} email={following} following={isFollowing} /> )
+                                }) }
                             </div>
                         </section>
                     </div>

@@ -27,7 +27,12 @@ export default function Navigation(props) {
 
       const profile = () => {
         const email = sessionStorage.getItem("Email");
-        history.push(`/profile/${email}`);
+        const name = sessionStorage.getItem("Name")
+        history.push({
+          pathname: `/profile/${name}`,
+          query: '?user=user',
+          state: { name: email}
+        });
         window.location.reload(false);
       }
     

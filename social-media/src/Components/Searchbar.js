@@ -11,7 +11,8 @@ class Searchbar extends React.Component {
         this.state = {
             value: '',
             suggestions: [],
-            Usernames: []
+            Usernames: [],
+            Users: {}
         };    
 
         this.renderSuggestion = this.renderSuggestion.bind(this);
@@ -29,7 +30,9 @@ class Searchbar extends React.Component {
     componentDidMount() {
         fetch("/users/getusernames")
         .then(response => response.json()).then(data => {  
-            this.setState({ Usernames: data });
+            console.log(data);
+            
+            this.setState({ Usernames: Object.keys(data), Users: data });
         });
     }
 
@@ -50,8 +53,12 @@ class Searchbar extends React.Component {
     }
 
     getSuggestionValue(suggestion){
-        this.setState({value: suggestion}, () => {
-            this.props.history.push(`/profile/${suggestion}`);
+        this.setState({value: this.state.Users[suggestion]}, () => {
+            this.props.history.push({
+                pathname: `/profile/${suggestion}`,
+                search: `?user=user`,
+                state: { name: this.state.Users[suggestion] }
+            });
             window.location.reload(false);
         });
         return suggestion;

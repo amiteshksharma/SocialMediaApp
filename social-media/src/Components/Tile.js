@@ -10,13 +10,21 @@ export default function Tile(props) {
 
     const routeChange = () => { 
         let path = `/profile/${props.Name}`; 
-        history.push(path);
+        history.push({
+            pathname: path,
+            query: '?user=user',
+            state: { name: props.Email}
+        });
     }
 
     const handleClick = (e) => {
         console.log(props);
         console.log("here")
-        history.push(`/post/${props.Email}/${props.Title}`);
+        history.push({
+            pathname: `/post/${props.Name}/${props.Title}`,
+            query: '?post=post',
+            state: { name: props.Email, title: props.Title}
+        });
     }
     
     return (

@@ -17,7 +17,7 @@ class Profile extends React.Component {
         super(props);
         this.state = {
             Posts: [],
-            Email: this.props.match.params.email,
+            Email: this.props.location.state.name,
             MyLikes: [],
             Follower: false,
             Following: 0,
@@ -35,39 +35,75 @@ class Profile extends React.Component {
     }
 
     followClick() {
-        fetch(`/users/follow`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                userEmail: sessionStorage.getItem('Email'),
-                profileEmail: this.state.Email
-            })
-        }).then(response => response.text()).then(data => {
+        Promise.all([
+            fetch(`/users/follow`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userEmail: sessionStorage.getItem('Email'),
+                    profileEmail: this.state.Email
+                })
+            }).then(response => response.text()).then(data => {
                 console.log(data);
                 this.setState({Follower: data})
+            }),
+    
+            fetch("/backend/loadprofile", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: this.state.Email,
+                    follow: 'followers'
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                this.setState({Followers: data.length});
+            }).catch(error => {
+                console.log("Error");
             })
+        ]).then();
     }
 
     unfollowClick() {
-        fetch(`/users/unfollow`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                userEmail: sessionStorage.getItem('Email'),
-                profileEmail: this.state.Email
-            })
-        }).then(response => response.text()).then(data => {
+        Promise.all([
+            fetch(`/users/unfollow`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userEmail: sessionStorage.getItem('Email'),
+                    profileEmail: this.state.Email
+                })
+            }).then(response => response.text()).then(data => {
                 console.log(data);
-                this.setState({Follower: false})
+                this.setState({Follower: false});
+            }),
+    
+            fetch("/backend/loadprofile", {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: this.state.Email,
+                    follow: 'followers'
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                this.setState({Followers: data.length});
+            }).catch(error => {
+                console.log("Error");
             })
+        ]).then();
     }
 
     componentDidMount() {
-        const email = this.props.match.params.email
+        const email = this.props.location.state.name
         Promise.all([
             fetch(`/backend/posts/${email}`, {
                 method: 'GET',

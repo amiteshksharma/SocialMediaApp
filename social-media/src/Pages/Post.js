@@ -27,8 +27,8 @@ class Post extends React.Component {
     }
 
     componentDidMount() {
-        const getEmail = this.props.match.params.email;
-        const getTitle = this.props.match.params.title;
+        const getEmail = this.props.location.state.name;
+        const getTitle = this.props.location.state.title;
 
         Promise.all([
             fetch("/backend/getpost", {
@@ -68,8 +68,8 @@ class Post extends React.Component {
     }
 
     componentWillUpdate() {
-        const getEmail = this.props.match.params.email;
-        const getTitle = this.props.match.params.title;
+        const getEmail = this.props.location.state.name;
+        const getTitle = this.props.location.state.title;
 
         fetch("/backend/getcomment", {
             method: 'POST',
@@ -96,8 +96,8 @@ class Post extends React.Component {
     }
 
     enterComment() {
-        const getEmail = this.props.match.params.email;
-        const getTitle = this.props.match.params.title;
+        const getEmail = this.props.location.state.name;
+        const getTitle = this.props.location.state.title;
 
         fetch("/backend/comment", {
             method: 'POST',
@@ -154,7 +154,7 @@ class Post extends React.Component {
                                 </Media>
 
                                 <div className="fav-icon">
-                                    <Favorite Title={this.props.match.params.title} Email={this.props.match.params.email} />
+                                    <Favorite Title={this.props.location.state.title} Email={this.props.location.state.name} />
                                 </div>
                             </div>
 

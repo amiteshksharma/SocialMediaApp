@@ -45,6 +45,7 @@
     position: absolute;
     top: calc(2.5vh);
     right: calc(1vw);
+    z-index: 2;
 }
 
 /* The 'follow' button */
@@ -61,7 +62,8 @@
     position: absolute;
     top: calc(2.5vh);
     right: calc(1vw);
-    transition: 0.2s;   
+    transition: 0.2s;  
+    z-index: 2; 
 }
 
 .follow-button-node:hover {

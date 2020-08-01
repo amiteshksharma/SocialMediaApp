@@ -280,6 +280,7 @@ router.post('/followlist', (req, res, next) => {
 router.post('/loadprofile', (req, res, next) => {
   //Email of the profile user
   const email = req.body.email;
+  console.log(email);
   //A keyword that is either "followers" or "following"
   const follow = req.body.follow;
   (async () => {
