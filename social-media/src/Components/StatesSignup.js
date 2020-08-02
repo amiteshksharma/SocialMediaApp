@@ -8,7 +8,7 @@ export default class StateList extends Component {
 
   render() {
     return (
-      <Form.Control as="select" placeHolder="Select State" onChange={(e) => this.props.selected(e.target.value)}>
+      <Form.Control as="select" placeHolder="Select State" onChange={(e) => this.props.selected(e.target.value)} required>
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>

@@ -9,7 +9,8 @@ class Users extends React.Component {
         super(props);
 
         this.state = {
-            Email: this.props.match.params.email,
+            Email: this.props.location.state.name,
+            Name: this.props.location.state.user,
             Followers: [],
             Following: [],
             UserFollowing: []
@@ -69,8 +70,8 @@ class Users extends React.Component {
     }
 
     render() {
-        console.log(this.props.match.params.follow);
-        console.log(this.state.Following);
+        console.log(this.props.location);
+        console.log(this.state.Email);
         return (
             <div className="users">
                 <div className="users-layout">
@@ -79,7 +80,11 @@ class Users extends React.Component {
                     </section>
 
                     <div className="profile-goback">
-                        <button onClick={() => this.props.history.push(`/profile/${this.props.match.params.email}`)}> 
+                        <button onClick={() => this.props.history.push({
+                            pathname: `/profile/${this.state.Name}`,
+                            search: '?profile=profile',
+                            state: { name: this.state.Email}
+                        })}> 
                             <i className="pi pi-caret-left" style={{fontSize: 'calc(1.1rem)', paddingRight: 'calc(0.3vw)'}}></i>Return to profile
                         </button>
                     </div>
@@ -87,8 +92,8 @@ class Users extends React.Component {
                     <div className="border-line">
                         <section className="user-section">
                             <div className="user-tab">
-                                <button onClick={() => this.props.history.push(`/profile/${this.state.Email}/followers`)}>Followers</button>
-                                <button onClick={() => this.props.history.push(`/profile/${this.state.Email}/following`)}>Following</button>
+                                <button onClick={() => this.props.history.push(`/profile/${this.state.Name}/followers`)}>Followers</button>
+                                <button onClick={() => this.props.history.push(`/profile/${this.state.Name}/following`)}>Following</button>
                             </div>
                         </section>
                         <section className="user-div">

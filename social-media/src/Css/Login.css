@@ -57,3 +57,16 @@
   .forgot-password-btn:hover, .user-register-btn:hover, .user-login-btn:hover {
     color: rgb(111, 113, 114);  
   }
+
+  /* Displaying the error message */
+  .error-display {
+    position: absolute;
+    bottom: calc(50vh);
+    right: calc(26vw);
+    width: calc(12vw);
+    background-color: rgb(194, 69, 69);
+    color: white;
+  }
+  .error-display p {
+    font-size: calc(1.2vw);
+  }

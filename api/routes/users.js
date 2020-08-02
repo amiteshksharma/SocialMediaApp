@@ -57,7 +57,7 @@ router.post('/register', function(req, res, next) {
     })
   }).catch((error) => {
     console.log(error);
-    res.status(404).send("Error");
+    return res.send({Error: error.message});
   })
 });
 

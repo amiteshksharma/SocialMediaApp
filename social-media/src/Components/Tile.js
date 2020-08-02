@@ -7,22 +7,18 @@ import { useHistory } from 'react-router-dom';
 export default function Tile(props) {
     const history = useHistory();
 
-
-    const routeChange = () => { 
-        let path = `/profile/${props.Name}`; 
+    console.log(props);
+    const routeChange = (e) => {  
         history.push({
-            pathname: path,
-            query: '?user=user',
+            pathname: `/profile/${props.Name}`,
             state: { name: props.Email}
         });
     }
 
     const handleClick = (e) => {
-        console.log(props);
-        console.log("here")
         history.push({
             pathname: `/post/${props.Name}/${props.Title}`,
-            query: '?post=post',
+            search: '?post=post',
             state: { name: props.Email, title: props.Title}
         });
     }
@@ -31,7 +27,7 @@ export default function Tile(props) {
         <div className="tile-container" >
             <section className="tile-author">
                 <AccountCircleIcon style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
-                <h6 className="profile-link"><a href={`/profile/${props.Name}`}>{props.Name}</a></h6>
+                <h6 className="profile-link" onClick={routeChange}>{props.Name}</h6>
                 <Favorite Title={props.Title} Email={props.Email} myLikes={props.isLiked} />
             </section>
 

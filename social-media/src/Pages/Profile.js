@@ -103,7 +103,8 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        const email = this.props.location.state.name
+        const email = this.props.location.state.name;
+        console.log(this.props.location);
         Promise.all([
             fetch(`/backend/posts/${email}`, {
                 method: 'GET',
@@ -198,9 +199,15 @@ class Profile extends React.Component {
     redirectFollows(tab) {
         if(tab === 'followers') {
             console.log("here");
-            this.props.history.push(`/profile/${this.state.Email}/followers`);
+            this.props.history.push({
+                pathname: `/profile/${this.state.Profile.Name}/followers`,
+                state: { name: this.state.Email, user: this.state.Profile.Name }
+            });
         } else {
-            this.props.history.push(`/profile/${this.state.Email}/following`);    
+            this.props.history.push({
+                pathname: `/profile/${this.state.Profile.Name}/following`,
+                state: { name: this.state.Email, user: this.state.Profile.Name }
+            });  
         }
     }
 

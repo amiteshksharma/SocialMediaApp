@@ -13,7 +13,7 @@
 
 .tile-author {
     width: calc(100%);
-    color: white;
+    color: rgb(255, 255, 255);
     display: flex;
     flex-direction: row;
 }
@@ -24,12 +24,15 @@
     margin-left: calc(0.4vw);
 }
 
-.profile-link a { 
+.profile-link { 
     color: rgb(148, 148, 148);
+    cursor: pointer;
 }
 
-.profile-link a:hover {
+.profile-link:hover {
     color: rgb(148, 148, 148);
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* Styling for the title and summary of the post */
