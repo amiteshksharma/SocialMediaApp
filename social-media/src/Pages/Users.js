@@ -9,15 +9,34 @@ class Users extends React.Component {
         super(props);
 
         this.state = {
-            Email: this.props.location.state.name,
-            Name: this.props.location.state.user,
+            Email: '',
+            Name: '',
             Followers: [],
             Following: [],
             UserFollowing: []
         }
+        
+        this.setData = this.setData.bind(this);
+        this.fetchAllData = this.fetchAllData.bind(this);
     }
 
-    componentDidMount() {
+    setData() {
+        if(this.props.location.state) {
+            localStorage.setItem('profileEmail', JSON.stringify(this.props.location.state.name));
+            localStorage.setItem('profileName', JSON.stringify(this.props.location.state.user));
+            this.setState({Name: this.props.location.state.user, Email: this.props.location.state.name}, () => {
+                this.fetchAllData();
+            });
+        } else {
+            const getEmail = localStorage.getItem('profileEmail');
+            const getName = localStorage.getItem('profileName');
+            this.setState({Name: JSON.parse(getName), Email: JSON.parse(getEmail)}, () => {
+                this.fetchAllData();
+            });
+        }
+    }
+
+    fetchAllData() {
         Promise.all([
             fetch("/backend/loadprofile", {
                 method: 'POST',
@@ -30,7 +49,9 @@ class Users extends React.Component {
                 }
             }).then(response => response.json()).then(data => {
                 console.log(data);
-                this.setState({Following: data});
+                this.setState({Following: data}, () => {
+                    console.log("Followers: ", this.state.Followers);
+                });
             }).catch(error => {
                 console.log("Error");
             }),
@@ -46,7 +67,9 @@ class Users extends React.Component {
                 }
             }).then(response => response.json()).then(data => {
                 console.log("Here: ", data);
-                this.setState({UserFollowing: data});
+                this.setState({UserFollowing: data}, () => {
+                    console.log("My followers ==> ", this.state.UserFollowing);
+                });
             }).catch(error => {
                 console.log("Error");
             }),
@@ -62,16 +85,20 @@ class Users extends React.Component {
                 }
             }).then(response => response.json()).then(data => {
                 console.log(data);
-                this.setState({Followers: data});
+                this.setState({Followers: data}, () => {
+                    console.log("Following: ", this.state.Following);
+                });
             }).catch(error => {
                 console.log("Error");
             })
         ])
     }
 
+    componentDidMount() {
+        this.setData();
+    }
+
     render() {
-        console.log(this.props.location);
-        console.log(this.state.Email);
         return (
             <div className="users">
                 <div className="users-layout">
@@ -92,20 +119,28 @@ class Users extends React.Component {
                     <div className="border-line">
                         <section className="user-section">
                             <div className="user-tab">
-                                <button onClick={() => this.props.history.push(`/profile/${this.state.Name}/followers`)}>Followers</button>
-                                <button onClick={() => this.props.history.push(`/profile/${this.state.Name}/following`)}>Following</button>
+                                <button onClick={() => {
+                                    this.props.history.push(`/profile/${this.state.Name}/followers`);
+                                    this.setState({Followers: []}, () => this.componentDidMount());
+                                    }}>Followers</button>
+                                <button onClick={() => {
+                                    this.props.history.push(`/profile/${this.state.Name}/following`);
+                                    this.setState({Following: []}, () => this.componentDidMount());
+                                    }}>Following</button>
                             </div>
                         </section>
                         <section className="user-div">
                             <div className="user-display">
                                 {this.props.match.params.follow === 'followers' ? 
                                     this.state.Followers.map(follower => {
+                                        console.log("A follower =====> ", follower);
                                         let isFollowing = false;
                                         if(follower === sessionStorage.getItem('Email')) {
                                             isFollowing = "ME"
-                                        } else if(this.state.Followers .length === 0) {
+                                        } else if(this.state.Followers.length === 0) {
                                             isFollowing = "No Followers";
-                                        } else if(this.state.Followers.includes(follower)) {
+                                        } else if(this.state.UserFollowing.includes(follower)) {
+                                            console.log("here");
                                             isFollowing = true;
                                         }
 
@@ -113,6 +148,7 @@ class Users extends React.Component {
                                     : 
                                     
                                     this.state.Following.map(following => {
+                                        console.log("A following =====> ", following);
                                         let isFollowing = false;
                                         if(following === sessionStorage.getItem('Email')) {
                                             isFollowing = "ME"
@@ -121,7 +157,7 @@ class Users extends React.Component {
                                         } else if(this.state.UserFollowing.includes(following)) {
                                             isFollowing = true;
                                         }
-                                        return ( <Node user={this.state.Email} email={following} following={isFollowing} /> )
+                                        return ( <Node user={following} email={following} following={isFollowing} /> )
                                 }) }
                             </div>
                         </section>

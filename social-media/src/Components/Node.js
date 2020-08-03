@@ -24,7 +24,7 @@ export default function Node(props) {
             })
         }).then(response => response.json())
         .then(data => {
-            console.log(data);
+            console.log("What is his data ===>>>>>>", data);
             setName({Name: data.Name});
             setBio({Bio: data.Bio});
             setEmail({Email: data.Email})
@@ -38,7 +38,7 @@ export default function Node(props) {
                 }
             }).then(response => response.json()).then(data => {
                 console.log(data);
-                if(data.includes(props.user)) {
+                if(data.includes(props.email)) {
                     console.log(data);
                     setFollower({Follower: true});
                 }
@@ -60,7 +60,7 @@ export default function Node(props) {
             },
             body: JSON.stringify({
                 userEmail: sessionStorage.getItem('Email'),
-                profileEmail: props.user
+                profileEmail: props.email
             })
         }).then(response => response.text()).then(data => {
                 console.log(data);
@@ -76,7 +76,7 @@ export default function Node(props) {
             },
             body: JSON.stringify({
                 userEmail: sessionStorage.getItem('Email'),
-                profileEmail: props.user
+                profileEmail: props.email
             })
         }).then(response => response.text()).then(data => {
                 console.log(data);
