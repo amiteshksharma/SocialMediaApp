@@ -111,7 +111,7 @@
     height: calc(4vh);
     width: calc(6vw);
     margin-top: calc(0.5vh);
-    font-size: calc(1.1rem);
+    font-size: calc(1rem);
     transition: 0.2s;
     position: absolute;
     right: calc(0.5vw);

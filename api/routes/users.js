@@ -14,7 +14,8 @@ firebase.initializeApp({
   storageBucket: process.env.STORAGE_BUCKET,
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID
+  measurementId: process.env.MEASUREMENT_ID,
+  storageBucket: process.env.STORAGE_BUCKET
 });
 
 const db = admin.firestore();
@@ -72,16 +73,27 @@ router.post('/login', function(req, res, next) {
   
   //Check if the user exists
   firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-    const user = firebase.auth().currentUser;
-    
-    const obj = {
-      Email: email,
-      Uid: user.uid,
-      Name: user.displayName
-    };
+    (async () => {
+      admin.auth().getUserByEmail(email).then(async (userRecord) => {
+        const user = userRecord.toJSON();
+        const uid = user.uid;
 
-    //Send the user's details to the frontend for other backend call
-    return res.status(200).send(obj);
+        //Go into the database
+        const details = await db.collection('user').doc(uid).get();
+        console.log(details.data());
+
+        //Get the user's information to save
+        const obj = {
+          Email: details.data().Email,
+          State: details.data().State,
+          Name: details.data().Name
+        }
+
+        //Send the user's details to the frontend for other backend call
+        return res.send(obj);
+      })
+    })();
+
     }).catch(function(error) {
       // Return an error comment and 404 error, indicating account is not found
       return res.status(404).send("Error!");
