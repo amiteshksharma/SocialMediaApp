@@ -29,7 +29,7 @@ class Explore extends React.Component {
         fetch("/backend/mylikes", {
             method: 'POST',
             body: JSON.stringify({
-                email: sessionStorage.getItem('Email'),
+                email: localStorage.getItem('Email'),
             }),
             headers: {
                 'Content-type': 'application/json'
@@ -64,7 +64,7 @@ class Explore extends React.Component {
                                 <h2>Explore</h2>
                             </div>
                             {this.state.Post.map(post => {
-                                if(post.Email === sessionStorage.getItem('Email')) {
+                                if(post.Email === localStorage.getItem('Email')) {
                                     return;
                                 } else {
                                     return (

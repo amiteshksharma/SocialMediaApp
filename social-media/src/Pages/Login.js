@@ -10,7 +10,8 @@ class Login extends React.Component {
     this.state = {
       ModalShow: false,
       Email: '',
-      Password: ''
+      Password: '',
+      Validation: false
     }
 
     this.displayModal = this.displayModal.bind(this);
@@ -18,8 +19,6 @@ class Login extends React.Component {
   }
 
   loginRequest() {
-    console.log(this.state.Email);
-    console.log(this.state.Password);
     fetch("/users/login", {
       method: 'POST',
       body: JSON.stringify({
@@ -30,10 +29,16 @@ class Login extends React.Component {
         'Content-type': 'application/json'
       }
     }).then(response => response.json()).then(data => {
-      console.log(data);
-      sessionStorage.setItem('Email', data.Email);
-      sessionStorage.setItem('Name', data.Name);
-      this.props.history.push('/home');
+        if(data) {
+          console.log(data);
+          localStorage.setItem('Email', data.Email);
+          localStorage.setItem('Name', data.Name);
+          localStorage.setItem('State', data.State);
+          this.props.history.push('/home');
+        } else {
+          console.log(data);
+          this.setState({Validation: true});
+        }
       }).catch(error => {
         console.log("Error");
       });
@@ -78,17 +83,23 @@ class Login extends React.Component {
 
               <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                  <Form>
+                  <Form >
                     <Form.Group controlId="formGroupEmail">
                       <div><Form.Label>Email address</Form.Label></div>
-                      <Form.Control type="email" placeholder="Enter email" 
-                      onChange={(e) => this.setState({ Email: e.target.value})}/>
+                      <Form.Control type="email" placeholder="Enter email" isInvalid={this.state.Validation}
+                      onChange={(e) => this.setState({ Email: e.target.value, Validation: false })}/>
+                      <Form.Control.Feedback type="invalid">
+                        Incorrect Email address
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group controlId="formGroupPassword">
                       <div><Form.Label>Password</Form.Label></div>
-                      <Form.Control type="password" placeholder="Password" 
-                        onChange={(e) => this.setState({ Password: e.target.value })}
+                      <Form.Control type="password" placeholder="Password" isInvalid={this.state.Validation}
+                        onChange={(e) => this.setState({ Password: e.target.value, Validation: false })}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        Incorrect Password
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </Form>
                 </Col>

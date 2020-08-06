@@ -27,7 +27,7 @@ class Main extends React.Component {
             fetch("/backend/mylikes", {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: sessionStorage.getItem('Email'),
+                    email: localStorage.getItem('Email'),
                 }),
                 headers: {
                     'Content-type': 'application/json'
@@ -35,7 +35,7 @@ class Main extends React.Component {
             }).then(response => response.text()).then(data => {
                 this.setState({ MyLikes: data }, () => {
                     console.log(this.state.MyLikes);
-                    sessionStorage.setItem('mylikes', JSON.stringify(this.state.MyLikes));
+                    localStorage.setItem('mylikes', JSON.stringify(this.state.MyLikes));
                 });
 
                 setTimeout(() => {

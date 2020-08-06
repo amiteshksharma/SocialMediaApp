@@ -42,7 +42,7 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userEmail: sessionStorage.getItem('Email'),
+                    userEmail: localStorage.getItem('Email'),
                     profileEmail: this.state.Email
                 })
             }).then(response => response.text()).then(data => {
@@ -76,7 +76,7 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userEmail: sessionStorage.getItem('Email'),
+                    userEmail: localStorage.getItem('Email'),
                     profileEmail: this.state.Email
                 })
             }).then(response => response.text()).then(data => {
@@ -103,7 +103,8 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        const email = this.props.location.state.name
+        const email = this.props.location.state.name;
+        console.log(this.props.location);
         Promise.all([
             fetch(`/backend/posts/${email}`, {
                 method: 'GET',
@@ -117,7 +118,7 @@ class Profile extends React.Component {
             fetch("/backend/mylikes", {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: sessionStorage.getItem('Email'),
+                    email: localStorage.getItem('Email'),
                 }),
                 headers: {
                     'Content-type': 'application/json'
@@ -139,6 +140,7 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
+                console.log("====================== data =============================");
                 this.setState({Profile: data});
             }).catch(error => {
                     console.log("Error");
@@ -147,7 +149,7 @@ class Profile extends React.Component {
             fetch("/backend/followlist", {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: sessionStorage.getItem('Email'),
+                    email: localStorage.getItem('Email'),
                 }),
                 headers: {
                     'Content-type': 'application/json'
@@ -198,9 +200,15 @@ class Profile extends React.Component {
     redirectFollows(tab) {
         if(tab === 'followers') {
             console.log("here");
-            this.props.history.push(`/profile/${this.state.Email}/followers`);
+            this.props.history.push({
+                pathname: `/profile/${this.state.Profile.Name}/followers`,
+                state: { name: this.state.Email, user: this.state.Profile.Name }
+            });
         } else {
-            this.props.history.push(`/profile/${this.state.Email}/following`);    
+            this.props.history.push({
+                pathname: `/profile/${this.state.Profile.Name}/following`,
+                state: { name: this.state.Email, user: this.state.Profile.Name }
+            });  
         }
     }
 
@@ -227,7 +235,7 @@ class Profile extends React.Component {
     }
 
     render() {
-        const getCurrentEmail = sessionStorage.getItem("Email");
+        const getCurrentEmail = localStorage.getItem("Email");
         return (
             <div className="profile">
                 <div className="profile-layout">
@@ -237,21 +245,22 @@ class Profile extends React.Component {
 
                     <div className="border-line-profile">
                         <section className="image-background">
-                            <img src={Background} alt="Background" />
+                            <img src={this.state.Profile.Image} alt="Background" />
                             <div className="profile-icon">
-                                <img src={ProfileIcon} width="160vw" height="150vh" alt="Profile icon" />
+                                <img src={this.state.Profile.Icon} 
+                                width="160vw" height="150vh" alt="Profile icon" />
                             </div>
                         </section>
 
                         <section className="biography">
                             <div className="profile-name">
                                 <h2>{this.state.Profile.Name}</h2>
-                                {this.state.Email !== sessionStorage.getItem('Email') ? null : 
+                                {this.state.Email !== localStorage.getItem('Email') ? null : 
                                 <CreateIcon style={{marginLeft: 'calc(1vw)', cursor: 'pointer'}} className="edit-profile" 
                                 onClick={(e) => this.saveBio()}/>}
                                 {this.state.Email === getCurrentEmail ? 
                                     <div className="menu-icon">
-                                        <SimpleMenu />
+                                        <SimpleMenu Profile={this.state.Profile}/>
                                     </div> : 
                                     (this.state.Follower ?
                                         <button className="followed-button" onClick={() => this.unfollowClick()}>

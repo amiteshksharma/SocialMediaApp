@@ -23,7 +23,7 @@ class Main extends React.Component {
         fetch("/users/followerspost", {
             method: 'POST',
             body: JSON.stringify({
-                currUser: sessionStorage.getItem('Email')
+                currUser: localStorage.getItem('Email')
             }),
             headers: {
                 'Content-type': 'application/json'
@@ -36,7 +36,7 @@ class Main extends React.Component {
         fetch("/backend/mylikes", {
             method: 'POST',
             body: JSON.stringify({
-                email: sessionStorage.getItem('Email'),
+                email: localStorage.getItem('Email'),
             }),
             headers: {
                 'Content-type': 'application/json'

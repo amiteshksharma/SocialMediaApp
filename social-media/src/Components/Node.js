@@ -24,21 +24,21 @@ export default function Node(props) {
             })
         }).then(response => response.json())
         .then(data => {
-            console.log(data);
+            console.log("What is his data ===>>>>>>", data);
             setName({Name: data.Name});
             setBio({Bio: data.Bio});
             setEmail({Email: data.Email})
             fetch("/backend/followlist", {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: sessionStorage.getItem('Email'),
+                    email: localStorage.getItem('Email'),
                 }),
                 headers: {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
                 console.log(data);
-                if(data.includes(props.user)) {
+                if(data.includes(props.email)) {
                     console.log(data);
                     setFollower({Follower: true});
                 }
@@ -59,8 +59,8 @@ export default function Node(props) {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                userEmail: sessionStorage.getItem('Email'),
-                profileEmail: props.user
+                userEmail: localStorage.getItem('Email'),
+                profileEmail: props.email
             })
         }).then(response => response.text()).then(data => {
                 console.log(data);
@@ -75,8 +75,8 @@ export default function Node(props) {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                userEmail: sessionStorage.getItem('Email'),
-                profileEmail: props.user
+                userEmail: localStorage.getItem('Email'),
+                profileEmail: props.email
             })
         }).then(response => response.text()).then(data => {
                 console.log(data);

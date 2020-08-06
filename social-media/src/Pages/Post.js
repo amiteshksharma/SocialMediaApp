@@ -81,9 +81,6 @@ class Post extends React.Component {
                 'Content-type': 'application/json'
             }
             }).then(response => response.json()).then(data => {
-                console.log(data)
-                console.log(this.state.CommentPost);
-                console.log(this.compareObjects(data, this.state.CommentPost));
                 if(this.compareObjects(data, this.state.CommentPost)) {
                     //Do nothing, avoid infinite loop
                 } else {
@@ -104,7 +101,7 @@ class Post extends React.Component {
             body: JSON.stringify({
                 email: getEmail,
                 title: getTitle,
-                userEmail: sessionStorage.getItem('Email'),
+                userEmail: localStorage.getItem('Email'),
                 comments: this.state.Comment
             }),
             headers: {

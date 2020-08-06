@@ -42,7 +42,7 @@ export default function Favorite(props) {
         fetch("/backend/postlike", {
         method: 'POST',
         body: JSON.stringify({
-            currentEmail: sessionStorage.getItem('Email'),
+            currentEmail: localStorage.getItem('Email'),
             email: props.Email,
             title: props.Title
         }),
@@ -62,7 +62,7 @@ export default function Favorite(props) {
         fetch("/backend/unlike", {
         method: 'POST',
         body: JSON.stringify({
-            currEmail: sessionStorage.getItem('Email'),
+            currEmail: localStorage.getItem('Email'),
             email: props.Email,
             title: props.Title
         }),
