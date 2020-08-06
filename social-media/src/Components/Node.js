@@ -31,7 +31,7 @@ export default function Node(props) {
             fetch("/backend/followlist", {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: sessionStorage.getItem('Email'),
+                    email: localStorage.getItem('Email'),
                 }),
                 headers: {
                     'Content-type': 'application/json'
@@ -59,7 +59,7 @@ export default function Node(props) {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                userEmail: sessionStorage.getItem('Email'),
+                userEmail: localStorage.getItem('Email'),
                 profileEmail: props.email
             })
         }).then(response => response.text()).then(data => {
@@ -75,7 +75,7 @@ export default function Node(props) {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                userEmail: sessionStorage.getItem('Email'),
+                userEmail: localStorage.getItem('Email'),
                 profileEmail: props.email
             })
         }).then(response => response.text()).then(data => {

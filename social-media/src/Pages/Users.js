@@ -59,7 +59,7 @@ class Users extends React.Component {
             fetch("/backend/loadprofile", {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: sessionStorage.getItem('Email'),
+                    email: localStorage.getItem('Email'),
                     follow: 'following'
                 }),
                 headers: {
@@ -135,7 +135,7 @@ class Users extends React.Component {
                                     this.state.Followers.map(follower => {
                                         console.log("A follower =====> ", follower);
                                         let isFollowing = false;
-                                        if(follower === sessionStorage.getItem('Email')) {
+                                        if(follower === localStorage.getItem('Email')) {
                                             isFollowing = "ME"
                                         } else if(this.state.Followers.length === 0) {
                                             isFollowing = "No Followers";
@@ -150,7 +150,7 @@ class Users extends React.Component {
                                     this.state.Following.map(following => {
                                         console.log("A following =====> ", following);
                                         let isFollowing = false;
-                                        if(following === sessionStorage.getItem('Email')) {
+                                        if(following === localStorage.getItem('Email')) {
                                             isFollowing = "ME"
                                         } else if(this.state.Followers.length === 0) {
                                             isFollowing = "No Followers";

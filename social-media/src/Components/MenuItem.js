@@ -46,22 +46,27 @@ export default function SimpleMenu() {
     prevOpen.current = open;
   }, [open]);
 
-  const saveProfile = () => {
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  async function saveProfile() {
     const getIconFile = icon.Icon;
     const getImageFile = image.Image;
-    console.log(getImageFile);
+
+    const formData = new FormData();
+    formData.append('email', localStorage.getItem('Email'));
+    formData.append('name', localStorage.getItem('Name'));
+    formData.append('state', localStorage.getItem('State'));
+    formData.append('image', getImageFile);
+    formData.append('icon', getIconFile);
+
     fetch("/settings/updateprofile", {
       method: 'POST',
-      body: JSON.stringify({
-          email: sessionStorage.getItem('Email'),
-          name: sessionStorage.getItem('Name'),
-          state: sessionStorage.getItem('State'),
-          image: getImageFile.name,
-          icon: getIconFile.name
-      }),
-      headers: {
-          'Content-type': 'application/json'
-      }
+      body: formData
     }).then(response => response.json()).then(data => {
         console.log(data);
     }).catch(error => {
@@ -96,7 +101,7 @@ export default function SimpleMenu() {
         )}
       </Popper>
 
-      <Modal show={true} onHide={() => setModal(false)}>
+      <Modal show={modal} onHide={() => setModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>

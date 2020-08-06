@@ -68,6 +68,8 @@
     bottom: calc(-13vh);
     transform: scale(0.5);
     border-radius: calc(50%);
+    height: calc(40vh);
+    z-index: 10;
 }
 
 /* Biography section of the profile page */

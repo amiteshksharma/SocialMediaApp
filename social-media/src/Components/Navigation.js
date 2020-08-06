@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import '../Css/Navigation.css';
 
 export default function Navigation(props) {
-    console.log(sessionStorage.getItem('Email'));
+    console.log(localStorage.getItem('Email'));
     const history = useHistory();
 
     const createPost = (e) => {
@@ -19,15 +19,15 @@ export default function Navigation(props) {
               console.log(data);
               if(data === 'True') {
                 let path = `/`; 
-                sessionStorage.clear();
+                localStorage.clear();
                 history.push(path);
               }     
           });
       }
 
       const profile = () => {
-        const email = sessionStorage.getItem("Email");
-        const name = sessionStorage.getItem("Name")
+        const email = localStorage.getItem("Email");
+        const name = localStorage.getItem("Name")
         history.push({
           pathname: `/profile/${name}`,
           query: '?user=user',

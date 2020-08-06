@@ -42,7 +42,7 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userEmail: sessionStorage.getItem('Email'),
+                    userEmail: localStorage.getItem('Email'),
                     profileEmail: this.state.Email
                 })
             }).then(response => response.text()).then(data => {
@@ -76,7 +76,7 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userEmail: sessionStorage.getItem('Email'),
+                    userEmail: localStorage.getItem('Email'),
                     profileEmail: this.state.Email
                 })
             }).then(response => response.text()).then(data => {
@@ -118,7 +118,7 @@ class Profile extends React.Component {
             fetch("/backend/mylikes", {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: sessionStorage.getItem('Email'),
+                    email: localStorage.getItem('Email'),
                 }),
                 headers: {
                     'Content-type': 'application/json'
@@ -140,6 +140,7 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
+                console.log("====================== data =============================");
                 this.setState({Profile: data});
             }).catch(error => {
                     console.log("Error");
@@ -148,7 +149,7 @@ class Profile extends React.Component {
             fetch("/backend/followlist", {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: sessionStorage.getItem('Email'),
+                    email: localStorage.getItem('Email'),
                 }),
                 headers: {
                     'Content-type': 'application/json'
@@ -234,7 +235,7 @@ class Profile extends React.Component {
     }
 
     render() {
-        const getCurrentEmail = sessionStorage.getItem("Email");
+        const getCurrentEmail = localStorage.getItem("Email");
         return (
             <div className="profile">
                 <div className="profile-layout">
@@ -246,14 +247,15 @@ class Profile extends React.Component {
                         <section className="image-background">
                             <img src={Background} alt="Background" />
                             <div className="profile-icon">
-                                <img src={ProfileIcon} width="160vw" height="150vh" alt="Profile icon" />
+                                <img src={'https://storage.googleapis.com/staging.socialmedia-c9bf6.appspot.com/spainrulzskgmail.com/background.jpg'} 
+                                width="160vw" height="150vh" alt="Profile icon" />
                             </div>
                         </section>
 
                         <section className="biography">
                             <div className="profile-name">
                                 <h2>{this.state.Profile.Name}</h2>
-                                {this.state.Email !== sessionStorage.getItem('Email') ? null : 
+                                {this.state.Email !== localStorage.getItem('Email') ? null : 
                                 <CreateIcon style={{marginLeft: 'calc(1vw)', cursor: 'pointer'}} className="edit-profile" 
                                 onClick={(e) => this.saveBio()}/>}
                                 {this.state.Email === getCurrentEmail ? 

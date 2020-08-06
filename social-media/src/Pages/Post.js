@@ -101,7 +101,7 @@ class Post extends React.Component {
             body: JSON.stringify({
                 email: getEmail,
                 title: getTitle,
-                userEmail: sessionStorage.getItem('Email'),
+                userEmail: localStorage.getItem('Email'),
                 comments: this.state.Comment
             }),
             headers: {

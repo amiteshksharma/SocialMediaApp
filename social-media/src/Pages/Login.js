@@ -31,9 +31,9 @@ class Login extends React.Component {
       }
     }).then(response => response.json()).then(data => {
       console.log(data);
-      sessionStorage.setItem('Email', data.Email);
-      sessionStorage.setItem('Name', data.Name);
-      sessionStorage.setItem('State', data.State);
+      localStorage.setItem('Email', data.Email);
+      localStorage.setItem('Name', data.Name);
+      localStorage.setItem('State', data.State);
       this.props.history.push('/home');
       }).catch(error => {
         console.log("Error");

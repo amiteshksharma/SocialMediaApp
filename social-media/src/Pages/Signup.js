@@ -78,8 +78,8 @@ class Login extends React.Component {
           this.setState({Display: true, Loading: false, ErrorMessage: data.Error});
         } else {
           this.setState({Loading: false, Redirect: true}) 
-          sessionStorage.setItem('Email', data.Email);
-          sessionStorage.setItem('Name', data.Name);
+          localStorage.setItem('Email', data.Email);
+          localStorage.setItem('Name', data.Name);
           this.props.history.push('/home');
         }
       }).catch(error => {
