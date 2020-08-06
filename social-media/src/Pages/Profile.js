@@ -245,9 +245,9 @@ class Profile extends React.Component {
 
                     <div className="border-line-profile">
                         <section className="image-background">
-                            <img src={Background} alt="Background" />
+                            <img src={this.state.Profile.Image} alt="Background" />
                             <div className="profile-icon">
-                                <img src={'https://storage.googleapis.com/staging.socialmedia-c9bf6.appspot.com/spainrulzskgmail.com/background.jpg'} 
+                                <img src={this.state.Profile.Icon} 
                                 width="160vw" height="150vh" alt="Profile icon" />
                             </div>
                         </section>
@@ -260,7 +260,7 @@ class Profile extends React.Component {
                                 onClick={(e) => this.saveBio()}/>}
                                 {this.state.Email === getCurrentEmail ? 
                                     <div className="menu-icon">
-                                        <SimpleMenu />
+                                        <SimpleMenu Profile={this.state.Profile}/>
                                     </div> : 
                                     (this.state.Follower ?
                                         <button className="followed-button" onClick={() => this.unfollowClick()}>

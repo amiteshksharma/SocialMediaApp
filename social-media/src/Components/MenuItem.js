@@ -7,13 +7,14 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import { Modal, Container, Row, Col, Form } from 'react-bootstrap';
+import { Modal, Container, Row, Col, Spinner } from 'react-bootstrap';
 
-export default function SimpleMenu() {
+export default function SimpleMenu(props) {
   const [open, setOpen] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [icon, setIcon] = React.useState({Icon: {}});
   const [image, setImage] = React.useState({Image: {}})
+  const [loading, setLoading] = React.useState({Loading: false});
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
@@ -46,29 +47,43 @@ export default function SimpleMenu() {
     prevOpen.current = open;
   }, [open]);
 
-  const toBase64 = file => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-
   async function saveProfile() {
-    const getIconFile = icon.Icon;
-    const getImageFile = image.Image;
+    setLoading({Loading: true});
+    let getIconFile = icon.Icon;
+    let getImageFile = image.Image;
+    let getNameUpdate = 'both';
+
+    console.log(getIconFile);
+
+    if(!getIconFile.name) {
+      getIconFile = props.Profile.Icon;
+      console.log(getIconFile)
+      getNameUpdate = 'icon'
+    }
+
+    if(!getImageFile.name) {
+      getImageFile = props.Profile.Image;
+      console.log(getImageFile)
+      getNameUpdate='image';
+    }
 
     const formData = new FormData();
     formData.append('email', localStorage.getItem('Email'));
     formData.append('name', localStorage.getItem('Name'));
     formData.append('state', localStorage.getItem('State'));
     formData.append('image', getImageFile);
-    formData.append('icon', getIconFile);
+    formData.append('image', getIconFile);
+    formData.append('label', getNameUpdate);
 
     fetch("/settings/updateprofile", {
       method: 'POST',
       body: formData
     }).then(response => response.json()).then(data => {
         console.log(data);
+        setTimeout(() => {
+          setLoading({Loading: false});
+          window.location.reload(false);
+        }, 3500);
     }).catch(error => {
         console.log("Error");
     })
@@ -126,7 +141,7 @@ export default function SimpleMenu() {
         
         <Modal.Footer>
           <Button variant="primary" onClick={() => saveProfile()}>
-            Save Changes
+            {loading.Loading ? <Spinner animation="border" role="status" /> : "Save Changes"}
           </Button>
         </Modal.Footer>
       </Modal>

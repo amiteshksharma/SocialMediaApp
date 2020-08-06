@@ -63,13 +63,19 @@
 .profile-icon {
     position: absolute;
     left: calc(-2.7vw);
-    border: 1px solid white;
-    width: calc(14vw);
+    border: 1px solid rgb(5, 5, 5);
+    max-width: calc(14vw);
     bottom: calc(-13vh);
     transform: scale(0.5);
     border-radius: calc(50%);
-    height: calc(40vh);
-    z-index: 10;
+    z-index: 2;
+    
+}
+
+.profile-icon img{
+    border-radius: calc(50%);
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* Biography section of the profile page */

@@ -6,16 +6,25 @@ const tools = require('firebase-tools');
 const firebase = require('firebase');
 const admin = require('firebase-admin');
 const cors = require("cors");
-const formidable = require('express-formidable');
+// const formidable = require('express-formidable');
+const Multer = require('multer');
+const { format } = require('util');
 
 const db = admin.firestore();
-const router = express.Router();
-router.use(cors());
 
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage({});
-const getBucket = storage.bucket('staging.socialmedia-c9bf6.appspot.com');
+const getBucket = storage.bucket('socialmedia-c9bf6.appspot.com');
 
+const multer = Multer({
+    storage: Multer.MemoryStorage,
+    limits: {
+      fileSize: 20 * 1024 * 1024 // no larger than 5mb
+    }
+});
+
+const router = express.Router();
+router.use(cors());
 
 router.post("/bio", (req, res, next) => {
     const getBio = req.body.bio;
@@ -57,54 +66,80 @@ router.post('/information', (req, res, next) => {
     })();
 })
 
-router.use(formidable());
-const fs = require(`fs`);
+// router.use(formidable());
 
-router.post('/updateprofile', (req, res, next) => {
-    // console.log(req.fields);
-    // console.log("====================");
-    // console.log(req.files);
-    const getIcon = req.files.icon;
-    const getImage = req.files.image;
-    const getName = req.fields.name;
-    const getState = req.fields.state;
-    const getEmail = req.fields.email;
+router.post('/updateprofile', multer.array("image", 2), (req, res, next) => {
+    let getIcon, getImage;
 
-    const blobIcon = getBucket.file(getIcon);
-    const blobStreamIcon = blobIcon.createWriteStream();
+    try {
+    if(req.body.label === 'image') {
+        getImage = req.body.image
+        getIcon = req.files;
+    } else if(req.body.label == 'icon') {
+        getIcon = req.body.image
+        getImage = req.files;
+    } else {
+        getImage = req.files[0];
+        getIcon = req.files[1];   
+    }
+    } catch (err) {
+        console.log(err);
+    }
 
-    console.log('============= here ============== ');
 
-    blobStreamIcon.on('error', (err) => {
-        console.log("MESSAGE ERROR ===================== ", err.messsage);
-        next(err);
-    });
+    const getName = req.body.name;
+    const getState = req.body.state;
+    const getEmail = req.body.email;
 
-    blobStreamIcon.on('finish', () => {
-        // The public URL can be used to directly access the file via HTTP.
-        const publicUrl = format(
-            `https://storage.googleapis.com/${getBucket}/${blobIcon.name}`
-        );
-        console.log(publicUrl);
-        return res.send(publicUrl);
-    })
+    try {
+        req.files.forEach((file, index) => {
+            const blob = getBucket.file(`${getEmail}/${file.originalname}`);
+            const blobStream = blob.createWriteStream({
+                metadata: {
+                    contentType: file.mimetype
+                }
+            });
+    
+            blobStream.on('error', (err) => {
+                console.log("MESSAGE ERROR ===================== ", err);
+                next(err);
+                return;
+            });
+    
+            blobStream.on('finish', () => {
+                // The public URL can be used to directly access the file via HTTP.
+                const publicUrl = format(
+                    `https://storage.googleapis.com/${getBucket.name}/${file.originalname}`
+                );
+                console.log(publicUrl);
+            })
+            
+            blobStream.end(file.buffer);     
+        })
+    } catch(err) {
+        console.log(err);
+    }
 
-    console.log("====== HERE =====");
-    // (async () => {
-    //     admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
-    //         const user = userRecord.toJSON();
-    //         const uid = user.uid;
+    (async () => {
+        admin.auth().getUserByEmail(getEmail).then(async (userRecord) => {
+            const user = userRecord.toJSON();
+            const uid = user.uid;
 
-    //         const getDetails = await db.collection('user').doc(uid).update({
-    //             Name: getName,
-    //             State: getState,
-    //         });
+            let setIconURL = getIcon[0].originalname ? `https://storage.googleapis.com/${getBucket.name}/${getEmail}/${getIcon[0].originalname}` : getIcon;
+            let setImageURL = getImage[0].originalname ? `https://storage.googleapis.com/${getBucket.name}/${getEmail}/${getImage[0].originalname}` : getImage;
 
-    //         return res.send(true);
-    //     }).catch(error => {
-    //         console.log(error.message);
-    //     })
-    // })();
+            const getDetails = await db.collection('user').doc(uid).update({
+                Name: getName,
+                State: getState,
+                Icon: setIconURL,
+                Image: setImageURL
+            });
+
+            return res.send(true);
+        }).catch(error => {
+            console.log(error.message);
+        })
+    })();
 })
 
 module.exports = router;
