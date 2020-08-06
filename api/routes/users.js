@@ -96,7 +96,8 @@ router.post('/login', function(req, res, next) {
 
     }).catch(function(error) {
       // Return an error comment and 404 error, indicating account is not found
-      return res.status(404).send("Error!");
+      return res.send(false)
+      console.log(error);
     });
 });
 
