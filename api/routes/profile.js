@@ -17,7 +17,7 @@ const getBucket = storage.bucket('socialmedia-c9bf6.appspot.com');
 const multer = Multer({
     storage: Multer.MemoryStorage,
     limits: {
-      fileSize: 20 * 1024 * 1024 // no larger than 5mb
+      fileSize: 20 * 1024 * 1024 // no larger than 20mb
     }
 });
 
@@ -97,8 +97,8 @@ router.post('/updateprofile', multer.array("image", 2), (req, res, next) => {
         getIcon = req.body.image
         getImage = req.files;
     } else {
-        getImage = req.files[0];
-        getIcon = req.files[1];   
+        getImage = req.files;
+        getIcon = req.files;   
     }
 
     //Get the parameters from req.body

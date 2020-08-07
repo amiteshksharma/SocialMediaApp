@@ -46,6 +46,7 @@ app.use("/backend/create", backendRouter);
 //Routes for the user's profile settings
 app.use("/settings", profileRouter);
 
+// This causes errors
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   next(createError(404));
