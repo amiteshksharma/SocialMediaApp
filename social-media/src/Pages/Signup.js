@@ -80,6 +80,7 @@ class Login extends React.Component {
           this.setState({Loading: false, Redirect: true}) 
           localStorage.setItem('Email', data.Email);
           localStorage.setItem('Name', data.Name);
+          localStorage.setItem('State', data.State);
           this.props.history.push('/home');
         }
       }).catch(error => {
@@ -166,7 +167,7 @@ class Login extends React.Component {
               <Row>
                 <Col md={{ span: 3, offset: 6}}>
                   <footer className="user-login"><button className="user-login-btn"
-                  onClick={() => this.props.history.push('/')}>Already a user? Login</button></footer>
+                  onClick={() => this.props.history.push('/login')}>Already a user? Login</button></footer>
                 </Col>
               </Row>
 

@@ -8,15 +8,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Modal, Container, Row, Col, Spinner } from 'react-bootstrap';
+import State from './StatesSignup';
 
 export default function SimpleMenu(props) {
   const [open, setOpen] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [icon, setIcon] = React.useState({Icon: {}});
   const [image, setImage] = React.useState({Image: {}})
+  const [name, setName] = React.useState({Name: localStorage.getItem('Name')});
+  const [state, setState] = React.useState({State: localStorage.getItem('State')})
   const [loading, setLoading] = React.useState({Loading: false});
   const anchorRef = React.useRef(null);
-
+  
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -53,24 +56,28 @@ export default function SimpleMenu(props) {
     let getImageFile = image.Image;
     let getNameUpdate = 'both';
 
-    console.log(getIconFile);
+    if(localStorage.getItem('Name') !== name.Name) {
+      localStorage.setItem('Name', name.Name);
+    }
+
+    if(localStorage.getItem('State') !== state.State) {
+      localStorage.setItem('State', state.State);
+    }
 
     if(!getIconFile.name) {
       getIconFile = props.Profile.Icon;
-      console.log(getIconFile)
       getNameUpdate = 'icon'
     }
 
     if(!getImageFile.name) {
       getImageFile = props.Profile.Image;
-      console.log(getImageFile)
       getNameUpdate='image';
     }
 
     const formData = new FormData();
     formData.append('email', localStorage.getItem('Email'));
-    formData.append('name', localStorage.getItem('Name'));
-    formData.append('state', localStorage.getItem('State'));
+    formData.append('name', name.Name);
+    formData.append('state', state.State);
     formData.append('image', getImageFile);
     formData.append('image', getIconFile);
     formData.append('label', getNameUpdate);
@@ -79,7 +86,6 @@ export default function SimpleMenu(props) {
       method: 'POST',
       body: formData
     }).then(response => response.json()).then(data => {
-        console.log(data);
         setTimeout(() => {
           setLoading({Loading: false});
           window.location.reload(false);
@@ -87,6 +93,10 @@ export default function SimpleMenu(props) {
     }).catch(error => {
         console.log("Error");
     })
+  }
+
+  const setUserState = (state) => {
+    setState({State: state});
   }
 
   return (
@@ -118,7 +128,7 @@ export default function SimpleMenu(props) {
 
       <Modal show={modal} onHide={() => setModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Profile Settings</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container fluid>
@@ -134,6 +144,20 @@ export default function SimpleMenu(props) {
               <Col md={{ span: 5 }}>Background Image</Col>
               <Col md={{ span: 6 }}>
                 <input type="file" accept="image/x-png,image/gif,image/jpeg" onChange={(e) => setImage({Image: e.target.files[0]})}/>
+              </Col>
+            </Row>
+
+            <Row style={{marginTop: 'calc(5vh)'}}>
+              <Col md={{ span: 5 }}>Display Name</Col>
+              <Col md={{ span: 6 }}>
+                <input type="email" value={name.Name} onChange={(e) => setName({Name: e.target.value})}/>
+              </Col>
+            </Row>
+
+            <Row style={{marginTop: 'calc(5vh)'}}>
+              <Col md={{ span: 5 }}>Select State</Col>
+              <Col md={{ span: 6 }}>
+                  <State selected={setUserState} default={state.State}/>
               </Col>
             </Row>
           </Container>

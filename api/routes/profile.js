@@ -79,6 +79,24 @@ router.post('/information', (req, res, next) => {
 })
 
 /**
+ * Reset password for user if they forget their password
+ */
+router.post('/reset', (req, res, next) => {
+    //Get their email
+    const getEmail = req.body.email;
+    //Authenticate the user
+    const auth = firebase.auth();
+
+    //Send the email to the user
+    auth.sendPasswordResetEmail(getEmail).then(() => {
+        console.log('sent!')
+        return res.send(true)
+    }).catch((err) => {
+        console.log(err);
+    })
+})
+
+/**
  * Updates the user's profile when he clicks 'save changes' on the profile
  * page
  */
@@ -86,61 +104,66 @@ router.post('/updateprofile', multer.array("image", 2), (req, res, next) => {
     //Create the icon and image variables
     let getIcon, getImage;
 
-    //Check the label tag to see if one or the other
-    //Images were updated
-    if(req.body.label === 'image') {
-        //Assign one to the body and the other to
-        //The file
-        getImage = req.body.image
-        getIcon = req.files;
-    } else if(req.body.label == 'icon') {
-        getIcon = req.body.image
-        getImage = req.files;
-    } else {
-        getImage = req.files;
-        getIcon = req.files;   
-    }
-
     //Get the parameters from req.body
     const getName = req.body.name;
     const getState = req.body.state;
     const getEmail = req.body.email;
 
-    try {
-        //Loop through the req.files to go through the image files
-        req.files.forEach((file, index) => {
-            //Create the file underthe folder of the user's email
-            const blob = getBucket.file(`${getEmail}/${file.originalname}`);
-            
-            //Writestream the image to store it.
-            const blobStream = blob.createWriteStream({
-                metadata: {
-                    contentType: file.mimetype
-                }
-            });
+    //Check the label tag to see if one or the other
+    //Images were updated
+    if(req.files.length !== 0) {
+        if(req.body.label === 'image') {
+            //Assign one to the body and the other to
+            //The file
+            getImage = req.body.image
+            getIcon = req.files;
+        } else if(req.body.label == 'icon') {
+            getIcon = req.body.image
+            getImage = req.files;
+        } else {
+            getImage = req.files;
+            getIcon = req.files;   
+        }
     
-            //Check for any errors in the process
-            blobStream.on('error', (err) => {
-                console.log("MESSAGE ERROR ===================== ", err);
-                next(err);
-                return;
-            });
-    
-            //On finish, create the url that will be used for loading
-            //The images
-            blobStream.on('finish', () => {
-                // The public URL can be used to directly access the file via HTTP.
-                const publicUrl = format(
-                    `https://storage.googleapis.com/${getBucket.name}/${file.originalname}`
-                );
-                console.log(publicUrl);
+        try {
+            //Loop through the req.files to go through the image files
+            req.files.forEach((file, index) => {
+                //Create the file underthe folder of the user's email
+                const blob = getBucket.file(`${getEmail}/${file.originalname}`);
+                
+                //Writestream the image to store it.
+                const blobStream = blob.createWriteStream({
+                    metadata: {
+                        contentType: file.mimetype
+                    }
+                });
+        
+                //Check for any errors in the process
+                blobStream.on('error', (err) => {
+                    console.log("MESSAGE ERROR ===================== ", err);
+                    next(err);
+                    return;
+                });
+        
+                //On finish, create the url that will be used for loading
+                //The images
+                blobStream.on('finish', () => {
+                    // The public URL can be used to directly access the file via HTTP.
+                    const publicUrl = format(
+                        `https://storage.googleapis.com/${getBucket.name}/${file.originalname}`
+                    );
+                    console.log(publicUrl);
+                })
+                
+                //End the file stream
+                blobStream.end(file.buffer);     
             })
-            
-            //End the file stream
-            blobStream.end(file.buffer);     
-        })
-    } catch(err) {
-        console.log(err);
+        } catch(err) {
+            console.log(err);
+        }
+    } else {
+        getIcon = req.body.image[0];
+        getImage = req.body.image[1];
     }
 
     (async () => {

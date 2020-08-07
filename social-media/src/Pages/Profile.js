@@ -46,7 +46,6 @@ class Profile extends React.Component {
                     profileEmail: this.state.Email
                 })
             }).then(response => response.text()).then(data => {
-                console.log(data);
                 this.setState({Follower: data})
             }),
     
@@ -60,7 +59,6 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log(data);
                 this.setState({Followers: data.length});
             }).catch(error => {
                 console.log("Error");
@@ -80,7 +78,6 @@ class Profile extends React.Component {
                     profileEmail: this.state.Email
                 })
             }).then(response => response.text()).then(data => {
-                console.log(data);
                 this.setState({Follower: false});
             }),
     
@@ -94,7 +91,6 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log(data);
                 this.setState({Followers: data.length});
             }).catch(error => {
                 console.log("Error");
@@ -104,7 +100,6 @@ class Profile extends React.Component {
 
     componentDidMount() {
         const email = this.props.location.state.name;
-        console.log(this.props.location);
         Promise.all([
             fetch(`/backend/posts/${email}`, {
                 method: 'GET',
@@ -124,9 +119,7 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.text()).then(data => {
-                this.setState({ MyLikes: data}, () => {
-                    console.log(this.state.MyLikes);
-                });
+                this.setState({ MyLikes: data});
             }).catch(error => {
                     console.log("Error");
             }),
@@ -140,7 +133,6 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log("====================== data =============================");
                 this.setState({Profile: data});
             }).catch(error => {
                     console.log("Error");
@@ -156,7 +148,6 @@ class Profile extends React.Component {
                 }
             }).then(response => response.json()).then(data => {
                 if(data.includes(this.state.Email)) {
-                    console.log(data);
                     this.setState({Follower: true});
                 }
             }).catch(error => {
@@ -173,7 +164,6 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log(data);
                 this.setState({Following: data.length});
             }).catch(error => {
                 console.log("Error");
@@ -189,7 +179,6 @@ class Profile extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log(data);
                 this.setState({Followers: data.length});
             }).catch(error => {
                 console.log("Error");
@@ -199,7 +188,6 @@ class Profile extends React.Component {
 
     redirectFollows(tab) {
         if(tab === 'followers') {
-            console.log("here");
             this.props.history.push({
                 pathname: `/profile/${this.state.Profile.Name}/followers`,
                 state: { name: this.state.Email, user: this.state.Profile.Name }
@@ -213,7 +201,6 @@ class Profile extends React.Component {
     }
 
     saveBio(e) {
-        console.log(this.state.ReadOnly);
         this.setState({ReadOnly: !this.state.ReadOnly}, () => {
             if(this.state.ReadOnly) {
                 fetch("/settings/bio", {
@@ -260,7 +247,7 @@ class Profile extends React.Component {
                                 onClick={(e) => this.saveBio()}/>}
                                 {this.state.Email === getCurrentEmail ? 
                                     <div className="menu-icon">
-                                        <SimpleMenu Profile={this.state.Profile}/>
+                                        <SimpleMenu Profile={this.state.Profile} />
                                     </div> : 
                                     (this.state.Follower ?
                                         <button className="followed-button" onClick={() => this.unfollowClick()}>

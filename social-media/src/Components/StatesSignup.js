@@ -4,11 +4,22 @@ import { Form } from 'react-bootstrap';
 export default class StateList extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      Value: ''
+    }
+  }
+
+  componentDidMount() {
+    this.setState({Value: this.props.default})
   }
 
   render() {
     return (
-      <Form.Control as="select" placeHolder="Select State" onChange={(e) => this.props.selected(e.target.value)} required>
+      <Form.Control value={this.state.Value} as="select" placeHolder="Select State" onChange={(e) => {
+        this.props.selected(e.target.value);
+        this.setState({Value: e.target.value});
+      }} required>
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>

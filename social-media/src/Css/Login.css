@@ -1,6 +1,6 @@
 .Login {
     text-align: center;
-    background-color: rgb(34, 139, 201);
+    background-color: rgb(21, 32, 43);
     height: auto;
     height: calc(100vh);
   }
@@ -15,10 +15,10 @@
   .login-form .container {
     width: 50%;
     border: calc(2px) solid rgb(255, 255, 255);
-    background-color: white;
+    background-color: rgb(247, 247, 247);
     border-radius: calc(2rem);
     padding: calc(3vw);
-    box-shadow: calc(4px) calc(4px) calc(10px);
+    box-shadow: calc(4px) calc(4px) calc(10px) black;
   }
 
   .form-group div {

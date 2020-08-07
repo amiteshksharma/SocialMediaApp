@@ -11,11 +11,14 @@ class Login extends React.Component {
       ModalShow: false,
       Email: '',
       Password: '',
-      Validation: false
+      Validation: false,
+      resetEmail: '',
+      Sent: false
     }
 
     this.displayModal = this.displayModal.bind(this);
     this.loginRequest = this.loginRequest.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
   }
 
   loginRequest() {
@@ -54,20 +57,51 @@ class Login extends React.Component {
       onHide={() => this.setState({ ModalShow: false})}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Enter email to send password reset
+          <Modal.Title id="contained-modal-title">
+            {this.state.Sent ? "Email sent!" : "Enter email to send password reset"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </p>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" onChange={(e) => this.setState({resetEmail: e.target.value})} />
+            </Form.Group>
+          </Form>
+          <Modal.Footer>
+          <Button variant="primary" onClick={() => this.resetPassword()}>
+             Reset!
+          </Button>
+        </Modal.Footer>  
         </Modal.Body>
       </Modal>
     )
+  }
+
+  resetPassword() {
+    if(this.state.resetEmail === '') {
+      return;
+    }
+
+    fetch("/settings/reset", {
+      method: 'POST',
+      body: JSON.stringify({
+        email: this.state.resetEmail
+      }),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then(response => response.text()).then(data => {
+        console.log(data);
+        if(data) {
+          this.setState({Sent: true});
+          setTimeout(() => {
+            this.setState({ModalShow: false, Sent: false});
+          }, 1500);
+        }
+      }).catch(error => {
+        console.log("Error");
+      });
   }
 
   render() {
