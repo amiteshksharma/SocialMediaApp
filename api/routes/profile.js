@@ -17,7 +17,7 @@ const getBucket = storage.bucket('socialmedia-c9bf6.appspot.com');
 const multer = Multer({
     storage: Multer.MemoryStorage,
     limits: {
-      fileSize: 20 * 1024 * 1024 // no larger than 5mb
+      fileSize: 20 * 1024 * 1024 // no larger than 20mb
     }
 });
 
