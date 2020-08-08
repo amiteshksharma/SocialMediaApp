@@ -51,10 +51,11 @@
 }
 
 .explore-header h2 {
-    margin-bottom: calc(1vh);
+    font-family: 'Lato', sans-serif;
+    margin-bottom: calc(0.7vh);
     margin-top: calc(1vh);
     margin-left: calc(0.7vw);
-    font-size: calc(1.3vw);
+    font-size: calc(1.5vw);
 }
 
 .explore-div {

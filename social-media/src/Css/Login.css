@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Merriweather&display=swap');
+
 .Login {
     text-align: center;
     background-color: rgb(21, 32, 43);
@@ -52,6 +54,7 @@
     color: #069;
     text-decoration: underline;
     cursor: pointer;  
+    font-family: 'Merriweather', serif;
   }
 
   .forgot-password-btn:hover, .user-register-btn:hover, .user-login-btn:hover {

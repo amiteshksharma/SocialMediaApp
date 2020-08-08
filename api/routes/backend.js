@@ -201,7 +201,6 @@ router.post('/unlike', (req, res, next) => {
       //Unlike from the current user's likes collection
       const unLike = await db.collection('user').doc(getUid).collection('likes').doc(getTitle).delete().then(() => {
         // return res.status(204).send("Unliked!");
-        console.log("unliked");
       }).catch(error => {
         console.log(error);
       })
@@ -210,7 +209,7 @@ router.post('/unlike', (req, res, next) => {
       const postUid = await getUidOfUser(getEmail);
       //Remove the like from his post in the posts collection
       const unLikeFromPost = await db.collection('user').doc(postUid.uid).collection('posts').doc(getTitle).collection('likes').doc(getUid).delete().then(() => {
-        console.log("deleted from post");
+        //Post deleted
       }).catch(error => {
         console.log(error);
       });
@@ -280,7 +279,7 @@ router.post('/followlist', (req, res, next) => {
 router.post('/loadprofile', (req, res, next) => {
   //Email of the profile user
   const email = req.body.email;
-  console.log(email);
+
   //A keyword that is either "followers" or "following"
   const follow = req.body.follow;
   (async () => {
@@ -436,7 +435,6 @@ async function addLikeToAccount(currUserEmail, getTitle, getEmail) {
       Title: getTitle 
     }).then(() => {
       //Console log success if it works
-      console.log("Success");
     }).catch(error => {
       //Console log the error
       console.log(error);

@@ -28,7 +28,6 @@ class Login extends React.Component {
   }
 
   signUpRequest(event) {
-    console.log(event);
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -40,11 +39,10 @@ class Login extends React.Component {
   }
 
   setUserState(value) {
-    this.setState({State: value}, () => console.log(this.state.State));
+    this.setState({State: value});
   }
 
   handleSubmit(event) {
-    console.log(event);
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -96,7 +94,7 @@ class Login extends React.Component {
             <Container>
               <Row>
                 <Col md={{ span: 6, offset: 3}}>
-                   <h2>SIGN UP</h2>
+                   <h2 style={{fontFamily: 'Lato, sans-serif', fontWeight: '600'}}>Sign Up</h2>
                 </Col>
               </Row>
 
@@ -104,7 +102,7 @@ class Login extends React.Component {
                 <Col md={{ span: 6, offset: 3 }}>
                   <Form noValidate validated={this.state.Validated} onSubmit={(event) => this.handleSubmit(event)}>
                     <Form.Group controlId="formGroupEmail">
-                      <div><Form.Label>Name</Form.Label></div>
+                      <div><Form.Label style={{fontFamily: 'Merriweather, serif'}}>Name</Form.Label></div>
                       <Form.Control type="text" placeholder="Enter name" required
                       onChange={(e) => this.setState({ Name: e.target.value, Display: false})}
                       maxLength="35"
@@ -115,7 +113,7 @@ class Login extends React.Component {
                     </Form.Group>
                     
                     <Form.Group controlId="formGroupEmail">
-                      <div><Form.Label>State</Form.Label></div>
+                      <div><Form.Label style={{fontFamily: 'Merriweather, serif'}}>State</Form.Label></div>
                       <State selected={this.setUserState} />
                       <Form.Control.Feedback type="invalid">
                         Please select your State
@@ -123,7 +121,7 @@ class Login extends React.Component {
                     </Form.Group>
 
                     <Form.Group controlId="formGroupEmail">
-                      <div><Form.Label>Email address</Form.Label></div>
+                      <div><Form.Label style={{fontFamily: 'Merriweather, serif'}}>Email address</Form.Label></div>
                       <Form.Control type="email" placeholder="Enter email" required 
                       onChange={(e) => this.setState({ Email: e.target.value, Display: false })}
                       maxLength="35"
@@ -134,7 +132,7 @@ class Login extends React.Component {
                     </Form.Group>
 
                     <Form.Group controlId="formGroupPassword">
-                      <div><Form.Label>Password</Form.Label></div>
+                      <div><Form.Label style={{fontFamily: 'Merriweather, serif'}}>Password</Form.Label></div>
                       <Form.Control type="password" placeholder="Password" required
                       maxLength="35" isInvalid={this.state.PasswordError}
                         onChange={(e) => this.setState({ Password: e.target.value, Display: false }, () => {
@@ -153,7 +151,7 @@ class Login extends React.Component {
                       </Form.Control.Feedback>}
                     </Form.Group>
 
-                    <Button variant="primary" className="mt-2" size="lg" block type="submit"
+                    <Button variant="primary" className="mt-2" size="lg" block type="submit" style={{fontFamily: 'Lato, san-serif'}}
                     >{this.state.Loading ? <Spinner animation="border" role="status"/> : "Sign up" }</Button>
                   </Form>
                 </Col>

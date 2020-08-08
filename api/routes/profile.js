@@ -89,7 +89,7 @@ router.post('/reset', (req, res, next) => {
 
     //Send the email to the user
     auth.sendPasswordResetEmail(getEmail).then(() => {
-        console.log('sent!')
+        //Email sent to the user
         return res.send(true)
     }).catch((err) => {
         console.log(err);
@@ -140,7 +140,6 @@ router.post('/updateprofile', multer.array("image", 2), (req, res, next) => {
         
                 //Check for any errors in the process
                 blobStream.on('error', (err) => {
-                    console.log("MESSAGE ERROR ===================== ", err);
                     next(err);
                     return;
                 });
@@ -152,7 +151,6 @@ router.post('/updateprofile', multer.array("image", 2), (req, res, next) => {
                     const publicUrl = format(
                         `https://storage.googleapis.com/${getBucket.name}/${file.originalname}`
                     );
-                    console.log(publicUrl);
                 })
                 
                 //End the file stream

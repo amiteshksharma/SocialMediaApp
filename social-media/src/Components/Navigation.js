@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import '../Css/Navigation.css';
 
 export default function Navigation(props) {
-    console.log(localStorage.getItem('Email'));
     const history = useHistory();
 
     const createPost = (e) => {
@@ -12,11 +11,9 @@ export default function Navigation(props) {
     }
 
     const logout = () => {
-        console.log("here");
         fetch("/users/logout")
             .then(response => response.text())
             .then(data => {
-              console.log(data);
               if(data === 'True') {
                 let path = `/`; 
                 localStorage.clear();

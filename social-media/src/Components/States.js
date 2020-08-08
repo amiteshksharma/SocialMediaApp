@@ -51,7 +51,6 @@ export default function States(props) {
                 'Content-type': 'application/json'
             }   
         }).then(response => response.json()).then(data => {
-            console.log(data);
             props.selected(data);
         })
     }, [state])

@@ -46,23 +46,9 @@ class Profile extends React.Component {
                     profileEmail: this.state.Email
                 })
             }).then(response => response.text()).then(data => {
-                this.setState({Follower: data})
+                this.setState({Follower: true});
+                this.componentDidMount();
             }),
-    
-            fetch("/backend/loadprofile", {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: this.state.Email,
-                    follow: 'followers'
-                }),
-                headers: {
-                    'Content-type': 'application/json'
-                }
-            }).then(response => response.json()).then(data => {
-                this.setState({Followers: data.length});
-            }).catch(error => {
-                console.log("Error");
-            })
         ]).then();
     }
 
@@ -79,22 +65,8 @@ class Profile extends React.Component {
                 })
             }).then(response => response.text()).then(data => {
                 this.setState({Follower: false});
+                this.componentDidMount();
             }),
-    
-            fetch("/backend/loadprofile", {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: this.state.Email,
-                    follow: 'followers'
-                }),
-                headers: {
-                    'Content-type': 'application/json'
-                }
-            }).then(response => response.json()).then(data => {
-                this.setState({Followers: data.length});
-            }).catch(error => {
-                console.log("Error");
-            })
         ]).then();
     }
 

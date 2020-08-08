@@ -41,10 +41,7 @@ class Post extends React.Component {
                 'Content-type': 'application/json'
             }
             }).then(response => response.json()).then(data => {
-                console.log(data);
                 this.setState({Post: data});
-                console.log(data.post.Title)
-                console.log(this.state.Post.post.Title );
             }).catch(error => {
                 console.log("Error");
             }),
@@ -59,37 +56,11 @@ class Post extends React.Component {
                 'Content-type': 'application/json'
             }
             }).then(response => response.json()).then(data => {
-                console.log(data);
                 this.setState({CommentPost: data});
             }).catch(error => {
                 console.log("Error");
             })
         ])
-    }
-
-    componentWillUpdate() {
-        const getEmail = this.props.location.state.name;
-        const getTitle = this.props.location.state.title;
-
-        fetch("/backend/getcomment", {
-            method: 'POST',
-            body: JSON.stringify({
-                email: getEmail,
-                title: getTitle
-            }),
-            headers: {
-                'Content-type': 'application/json'
-            }
-            }).then(response => response.json()).then(data => {
-                if(this.compareObjects(data, this.state.CommentPost)) {
-                    //Do nothing, avoid infinite loop
-                } else {
-                    this.setState({CommentPost: data});
-                    return;
-                }
-            }).catch(error => {
-                console.log("Error");
-            })    
     }
 
     enterComment() {
@@ -108,8 +79,8 @@ class Post extends React.Component {
                 'Content-type': 'application/json'
             }
             }).then(response => response.text()).then(data => {
-                console.log(data);
                 this.setState({Comment: ''});
+                this.componentDidMount();
             }).catch(error => {
                 console.log("Error");
             }) 

@@ -12,6 +12,7 @@
 /* Styling for author profile icon and name */
 
 .tile-author {
+    font-family: 'Lato', sans-serif;
     width: calc(100%);
     color: rgb(255, 255, 255);
     display: flex;
@@ -19,8 +20,10 @@
 }
 
 .profile-link {
+    font-family: 'Lato', sans-serif;
+    font-size: calc(1.1vw);
     width: auto;
-    margin-top: calc(1vh);
+    margin-top: calc(0.8vh);
     margin-left: calc(0.4vw);
 }
 
@@ -38,6 +41,7 @@
 /* Styling for the title and summary of the post */
 
 .title-section, .summary-section {
+    font-family: 'Merriweather', serif;
     width: auto;
     margin-top: calc(0.5vh);
     margin-left: calc(2vw); 

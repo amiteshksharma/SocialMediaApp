@@ -23,7 +23,6 @@ class Create extends React.Component {
         this.setState({Loading: true});
         let isError = false;
         if(this.state.Title === '') {
-            console.log(this.state.Title);
             this.setState({TitleError: "red", isTitleError: true});
             isError = true;
         }
@@ -56,7 +55,6 @@ class Create extends React.Component {
     renderErrorMessage() {
         if(this.state.isTitleError === false && 
             this.state.isBodyError === false) {
-            console.log("here");
             return;
         }
 
@@ -86,7 +84,7 @@ class Create extends React.Component {
                 <div className="post-body">
                     <div className="title-create" style={{color: this.state.TitleError}}>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Title</Form.Label>
+                            <Form.Label style={{fontFamily: 'Lato, sans-serif'}}>Title</Form.Label>
                             <Form.Control as="textarea" rows="1" 
                                 onChange={(e) => this.setState({Title: e.target.value, TitleError: 'white', isTitleError: false})}
                                 maxLength={"70"}
@@ -96,14 +94,15 @@ class Create extends React.Component {
 
                     <div className="body-create" style={{color: this.state.BodyError}}>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Your Post</Form.Label>
+                            <Form.Label style={{fontFamily: 'Lato, sans-serif'}}>Your Post</Form.Label>
                             <Form.Control as="textarea" rows="14" 
                                 onChange={(e) => this.setState({Body: e.target.value, BodyError: 'white', isBodyError: false})}/>
                         </Form.Group>
                     </div>
 
                     <div className="create-button">
-                        <Button className="w-50" onClick={() => this.submitPost()} size="lg">
+                        <Button className="w-50" onClick={() => this.submitPost()} size="lg" 
+                        style={{fontFamily: 'Lato, sans-serif'}}>
                             {this.state.Loading ? <Spinner animation="border" variant="light" /> : "Create"}
                         </Button>
                     </div>

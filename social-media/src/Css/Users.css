@@ -29,7 +29,8 @@
 }
 
 .user-tab button {
-    background-color: rgba(41, 128, 209, 0.541);
+    font-family: 'Lato', sans-serif;
+    background-color: rgb(4, 95, 180);
     width: calc(50%);
     border: none;
     height: calc(6vh);
@@ -54,6 +55,7 @@
 
 /* The goback button to return to profile page */
 .profile-goback {
+    font-family: 'Lato', sans-serif;
     position: absolute;
     left: calc(15vw);
     top: calc(3vh);

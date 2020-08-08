@@ -6,8 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function Tile(props) {
     const history = useHistory();
-
-    console.log(props);
+    
     const routeChange = (e) => {  
         history.push({
             pathname: `/profile/${props.Name}`,

@@ -48,10 +48,7 @@ class Users extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log(data);
-                this.setState({Following: data}, () => {
-                    console.log("Followers: ", this.state.Followers);
-                });
+                this.setState({Following: data});
             }).catch(error => {
                 console.log("Error");
             }),
@@ -66,10 +63,7 @@ class Users extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log("Here: ", data);
-                this.setState({UserFollowing: data}, () => {
-                    console.log("My followers ==> ", this.state.UserFollowing);
-                });
+                this.setState({UserFollowing: data});
             }).catch(error => {
                 console.log("Error");
             }),
@@ -84,10 +78,7 @@ class Users extends React.Component {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log(data);
-                this.setState({Followers: data}, () => {
-                    console.log("Following: ", this.state.Following);
-                });
+                this.setState({Followers: data});
             }).catch(error => {
                 console.log("Error");
             })
@@ -133,14 +124,12 @@ class Users extends React.Component {
                             <div className="user-display">
                                 {this.props.match.params.follow === 'followers' ? 
                                     this.state.Followers.map(follower => {
-                                        console.log("A follower =====> ", follower);
                                         let isFollowing = false;
                                         if(follower === localStorage.getItem('Email')) {
                                             isFollowing = "ME"
                                         } else if(this.state.Followers.length === 0) {
                                             isFollowing = "No Followers";
                                         } else if(this.state.UserFollowing.includes(follower)) {
-                                            console.log("here");
                                             isFollowing = true;
                                         }
 
@@ -148,7 +137,6 @@ class Users extends React.Component {
                                     : 
                                     
                                     this.state.Following.map(following => {
-                                        console.log("A following =====> ", following);
                                         let isFollowing = false;
                                         if(following === localStorage.getItem('Email')) {
                                             isFollowing = "ME"

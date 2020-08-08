@@ -10,7 +10,6 @@ export default function Favorite(props) {
 
     const checkIsLiked = () => {
         const myLikes = props.myLikes;
-        console.log(myLikes);
         if(myLikes === undefined) {
             return;
         }
@@ -51,14 +50,12 @@ export default function Favorite(props) {
         }
         }).then(response => response.text()).then(data => { 
             loadTotalLikes();
-            console.log("here");
         }).catch(error => {
             console.log("Error");
         });
     }
 
     const unlike = () => {
-        console.log("here");
         fetch("/backend/unlike", {
         method: 'POST',
         body: JSON.stringify({
@@ -71,7 +68,6 @@ export default function Favorite(props) {
         }
         }).then(response => response.text()).then(data => {  
             loadTotalLikes();
-            console.log("here");
         }).catch(error => {
             console.log("Error");
         });

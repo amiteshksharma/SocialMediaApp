@@ -24,7 +24,6 @@ export default function Node(props) {
             })
         }).then(response => response.json())
         .then(data => {
-            console.log("What is his data ===>>>>>>", data);
             setName({Name: data.Name});
             setBio({Bio: data.Bio});
             setEmail({Email: data.Email})
@@ -37,9 +36,7 @@ export default function Node(props) {
                     'Content-type': 'application/json'
                 }
             }).then(response => response.json()).then(data => {
-                console.log(data);
                 if(data.includes(props.email)) {
-                    console.log(data);
                     setFollower({Follower: true});
                 }
             }).catch(error => {
@@ -63,7 +60,6 @@ export default function Node(props) {
                 profileEmail: props.email
             })
         }).then(response => response.text()).then(data => {
-                console.log(data);
                 setFollower({Follower: data});
             })
     }
@@ -79,7 +75,6 @@ export default function Node(props) {
                 profileEmail: props.email
             })
         }).then(response => response.text()).then(data => {
-                console.log(data);
                 setFollower({Follower: false})
             })
     }
