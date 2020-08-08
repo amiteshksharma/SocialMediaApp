@@ -30,8 +30,6 @@ class Searchbar extends React.Component {
     componentDidMount() {
         fetch("/users/getusernames")
         .then(response => response.json()).then(data => {  
-            console.log(data);
-            
             this.setState({ Usernames: Object.keys(data), Users: data });
         });
     }

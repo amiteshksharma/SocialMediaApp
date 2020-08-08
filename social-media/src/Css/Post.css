@@ -41,6 +41,7 @@
 }
 
 .userinfo-name {
+    font-family: 'Lato', sans-serif;
     font-size: calc(2.5vh) !important;
     margin-top: calc(1.8vh);
     color: white;
@@ -65,6 +66,7 @@
 }
 
 .post-title h1 {
+    font-family: 'Lato', sans-serif;
     font-size: calc(1.3vw);
     color: white;
 }
@@ -82,6 +84,8 @@ hr {
 }
 
 .post-paragraph h1 {
+    font-family: 'Merriweather', serif;
+    line-height: calc(1.8vw);
     font-size: calc(1vw);
     color: white;
 }
@@ -132,16 +136,19 @@ hr {
 }
 
 .comment-header {
+    font-family: 'Lato', sans-serif;
     color: white;
 }
 
 .comment-tile h1 {
+    font-family: 'Lato', sans-serif;
     font-size: calc(1.2vw);
     margin-left: calc(0.3vw);
     color: rgb(16, 131, 177);
 }
 
 .comment-tile p {
+    font-family: 'Merriweather', serif;
     font-size: calc(0.8vw);
     color: white;
     margin-left: calc(0.7vw);

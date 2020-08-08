@@ -80,7 +80,6 @@ router.post('/login', function(req, res, next) {
 
         //Go into the database
         const details = await db.collection('user').doc(uid).get();
-        console.log(details.data());
 
         //Get the user's information to save
         const obj = {
@@ -108,7 +107,6 @@ router.get('/logout', (req, res, next) => {
   //Using firebase function, sign out of session
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
-    console.log("Logged out");
     return res.send("True");
   }).catch(function(error) {
     // An error happened.
@@ -125,8 +123,6 @@ router.post('/follow', (req, res, next) => {
   //Get the email of the current user and the profile user's email
   const userEmail = req.body.userEmail;
   const profileEmail = req.body.profileEmail;
-  console.log(profileEmail);
-  console.log(userEmail);
   
   (async () => {
     admin.auth().getUserByEmail(userEmail).then(async (userRecord) => {
@@ -170,7 +166,7 @@ router.post('/unfollow', (req, res, next) => {
 
       //Remove the info to the current user's "following"
       const followers = await db.collection('user').doc(user.uid).collection('following').doc(profileEmail).delete().then(() => {
-        console.log("Deleted profile Email");
+        //Removed the user
       })
     }).catch(error => console.log(error))
 
@@ -180,7 +176,7 @@ router.post('/unfollow', (req, res, next) => {
 
       //Removes the info to the profile user's "followers"
       const followers = await db.collection('user').doc(user.uid).collection('followers').doc(userEmail).delete().then(() => {
-        console.log("Deleted user Email")
+        //Removed the user
       })
     }).catch(error => console.log(error))
 
@@ -231,8 +227,6 @@ router.post('/followerspost', (req, res, next) => {
       const getFollowers = await db.collection('user').doc(uid).collection('following').get().then(snapshot => {
         let arr = [];
         snapshot.forEach(doc => {
-          console.log(doc.data());
-          console.log(doc.id);
           arr.push(doc.id);
         })
         return arr;
@@ -288,7 +282,6 @@ router.post('/usersnear', (req, res, next) => {
   (async () => {
     const list = [];
     for(let state of states) {
-      console.log("State => ", state)
       const usersLocation = await db.collection('user').where("State", "==", state).get().then(snap => {
         snap.forEach(doc => {
           list.push({
@@ -340,7 +333,6 @@ async function getUidFromEmail(arr) {
   const array = [];
   //Loop through the 'arr' parameter
   for(let user of arr) {
-    console.log(user);
     //Convert each email to the uid using getUserByEmail
     const getuid = admin.auth().getUserByEmail(user).then(async (userRecord) => {
       return userRecord.toJSON().uid;

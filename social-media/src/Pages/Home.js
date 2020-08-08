@@ -25,13 +25,13 @@ class Home extends React.Component {
                     </div>    
                 </section>
 
-                <Container fluid style={{marginTop: 'calc(6vh)'}}>
+                <Container fluid style={{marginTop: 'calc(4vh)'}}>
                     <Row style={{marginTop: 'calc(0vh)'}}>
                         <Col>Blog</Col>
                         <Col>Search</Col>
                         <Col>Connect</Col>
                     </Row>
-                    <Row style={{marginTop: 'calc(4vh)'}}>
+                    <Row style={{marginTop: 'calc(2vh)'}}>
                         <Col>
                             <div className="icon-div">
                                 <div className="icon-background">

@@ -35,10 +35,7 @@ class Explore extends React.Component {
                 'Content-type': 'application/json'
             }
             }).then(response => response.json()).then(data => {
-                console.log(data);
-                this.setState({ MyLikes: data}, () => {
-                    console.log(this.state.MyLikes);
-                });
+                this.setState({ MyLikes: data });
             }).catch(error => {
                 console.log("Error");
             }) 
