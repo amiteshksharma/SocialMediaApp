@@ -65,7 +65,9 @@ class Explore extends React.Component {
                                     return;
                                 } else {
                                     return (
-                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
+                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}
+                                            Icon={post.Icon}
+                                        />
                                     )
                                 }
                             })}

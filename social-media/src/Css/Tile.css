@@ -24,7 +24,7 @@
     font-size: calc(1.1vw);
     width: auto;
     margin-top: calc(0.8vh);
-    margin-left: calc(0.4vw);
+    margin-left: calc(-0.5vw);
 }
 
 .profile-link { 
@@ -56,7 +56,7 @@
 }
 
 .title h3 {
-    font-size: calc(1.2vw);
+    font-size: calc(1.3vw);
     text-overflow: ellipsis; /* will make [...] at the end */
     width: calc(37vw); /* change to your preferences */
     white-space: initial;

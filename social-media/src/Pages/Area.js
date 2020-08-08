@@ -75,7 +75,7 @@ class Main extends React.Component {
                             </div>
                             {this.state.GetStates.map(post => {
                                 return (
-                                    <Node email={post.Email} name={post.Name} bio={post.Bio} showFollow={true} />
+                                    <Node email={post.Email} name={post.Name} bio={post.Bio} showFollow={true} icon={post.Icon} />
                                 )
                             })}
                         </div>

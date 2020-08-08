@@ -45,7 +45,9 @@ router.post('/register', function(req, res, next) {
         Email: user.email,
         Name: user.displayName,
         Bio: "Your bio is default to this message. Click the pencil to edit it.",
-        State: state
+        State: state,
+        Icon: 'https://storage.googleapis.com/socialmedia-c9bf6.appspot.com/no-image-user-profile-icon.png',
+        Image: 'https://storage.googleapis.com/socialmedia-c9bf6.appspot.com/grey-background.jpg' 
       });
       //Send the obj back to the frontend to use for other methods
       const obj = {
@@ -203,9 +205,10 @@ router.post('/username', (req, res, next) => {
       const setName = getName.data().Name;
       const setBio = getName.data().Bio;
       const setEmail = getName.data().Email;
+      const setIcon = getName.data().Icon;
 
       //Return the user's name
-      return res.send({Name: setName, Bio: setBio, Email: setEmail});
+      return res.send({Name: setName, Bio: setBio, Email: setEmail, Icon: setIcon});
     })
   })();
 })
@@ -287,7 +290,8 @@ router.post('/usersnear', (req, res, next) => {
           list.push({
             Name: doc.data().Name,
             Bio: doc.data().Bio,
-            Email: doc.data().Email
+            Email: doc.data().Email,
+            Icon: doc.data().Icon
           });
         })
       })
@@ -319,8 +323,10 @@ async function getBlogPosts(uid) {
     const obj = title.data();
     obj.Name = name.data().Name;
     obj.Email = name.data().Email;
+    obj.Icon = name.data().Icon;
     getAllPosts.push(obj);
   })
+  
   return getAllPosts; 
 }
 
@@ -343,27 +349,6 @@ async function getUidFromEmail(arr) {
   }
 
   return await array;
-}
-
-/**
- * Returns all the posts for each uid
- * @param {Ret} uid 
- */
-async function getBlogPosts(uid) {
-  let getAllPosts = [];
-  //Get all the posts
-  const items = await db.collection('user').doc(uid).collection('posts').get();
-  //Get all the names
-  const name = await db.collection('user').doc(uid).get();
-          
-  items.forEach(title => {
-    //Store the name in each obj being pushed into the array
-    const obj = title.data();
-    obj.Name = name.data().Name;
-    obj.Email = name.data().Email;
-    getAllPosts.push(obj);
-  })
-  return getAllPosts; 
 }
 
 module.exports = router;

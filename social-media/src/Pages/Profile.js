@@ -254,7 +254,9 @@ class Profile extends React.Component {
                             <div className="post-display">
                                 {this.state.Posts.map(post => {
                                     return (
-                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} isLiked={this.state.MyLikes} Email={post.Email}/>
+                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} isLiked={this.state.MyLikes} Email={post.Email}
+                                            Icon={post.Icon}
+                                        />
                                     )
                                 })}  
                             </div>

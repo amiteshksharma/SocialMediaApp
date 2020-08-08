@@ -30,6 +30,7 @@ class Main extends React.Component {
             }
         })
         .then(response => response.json()).then(data => {
+            console.log(data);
             this.setState({ Post: data });
         }),
         
@@ -77,7 +78,9 @@ class Main extends React.Component {
                             </div>
                             {this.state.Post.map(post => {
                                 return (
-                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
+                                    <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}
+                                        Icon={post.Icon}
+                                    />
                                 )
                             })}
 
