@@ -6,10 +6,15 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import CreateIcon from '@material-ui/icons/Create';
+import ExploreIcon from '@material-ui/icons/Explore';
+import PublicIcon from '@material-ui/icons/Public';
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -30,14 +35,13 @@ const useStyles = makeStyles({
   },
   button: {
       backgroundColor: 'rgb(38, 119, 196)',
-      fontSize: 'calc(10vw)',
       fontWeight: '600',
       color: 'white',
-      padding: 'calc(1vw)',
+      padding: 'calc(3vw)',
       borderRadius: 'calc(50%)',
       position: 'fixed',
-      right: 'calc(2vw)',
-      bottom: 'calc(2vw)',
+      right: 'calc(3vw)',
+      bottom: 'calc(3vw)',
       boxShadow: '4px 4px 10px black'
   }
 });
@@ -92,34 +96,33 @@ const logout = () => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <Divider className={clsx(classes.line)}/>
       <List>
           <ListItem button key={'home'} onClick={(e) => history.push('/home')} >
-            <ListItemIcon className={clsx(classes.icon)}><MailIcon /></ListItemIcon>
+            <ListItemIcon className={clsx(classes.icon)}><HomeIcon /></ListItemIcon>
             <ListItemText primary={'Home'} />
           </ListItem>
           <ListItem button key={'explore'} onClick={(e) => history.push('/explore')}>
-            <ListItemIcon className={clsx(classes.icon)}><MailIcon /></ListItemIcon>
+            <ListItemIcon className={clsx(classes.icon)}><ExploreIcon /></ListItemIcon>
             <ListItemText primary={'Explore'} />
           </ListItem>
           <ListItem button key={'area'} onClick={(e) => history.push('/area')}>
-            <ListItemIcon className={clsx(classes.icon)}><MailIcon /></ListItemIcon>
+            <ListItemIcon className={clsx(classes.icon)}><PublicIcon /></ListItemIcon>
             <ListItemText primary={'Area Search'} />
           </ListItem>
           <ListItem button key={'profile'} onClick={(e) => profile()}>
-            <ListItemIcon className={clsx(classes.icon)}><MailIcon /></ListItemIcon>
+            <ListItemIcon className={clsx(classes.icon)}><PersonOutlineIcon /></ListItemIcon>
             <ListItemText primary={'Profile'} />
           </ListItem>
           <ListItem button key={'post'} onClick={(e) => createPost()}>
-            <ListItemIcon className={clsx(classes.icon)}><MailIcon /></ListItemIcon>
+            <ListItemIcon className={clsx(classes.icon)}><CreateIcon /></ListItemIcon>
             <ListItemText primary={'Create Post'} />
           </ListItem>
       </List>
       <Divider className={clsx(classes.line)}/>
       <List>
           <ListItem button key={'logout'} onClick={(e) => logout()}>
-            <ListItemIcon className={clsx(classes.icon)}><InboxIcon /></ListItemIcon>
-            <ListItemText primary={'logout'} />
+            <ListItemIcon className={clsx(classes.icon)}><ExitToAppIcon /></ListItemIcon>
+            <ListItemText primary={'Logout'} />
           </ListItem>
       </List>
     </div>
@@ -129,7 +132,7 @@ const logout = () => {
     <div>
         <React.Fragment key={'left'}>
           <Button className={clsx(classes.button)} 
-            onClick={toggleDrawer(true)}>+</Button>
+            onClick={toggleDrawer(true)}><DashboardIcon style={{fontSize: 'calc(10vw)'}}/></Button>
           <SwipeableDrawer
             anchor={'left'}
             open={state.left}

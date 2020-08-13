@@ -3,11 +3,13 @@
     height: auto;
     min-height: calc(100vh);
     background-color: rgb(21, 32, 43);
+    overflow: hidden;
 }
 
 .post-container {
     display: flex;
     flex-direction: row;
+    background-color: rgb(21, 32, 43);
 }
 
 .post-section {
@@ -196,7 +198,7 @@ hr {
     }
     
     .post-paragraph h1 {
-        line-height: calc(2.5vw);
+        line-height: calc(6vw);
         font-size: calc(3.5vw);
     }
 

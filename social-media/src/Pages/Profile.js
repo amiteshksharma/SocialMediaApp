@@ -176,14 +176,16 @@ class Profile extends React.Component {
     saveBio(e) {
         this.setState({ReadOnly: !this.state.ReadOnly}, () => {
             if(this.state.ReadOnly) {
-                if(this.state.Bio === '') {
-                    this.setState({Bio: this.state.Profile.Bio});
+                let sendBio = this.state.Bio
+                if(!sendBio) {
+                    sendBio = this.state.Profile.Bio;
                 }
+                
                 fetch("/settings/bio", {
                 method: 'POST',
                 body: JSON.stringify({
                     email: this.state.Email,
-                    bio: this.state.Bio
+                    bio: sendBio
                 }),
                 headers: {
                     'Content-type': 'application/json'

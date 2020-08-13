@@ -82,6 +82,7 @@
       background-color: rgb(247, 247, 247);
       height: auto;
       height: calc(100vh);
+      overflow: hidden;
     }
     
     .login-form .container {
