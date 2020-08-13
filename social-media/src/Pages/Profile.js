@@ -9,6 +9,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
 import Tile from '../Components/Tile';
+import Drawer from '../Components/Drawer';
 import { Form } from 'react-bootstrap';
 
 class Profile extends React.Component {
@@ -175,6 +176,9 @@ class Profile extends React.Component {
     saveBio(e) {
         this.setState({ReadOnly: !this.state.ReadOnly}, () => {
             if(this.state.ReadOnly) {
+                if(this.state.Bio === '') {
+                    this.setState({Bio: this.state.Profile.Bio});
+                }
                 fetch("/settings/bio", {
                 method: 'POST',
                 body: JSON.stringify({
@@ -198,9 +202,10 @@ class Profile extends React.Component {
         return (
             <div className="profile">
                 <div className="profile-layout">
+                    {window.innerWidth <= 760 ? null : 
                     <section className="profile-navbar">
                         <Navigation eventKey="4" />
-                    </section>
+                    </section>}
 
                     <div className="border-line-profile">
                         <section className="image-background">
@@ -236,7 +241,7 @@ class Profile extends React.Component {
                             <div className="description">
                                 <p>
                                     <Form.Control plaintext={this.state.ReadOnly} readOnly={this.state.ReadOnly} defaultValue={this.state.Profile.Bio} 
-                                        as="textarea" rows="4" style={{width: 'calc(20vw)', color: 'white', backgroundColor: 'rgb(21, 32, 43)'}} 
+                                        as="textarea" rows="4" style={{width: window.innerWidth <= 760 ? 'calc(70vw)' : 'calc(20vw)', color: 'white', backgroundColor: 'rgb(21, 32, 43)'}} 
                                         onChange={(e) => this.setState({Bio: e.target.value})}
                                         maxLength="210"
                                     />  
@@ -254,16 +259,21 @@ class Profile extends React.Component {
                             <div className="post-display">
                                 {this.state.Posts.map(post => {
                                     return (
-                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} isLiked={this.state.MyLikes} Email={post.Email}/>
+                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} isLiked={this.state.MyLikes} Email={post.Email}
+                                            Icon={post.Icon}
+                                        />
                                     )
                                 })}  
                             </div>
                         </section>
                     </div>
 
+                    {window.innerWidth <= 760 ? null : 
                     <section className="searchbar-profile">
                         <Searchbar />
-                    </section>
+                    </section>}
+
+                    {window.innerWidth <= 760 ? <Drawer /> : null}
                 </div>
             </div>
         )

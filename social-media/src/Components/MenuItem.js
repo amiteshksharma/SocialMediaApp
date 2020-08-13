@@ -117,7 +117,7 @@ export default function SimpleMenu(props) {
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
                   <MenuItem onClick={handleClose}>My Profile</MenuItem>
                 </MenuList>
               </ClickAwayListener>

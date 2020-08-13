@@ -66,47 +66,87 @@
 
 .Home .row {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     text-align: center;
 }
 
-.Home .row:first-child {
+.feature-header {
     font-family: 'Lato', sans-serif;
     font-weight: 600;
-    font-size: calc(2vw);
+    font-size: calc(2.5vw);
 }
 
-.Home .row:nth-child(2) {
-    font-size: calc(2vw);
-}
-
-.Home .row:last-child {
-    font-size: calc(1vw);
-}
-
-.Home .row:last-child div {
-    width: calc(100%);
-    display: flex;
-    text-align: center;
-    justify-content: center;
-}
-
-.Home .row:last-child div p {
+.feature-text {
     font-family: 'Merriweather', serif;
-    width: 65%;
+    margin-top: calc(1.8vh);
+    font-size: calc(1.2vw);
 }
 
 .icon-div{
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
 .icon-background{ 
+    margin-top: calc(1.5vh);
     background-color: rgb(32, 186, 224);
-    padding: calc(1vh);
+    padding: calc(2.4vh);
     width: 13%;
     border-radius: calc(50%);
+}
+
+@media screen and (max-width: 768px) {
+    
+    .navbar-home p {
+        font-family: 'Lato', sans-serif;
+        font-size: calc(4vw);
+        margin-right: calc(3vw);
+        padding-top: calc(1.5vh);
+    }
+
+    .top-section {
+        height: calc(50vh);
+        color: white;
+    }
+
+    .top-slogan {
+        margin-top: calc(5vh);
+        width: 90%;
+        box-shadow: 4px 4px 20px black;
+        border-radius: calc(1vw);
+        padding: calc(2vw);
+        background-color: rgba(0, 0, 0, 0.685);
+    }
+
+    .top-slogan h1 {
+        font-size: calc(12vw);
+    }
+    
+    .top-slogan p {
+        width: calc(100%);
+        font-size: calc(4vw);
+    }
+
+    .icon-background {
+        padding: calc(1.7vh);
+        margin-top: calc(0.2vh);
+        width: calc(15%);
+    }
+
+    .feature-header {
+        font-size: calc(6.5vw);
+        margin-top: calc(1vh);
+    }
+    
+    .feature-text {
+        font-family: 'Merriweather', serif;
+        margin-top: calc(2vh);
+        font-size: calc(3.5vw);
+    }
+
 }

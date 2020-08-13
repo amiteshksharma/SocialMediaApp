@@ -4,6 +4,7 @@ import Navigation from '../Components/Navigation';
 import Node from '../Components/Node';
 import Searchbar from '../Components/Searchbar';
 import States from '../Components/States';
+import Drawer from '../Components/Drawer';
 import PublicIcon from '@material-ui/icons/Public';
 
 class Main extends React.Component {
@@ -62,12 +63,13 @@ class Main extends React.Component {
         return (
             <div className="area-page">
                 <div className="container-area">
+                {window.innerWidth <= 760 ? null : 
                     <section className="create-section">
                         <Navigation eventKey="3" />
-                    </section>
+                    </section>}
                     
-                    <section className="content-section">
-                        <div className="content-div">
+                    <section className="area-section">
+                        <div className="area-div">
                             <div className="area-header">
                                 <PublicIcon style={{marginTop: 'calc(0.7vh)'}} fontSize="large" />
                                 <h2>Area Explore</h2>
@@ -75,15 +77,18 @@ class Main extends React.Component {
                             </div>
                             {this.state.GetStates.map(post => {
                                 return (
-                                    <Node email={post.Email} name={post.Name} bio={post.Bio} showFollow={true} />
+                                    <Node email={post.Email} name={post.Name} bio={post.Bio} showFollow={true} icon={post.Icon} />
                                 )
                             })}
                         </div>
                     </section>
 
-                    <section className="searchbar-main">
+                    {window.innerWidth <= 760 ? null : 
+                    <section className="searchbar-section">
                         <Searchbar />
-                    </section>
+                    </section>}
+
+                    {window.innerWidth <= 760 ? <Drawer /> : null}
                 </div>
             </div>
         )

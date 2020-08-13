@@ -49,3 +49,27 @@
 .error-div h1 {
     font-size: calc(1.2vw);
 }
+
+@media screen and (max-width: 768px) {
+    .post-body {
+        width: calc(100%);
+        min-height: calc(100vh);
+        border: none;
+    }
+
+    .post .form-label {
+        font-size: calc(4vw) !important;
+    }
+
+    .return-button {
+        position: absolute;
+        bottom: calc(1vh);
+        left: calc(1vw);
+        border: none;
+        border-left: none;
+        background-color: transparent;
+        color: white;
+        padding: calc(3vw);
+        border-radius: calc(2vw);
+    }
+}

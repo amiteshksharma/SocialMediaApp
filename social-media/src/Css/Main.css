@@ -92,3 +92,34 @@
 .right {
     width: calc(15vw);
 }
+
+@media screen and (max-width: 768px) {
+    .content-div {
+        width: calc(100%);
+        border: none;
+    }   
+
+    .suggest-follow h1 {
+        margin-top: calc(2.5vh);
+        font-size: calc(5.5vw);
+        width: calc(90%);
+    }
+
+    .main-header h2 {
+        font-family: 'Lato', sans-serif;
+        margin-bottom: calc(1vh);
+        margin-top: calc(1.8vh);
+        margin-left: calc(0.9vw);
+        font-size: calc(5.5vw);
+    }
+
+    .homepage .searchbar-main {
+        position: absolute;
+        right: calc(6vw);
+        top: calc(1vh);
+        height: 0;
+        box-shadow: none;
+        border-radius: calc(1rem);
+        background-color: transparent;
+    }
+}

@@ -3,6 +3,7 @@ import '../Css/Main.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import Searchbar from '../Components/Searchbar';
+import Drawer from '../Components/Drawer';
 import ExploreIcon from '@material-ui/icons/Explore';
 
 class Explore extends React.Component {
@@ -50,9 +51,10 @@ class Explore extends React.Component {
         return (
             <div className="explorepage">
                 <div className="container-explore">
+                    {window.innerWidth <= 760 ? null : 
                     <section className="create-section">
                         <Navigation eventKey="2" />
-                    </section>
+                    </section>}
                     
                     <section className="explore-section">
                         <div className="explore-content-div">
@@ -65,7 +67,9 @@ class Explore extends React.Component {
                                     return;
                                 } else {
                                     return (
-                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}/>
+                                        <Tile Title={post.Title} Body={post.Body} Name={post.Name} Email={post.Email} isLiked={this.state.MyLikes}
+                                            Icon={post.Icon}
+                                        />
                                     )
                                 }
                             })}
@@ -75,6 +79,8 @@ class Explore extends React.Component {
                     <section className="searchbar-section">
                         <Searchbar />
                     </section>
+
+                    {window.innerWidth <= 760 ? <Drawer /> : null}
                 </div>
             </div>
         )

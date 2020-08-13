@@ -2,10 +2,13 @@ import React from 'react';
 import '../Css/Tile.css';
 import Favorite from './Favorite.js';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { Media } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 export default function Tile(props) {
     const history = useHistory();
+
+    console.log(props);
     
     const routeChange = (e) => {  
         history.push({
@@ -25,7 +28,17 @@ export default function Tile(props) {
     return (
         <div className="tile-container" >
             <section className="tile-author">
-                <AccountCircleIcon style={{fontSize: 'calc(2vw)'}} onClick={routeChange} /> 
+                <Media>
+                    <img
+                        style={{borderRadius: '50%'}}
+                        width={45}
+                        height={45}
+                        className="mr-3"
+                        src={props.Icon}
+                        alt="Generic placeholder"
+                        onClick={routeChange}
+                    />
+                </Media>
                 <h6 className="profile-link" onClick={routeChange}>{props.Name}</h6>
                 <Favorite Title={props.Title} Email={props.Email} myLikes={props.isLiked} />
             </section>

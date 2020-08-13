@@ -17,3 +17,11 @@
     font-size: calc(1.2vw);
     font-weight: 600;
 }
+
+@media screen and (max-width: 768px) {
+    .display-likes {
+        right: calc(8vw);
+        top: calc(0vh);
+        font-size: calc(5vw);
+    }
+}

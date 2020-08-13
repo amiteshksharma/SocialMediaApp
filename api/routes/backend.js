@@ -65,6 +65,7 @@ router.get('/posts/:email', function(req, res, next) {
               const obj = doc.data();
               obj.Name = name.data().Name;
               obj.Email = name.data().Email;
+              obj.Icon = name.data().Icon;
               return obj;
             });
             //Return array to frontend
@@ -474,6 +475,7 @@ async function getBlogPosts(uid) {
     const obj = title.data();
     obj.Name = name.data().Name;
     obj.Email = name.data().Email;
+    obj.Icon = name.data().Icon;
     getAllPosts.push(obj);
   })
   return getAllPosts; 

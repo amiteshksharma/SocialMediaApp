@@ -145,12 +145,12 @@ class Login extends React.Component {
               </Row>
 
               <Row>
-                <Col md={{ span: 3, offset: 3}}>
+                <Col md={{ span: 3, offset: 3}} xs={{span: 2, offset: 0}}>
                   <footer className="user-register"><button className="user-register-btn"
                   onClick={() => this.props.history.push('/signup')}>Not a user? Sign up</button></footer>
                 </Col>
                 
-                <Col md={{ span: 3, offset: 1}}>
+                <Col md={{ span: 3, offset: 1}} xs={{span: 2, offset: 6}}>
                   <footer className="forgot-password">
                     <button className="forgot-password-btn" onClick={() => this.setState({ ModalShow: true})}>Forgot Password?</button>
                   </footer>

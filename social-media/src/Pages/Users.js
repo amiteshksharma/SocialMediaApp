@@ -2,6 +2,7 @@ import React from 'react';
 import Navigation from '../Components/Navigation';
 import Node from '../Components/Node';
 import Searchbar from '../Components/Searchbar';
+import Drawer from '../Components/Drawer';
 import '../Css/Users.css';
 
 class Users extends React.Component {
@@ -93,10 +94,12 @@ class Users extends React.Component {
         return (
             <div className="users">
                 <div className="users-layout">
+                    {window.innerWidth <= 760 ? null : 
                     <section className="create-section">
                         <Navigation eventKey="4" />
-                    </section>
+                    </section>}
 
+                    {window.innerWidth <= 760 ? null : 
                     <div className="profile-goback">
                         <button onClick={() => this.props.history.push({
                             pathname: `/profile/${this.state.Name}`,
@@ -105,7 +108,7 @@ class Users extends React.Component {
                         })}> 
                             <i className="pi pi-caret-left" style={{fontSize: 'calc(1.1rem)', paddingRight: 'calc(0.3vw)'}}></i>Return to profile
                         </button>
-                    </div>
+                    </div>}
 
                     <div className="border-line">
                         <section className="user-section">
@@ -151,9 +154,12 @@ class Users extends React.Component {
                         </section>
                     </div>
 
+                    {window.innerWidth ? null : 
                     <section className="searchbar-section">
                         <Searchbar />
-                    </section>
+                    </section>}
+
+                    {window.innerWidth <= 760 ? <Drawer /> : null}
                 </div>
             </div>
         )

@@ -10,16 +10,17 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 150,
     maxWidth: 150,
-    marginLeft: theme.spacing(50),
+    marginLeft: window.innerWidth <= 760 ? theme.spacing(5) : theme.spacing(50),
+    marginTop: window.innerWidth <= 760 ? theme.spacing(0.5) : null,
     color: 'white',
   },
   inputLabel: {
     color: 'white',
-    fontSize: 'calc(0.8vw)'
+    fontSize:  window.innerWidth <= 760 ? 'calc(1.8vh)' : 'calc(0.8vw)'
   },
   selectClass: {
-    marginTop: 'calc(0.7vh)',
-    height: 'calc(4vh)',
+    marginTop: window.innerWidth <= 760 ? 'calc(0.1vh)' : 'calc(0.7vh)',
+    height: window.innerWidth <= 760 ? 'calc(5vh)' : 'calc(4vh)',
     color: 'white'
   }
 }));

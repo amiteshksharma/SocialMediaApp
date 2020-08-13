@@ -16,7 +16,7 @@
     font-family: 'Lato', sans-serif;
     font-size: calc(1.2vw);
     margin-top: calc(1vh);
-    margin-left: calc(0.3vw);
+    margin-left: calc(-0.5vw);
     color: white;
 }
 
@@ -78,5 +78,38 @@
 .follow-button-node:hover > .plus-icon {
     color: white;
     transition: 0.2s;
+}
+
+@media screen and (max-width: 768px) {
+    .information h2 {
+        font-family: 'Lato', sans-serif;
+        font-size: calc(4.7vw);
+        margin-top: calc(1vh);
+        margin-left: calc(-0.5vw);
+        color: white;
+    }    
+
+    .bio {
+        width: calc(90%);
+        margin-left: calc(2.8vw);
+    }
+    
+    .bio h4 {
+        margin-top: calc(0vh);
+        margin-left: calc(13vw);
+        font-family: 'Merriweather', serif;
+        font-size: calc(3vw);
+        color: white;
+    }
+
+    .followed-button-node, .follow-button-node {
+        height: calc(4vh);
+        width: calc(26vw);
+        font-size: calc(4vw);
+        position: absolute;
+        top: calc(1vh);
+        right: calc(1vw);
+    }
+    
 }
 
