@@ -70,3 +70,41 @@
     white-space: nowrap;
     overflow: hidden; /* older browsers */
 }
+
+@media screen and (max-width: 768px) {
+    .profile-link {
+        font-family: 'Lato', sans-serif;
+        font-size: calc(4.3vw);
+        width: auto;
+        margin-top: calc(0.8vh);
+        margin-left: calc(-0.5vw);
+    }   
+
+    .title-section, .summary-section {
+        font-family: 'Merriweather', serif;
+        width: auto;
+        margin-top: calc(0vh);
+        margin-left: calc(4vw); 
+        color: white;
+    }
+
+    .title-section {
+        margin-top: calc(1.4vh);
+    }
+
+    .title h3 {
+        font-size: calc(4.3vw);
+        text-overflow: ellipsis; /* will make [...] at the end */
+        width: calc(100%); /* change to your preferences */
+        white-space: initial;
+        overflow: hidden; /* older browsers */    
+    }
+    
+    .summary h3 {
+        font-size: calc(3.7vw);
+        text-overflow: ellipsis; /* will make [...] at the end */
+        width: calc(100%); /* change to your preferences */
+        white-space: nowrap;
+        overflow: hidden; /* older browsers */
+    }
+}

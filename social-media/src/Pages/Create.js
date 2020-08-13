@@ -1,6 +1,8 @@
 import React from 'react';
 import '../Css/Create.css';
 import { Form, Button, Spinner } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+
 class Create extends React.Component {
     constructor(props) {
         super(props);
@@ -106,10 +108,12 @@ class Create extends React.Component {
                             {this.state.Loading ? <Spinner animation="border" variant="light" /> : "Create"}
                         </Button>
                     </div>
+
+                    {window.innerWidth <= 760 ? <button onClick={() => this.props.history.goBack()} className="return-button">Go back</button> : null}
                 </div>
             </section>
         )
     }
 }
 
-export default Create;
+export default withRouter(Create);

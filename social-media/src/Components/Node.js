@@ -132,16 +132,6 @@ export default function Node(props) {
                 <h4>{props.bio ? props.bio : bio.Bio}</h4>
             </section>
 
-            {/* {props.following === 'ME' ? null : 
-            <section className="followed-button-section">
-                {(props.following !== 'No Followers' && props.following) || follower.Follower ? 
-                <button className="followed-button-node" onClick={() => unfollowClick()}>
-                    Followed <CheckIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="checked-icon" />
-                </button> : 
-                <button className="follow-button-node" onClick={() => followClick()}>
-                    Follow <AddIcon color="primary" style={{marginBottom: 'calc(0.4vh)'}} className="plus-icon" />
-                </button> }
-            </section>} */}
             {button()}
 
         </div>

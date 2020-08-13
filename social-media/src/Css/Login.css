@@ -70,6 +70,31 @@
     background-color: rgb(194, 69, 69);
     color: white;
   }
+
   .error-display p {
     font-size: calc(1.2vw);
+  }
+
+  @media screen and (max-width: 768px) {
+
+    .Login {
+      text-align: center;
+      background-color: rgb(247, 247, 247);
+      height: auto;
+      height: calc(100vh);
+    }
+    
+    .login-form .container {
+      width: 100%;
+      border: none;
+      box-shadow: none;
+    }
+
+    .forgot-password, .user-register, .user-login {
+      margin-top: calc(0.7vh);
+      text-align: left;
+      font-size: calc(3vw);
+      width: calc(40vw);
+      padding-bottom: calc(2rem);
+    }
   }

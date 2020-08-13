@@ -85,9 +85,9 @@ export default function Favorite(props) {
         </div>
         <div className="favorite-icon" onClick={() => setFavorite({Favorite: !favorite.Favorite})}>
             {favorite.Favorite ? 
-                <FavoriteBorderIcon style={{fontSize: 'calc(1.5vw)'}} className="favorite" onClick={like}/> 
+                <FavoriteBorderIcon style={{fontSize: window.innerWidth <= 760 ? 'calc(7vw)' : 'calc(1.5vw)'}} className="favorite" onClick={like}/> 
                 : 
-                <FavoriteIcon style={{fontSize: 'calc(1.5vw)'}} className="favorited" onClick={unlike}/> 
+                <FavoriteIcon style={{fontSize: window.innerWidth <= 760 ? 'calc(7vw)' : 'calc(1.5vw)'}} className="favorited" onClick={unlike}/> 
             }
         </div>
         </section>

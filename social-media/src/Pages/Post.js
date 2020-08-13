@@ -3,6 +3,7 @@ import '../Css/Post.css';
 import Navigation from '../Components/Navigation';
 import Favorite from '../Components/Favorite';
 import { Media, Form, Button } from 'react-bootstrap';
+import Drawer from '../Components/Drawer';
 import ProfileIcon from '../Images/download.png';
 
 class Post extends React.Component {
@@ -101,9 +102,10 @@ class Post extends React.Component {
         return (
             <div className="postpage">
                 <div className="post-container">
+                    {window.innerWidth <= 760 ? null : 
                     <section className="create-section">
                         <Navigation />
-                    </section>
+                    </section>}
 
                     <section className="post-section">
                         <section className="post-style">
@@ -148,7 +150,9 @@ class Post extends React.Component {
                             <Form.Control  placeHolder={"Enter comment..."}
                                 value={this.state.Comment}
                                 as="textarea" rows="4" 
-                                style={{width: 'calc(18vw)', color: 'white', backgroundColor: 'rgb(21, 32, 43)', marginLeft: 'calc(1.2vw)'}} 
+                                style={{width: window.innerWidth <= 760 ? 'calc(78vw)': 'calc(18vw)', 
+                                color: 'white', backgroundColor: 'rgb(21, 32, 43)', marginLeft: window.innerWidth <= 760 ? 'calc(10vw)': 'calc(1.2vw)',
+                                marginBottom: window.innerWidth <= 760 ? 'calc(2vw)': null}} 
                                 onChange={(e) => this.setState({Comment: e.target.value})}
                                 maxLength="275"
                             /> 
@@ -166,6 +170,7 @@ class Post extends React.Component {
                         })}
                     </section>
                 </div>
+                {window.innerWidth <= 760 ? <Drawer /> : null}
             </div>
         )
     }

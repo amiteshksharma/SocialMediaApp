@@ -23,14 +23,14 @@
     transition: 0.3s;
 }
 
-.content-section {
+.area-section {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.content-div {
+.area-div {
     width: calc(40%);
     border: 1px solid white;
     border-top: none;
@@ -58,7 +58,7 @@
 }
 
 /* Searchbar for searching for users */
-.searchbar-main {
+.area-page .searchbar-main {
     position: absolute;
     right: calc(6vw);
     top: calc(5.5vh);
@@ -74,4 +74,26 @@
  */
 .right {
     width: calc(15vw);
+}
+
+@media screen and (max-width: 768px) {
+    .area-div {
+        width: calc(100%);
+        border: none;
+    }   
+
+    .suggest-follow h1 {
+        margin-top: calc(2.5vh);
+        font-size: calc(5.5vw);
+        width: calc(90%);
+    }
+
+    .area-header h2 {
+        font-family: 'Lato', sans-serif;
+        margin-bottom: calc(1vh);
+        margin-top: calc(1.8vh);
+        margin-left: calc(0.9vw);
+        font-size: calc(5.5vw);
+        min-width: calc(35vw);
+    }
 }

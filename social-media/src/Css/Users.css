@@ -15,13 +15,13 @@
 }
 
 /* The outer border line */
-.border-line {
-    width: 40%;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
-    display: flex;
-    flex-direction: column;
-}
+    .border-line {
+        width: 40%;
+        border-left: 1px solid white;
+        border-right: 1px solid white;
+        display: flex;
+        flex-direction: column;
+    }
 
 .user-section {
     width: 100%;
@@ -82,4 +82,15 @@
 
 .profile-goback button:focus {
     outline: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .border-line {
+        width: 100%;
+        border: none;
+    }
+
+    .user-tab button {
+        font-size: calc(5.5vw);
+    }
 }

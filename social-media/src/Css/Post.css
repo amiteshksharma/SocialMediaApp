@@ -162,3 +162,85 @@ hr {
     border-radius: calc(0.7vw);
     transition: 0.3s;
 }
+
+@media screen and (max-width: 768px) {
+
+    .post-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-style {
+        width: calc(100%);
+        border: none;
+        height: auto;
+        min-height: calc(100vh);
+        height: auto;
+        display: flex;
+        flex-direction: column;   
+    }    
+
+    .post-title {
+        margin-left: calc(10%);
+        margin-right: calc(10%);
+        margin-top: calc(4vh);
+        text-align: center;
+        max-width: calc(100%);
+        margin-bottom: calc(-2vh);
+    }
+    
+    .post-title h1 {
+        font-family: 'Lato', sans-serif;
+        font-size: calc(6.3vw);
+        color: white;
+    }
+    
+    .post-paragraph h1 {
+        line-height: calc(2.5vw);
+        font-size: calc(3.5vw);
+    }
+
+    .comment-section {
+        position: relative;
+        border-radius: calc(1rem);
+        box-shadow: none;
+        margin-left: none;
+        min-height: calc(80vh);
+        width: calc(100%);
+        overflow-y: auto;
+        margin-bottom: none;
+    }
+    
+    .comment-header h1 {
+        margin-top: calc(1vh);
+        font-size: calc(5vw);
+    }
+    
+    .comment-box .btn {
+        margin-left: calc(35vw) !important;
+    }
+    
+    /* The tile for the comment */
+    .comment-tile {
+        border-bottom: 1px solid white;
+        border-radius: calc(0vw);
+        margin-right: calc(0.5rem);
+        margin-left: calc(0.5rem);
+        margin-bottom: calc(0.5rem);
+        color: white;
+    }
+    
+    .comment-tile h1 {
+        font-family: 'Lato', sans-serif;
+        font-size: calc(4.7vw);
+        margin-left: calc(0.3vw);
+        color: rgb(16, 131, 177);
+    }
+    
+    .comment-tile p {
+        font-family: 'Merriweather', serif;
+        font-size: calc(3.5vw);
+        color: white;
+        margin-left: calc(0.7vw);
+    }
+}

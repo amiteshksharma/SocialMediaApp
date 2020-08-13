@@ -3,6 +3,7 @@ import '../Css/Explore.css';
 import Navigation from '../Components/Navigation';
 import Tile from '../Components/Tile';
 import Searchbar from '../Components/Searchbar';
+import Drawer from '../Components/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
 
 class Main extends React.Component {
@@ -66,9 +67,10 @@ class Main extends React.Component {
         return (
             <div className="homepage">
                 <div className="container-main">
+                    {window.innerWidth <= 760 ? null : 
                     <section className="create-section">
                         <Navigation eventKey="1" />
-                    </section>
+                    </section>}
                     
                     <section className="content-section">
                         <div className="content-div">
@@ -102,6 +104,8 @@ class Main extends React.Component {
                     <section className="searchbar-main">
                         <Searchbar />
                     </section>
+
+                    {window.innerWidth <= 760 ? <Drawer /> : null}
                 </div>
             </div>
         )
